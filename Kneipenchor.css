@@ -1,0 +1,1143 @@
+/* ---------------------------------------- */
+/* ========== Variables =================== */
+/* ---------------------------------------- */
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-yellow: rgba(255, 237, 0, 1);
+  --color-light-bg: rgba(253, 247, 240, 1);
+  --color-dark-text: #2b2b2b;
+  --font-main: Manrope, -apple-system, Roboto, Helvetica, sans-serif;
+  --font-alt: Nunito Sans, -apple-system, Roboto, Helvetica, sans-serif;
+  --font-size-sm: 14px;
+  --font-size-md: 18px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-hero: 56px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --border-radius-sm: 12px;
+  --border-radius-md: 24px;
+  --padding-sm: 12px 16px;
+  --padding-md: 12px 24px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+  --gap-lg: 40px;
+  --gap-xl: 100px;
+}
+
+/* ---------------------------------------- */
+/* ========== 1. Base Styles ============= */
+/* ---------------------------------------- */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-light-bg);
+  font-family: var(--font-alt);
+}
+.break {
+  display: block;
+}
+a {
+    color: var(--color-black);
+}
+
+
+
+/* ---------------------------------------- */
+/* ========== 2. Header =================== */
+/* ---------------------------------------- */
+.site-header, .main-header {
+  display: flex;
+  min-height: 100px;
+  padding: 0 var(--gap-xl);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-lg) var(--gap-xl);
+}
+
+.logo, .site-title {
+  color: var(--color-black);
+  font-size: var(--font-size-md);
+  font-family: var(--font-main);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  margin: 0;
+}
+
+.nav-container, .main-nav {
+  display: flex;
+  min-width: 240px;
+  align-items: center;
+  gap: var(--gap-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin-top: 24px;
+  padding: 0;
+  gap: 24px;
+}
+
+.nav-link {
+  color: var(--color-black);
+  text-decoration: none;
+  font-weight: var(--font-weight-normal);
+}
+
+.cta-button, .register-btn {
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: var(--padding-md);
+  border: none;
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 2.1px;
+  cursor: pointer;
+}
+nav a[href*="eintragen"] {
+  background-color: #ffed00;
+  color: #000;
+  padding: var(--padding-md);
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  display: inline-block;
+}
+
+nav a[href*="eintragen"]:hover,
+nav a[href*="eintragen"]:focus {
+  background-color: #e6bf00; /* etwas dunkler beim Hover */
+}
+
+/* Hamburger-Styling */
+
+/* Hamburger-Icon */
+.hamburger {
+  display: none;
+  text-align: center;      /* Horizontal zentrieren */
+  width: 48px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+  vertical-align: middle;  /* Falls im Inline-Kontext */
+  line-height: 0.5;
+}
+.hamburger .bar {
+  display: inline-block;
+  height: 3px;
+  width: 24px;
+  background-color: #000;
+  border-radius: 2px;
+  margin: 4px 0;
+  line-height: 0.5;
+}
+
+/* Desktop: Navigation immer sichtbar */
+@media (min-width: 1095px) {
+  .main-nav {
+    display: flex !important; /* immer sichtbar */
+    flex-direction: row;
+    gap: var(--gap-md);
+    background: none;
+    box-shadow: none;
+    position: static;
+    padding: 0;
+  }
+  .hamburger {
+    display: none;
+  }
+}
+
+/* Mobil */
+@media (max-width: 1094px) {
+  .hamburger {
+    display: block; /* sichtbar */
+    position: relative; /* notwendig, damit z-index wirkt */
+  }
+  .main-header {
+    padding-left: 16px;
+  }
+  .main-nav {
+    display: none; /* standard versteckt */
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    box-shadow: -4px 0 10px rgba(0,0,0,0.1);
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    width: 200px; /* nach Wunsch anpassen */
+    z-index: 2000;
+  }
+  .main-nav.open {
+    display: flex;
+    height: 100%;
+    align-items: start;
+  }
+  .nav-list {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 24px;
+    gap: 16px;
+  }
+  .register-btn {
+    align-self: stretch;
+    margin-top: 48px;
+  }
+}
+  
+
+
+
+
+/* ---------------------------------------- */
+/* ========== 3. Hero Section ============= */
+/* ---------------------------------------- */
+.hero-section {
+  display: flex;
+  padding: 80px var(--gap-xl);
+  align-items: center;
+  gap: var(--gap-lg) 64px;
+  flex-wrap: wrap;
+  width: 100%;
+  position: relative; /* wichtig für ggf. positionierte Inhalte */
+}
+
+.hero-content {
+  flex: 1;
+  min-width: 240px;
+}
+
+.hero-img {
+  width: 100%;
+  max-height: 600px; /* Begrenzung nur fürs Bild */
+  max-width: 647px;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  flex: 1 1 300px; /* falls du Flexbox für die Größe nutzt */
+}
+
+.hero-subtitle, .hero-description {
+  color: var(--color-black);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.hero-subtitle {
+  font-weight: var(--font-weight-bold);
+}
+
+.hero-title {
+  color: var(--color-dark-text);
+  font-size: var(--font-size-hero);
+  font-family: var(--font-main);
+  font-weight: var(--font-weight-medium);
+  line-height: 60px;
+  margin: 16px 0 0;
+}
+
+.hero-description {
+  margin: 28px 0;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 40px 20px 60px 20px;
+  }
+}
+
+
+/* ---------------------------------------- */
+/* ========== 4. Map Section ============== */
+/* ---------------------------------------- */
+
+.map-image-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.header-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: 100%;
+}
+
+.map-section {
+  position: relative;/* Positionierung der Karte, um das Overlay oben zu platzieren */
+  background-color: var(--color-white);
+  width: 100%;
+  overflow: visible;
+  z-index: 0;
+}
+
+#map {
+  width: 100%;
+  height: 450px;
+}
+
+.map-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  z-index: 0;
+}
+
+.map-title {
+  text-align: center;
+  margin: 0 auto 1rem auto; /* oben/seitlich/unten zentriert */
+  max-width: 800px; /* optional: verhindert zu lange Zeilen */
+  color: var(--color-dark-text);
+  font-size: var(--font-size-xl);
+  font-family: var(--font-main);
+  font-weight: var(--font-weight-medium);
+  line-height: 60px;
+  margin: 0;
+}
+
+.map-image {
+  aspect-ratio: 1.68;
+}
+
+.map-main {
+  aspect-ratio: 3.89;
+}
+
+.map-image, .map-main {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  max-width: 1204px;
+}
+
+
+.mapboxgl-popup {
+  position: fixed !important; /* oder absolute */
+  z-index: 9999 !important;
+  pointer-events: auto;
+}
+
+  
+
+.mapboxgl-map {
+    overflow: inherit !important;
+}
+
+
+.map-marker, .mapboxgl-marker {
+  position: absolute;
+  top: -30px !important;
+}
+
+/* Mobile Ansicht */
+@media (max-width: 768px) {
+.map-title {
+  text-align: center;
+  font-size: clamp(1.5rem, 2vw, 2.5rem);
+  margin-bottom: 1rem;
+}
+  }
+
+/*---------------------------------------- */
+/* ========== 5. Choir Popups auf Karte =============== */
+/* ---------------------------------------- */
+.mapboxgl-popup-content {
+  position: relative !important;
+  border-radius: 16px !important;
+  max-width: 360px;
+  font-family: var(--font-alt);
+  font-size: 14px;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .2) !important;
+}
+
+
+.chor-popup {
+  display: flex;
+  flex-direction: column;
+}
+.chor-popup-facts {
+  display: flex;
+  max-width: 360px;
+  gap: 0px; /* Abstand Bild - Text */
+  align-items: flex-start; /* Damit Bild und Text oben ausgerichtet sind */
+}
+
+.chor-popup-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  max-width: 100%;
+  display: block;
+  margin: 8px 0px 8px 16px;
+  flex-shrink: 0; /* Bild nicht schrumpfen lassen */
+}
+
+.chor-popup-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1; /* Text nimmt den restlichen Platz ein */
+}
+
+.chor-popup-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 12px 16px 4px;
+}
+
+.chor-popup-desc {
+  margin: 0 16px 12px;
+  line-height: 1.4;
+  max-height: 5.6em; /* 4 Zeilen */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.chor-popup-line {
+  border: none;
+  border-top: 0.5px solid #aaa;
+  margin: 0 16px 12px;
+}
+
+.chor-popup-leitung {
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.chor-popup-stats {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin: 0 16px 16px;
+}
+
+.chor-popup-stats .label {
+  font-size: 12px;
+  color: #666;
+}
+
+.chor-popup-stats .value {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.chor-popup-btn {
+  background-color: #ffED00;
+  color: #000;
+  text-align: center;
+  display: block;
+  margin: 0 16px 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.chor-popup-kontakt {
+  text-align: center;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+
+
+/* ---------------------------------------- */
+/* ========== 6. Choir List =============== */
+/* ---------------------------------------- */
+
+.choir-list {
+  padding: 0px 80px 80px 0px;
+  width: 100%;
+}
+
+.filter-section {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 40px 40px;
+  flex-wrap: wrap;
+}
+
+.filter-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2.1px;
+  margin: 0;
+}
+
+select {
+  appearance: none;        /* entfernt Standard-Pfeil */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: rgba(253, 247, 240, 1);
+  border: 1px solid #000;
+  padding: 14px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2.1px;
+  cursor: pointer;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23666" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px; /* Platz für Icon */
+}
+
+.filter-buttons,
+#bundesland-filter,
+#genre-filter {
+  margin: 8px;
+}
+
+
+
+.filter-buttons {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #000;
+  border-radius: 24px;
+  padding: 12px 24px;
+  background: none;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2.1px;
+  cursor: pointer;
+}
+
+.filter-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.choir-card {
+  display: flex;
+  flex-wrap: nowrap;       /* Inhalte nebeneinander */
+  gap: 20px;               /* Abstand zwischen den Bereichen */
+  width: 100%;             /* volle Breite des Containers */
+  /* max-width: 900px;         optional max. Breite */
+  /* margin: 0 auto;           zentriert im Container */
+  background: #fff;        /* Hintergrundfarbe, optional */
+  padding: 16px;
+  box-sizing: border-box;
+  border-radius: 8px;      /* optional abgerundete Ecken */
+  margin-top: 24px;
+  /*box-shadow: 0 0 8px rgba(0,0,0,0.1);  optional Schatten */
+}
+
+.choir-card,
+.choir-info,
+.choir-details {
+  overflow-wrap: break-word;  /* lange Wörter umbrechen */
+  word-wrap: break-word;
+  hyphens: auto;              /* optionale Silbentrennung */
+}
+
+
+.choir-image {
+  flex-shrink: 1; /* Bild darf auch schrumpfen */
+  min-width: 100px; /* aber nicht kleiner als 100px */
+  max-width: 360px; 
+  object-fit: cover; /* Bild füllt Fläche aus, ohne Verzerrung */
+  aspect-ratio: 1.88;
+  width: 100%;
+  object-fit: cover;
+}
+
+.choir-info, .choir-details {
+  flex: 1;
+  padding: 16px;
+  min-width: 240px;
+}
+
+.choir-name {
+  font-size: 20px;
+  font-family: Manrope, -apple-system, Roboto, Helvetica, sans-serif;
+  font-weight: 700;
+  margin: 0;
+}
+
+.choir-description {
+  font-size: 14px;
+  margin: 24px 0;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 400;
+  display: block;
+}
+
+.conductor-info {
+  padding: 8px 0;
+}
+
+.conductor-name {
+  font-size: 14px;
+  font-weight: 700;
+  display: block;
+  margin-top: 4px;
+}
+
+.stats {
+  display: flex;
+  padding: 0 12px;
+  gap: 22px;
+  justify-content: space-between;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 12px;
+  font-weight: 400;
+  display: block;
+}
+
+.stat-value {
+  font-size: 14px;
+  font-weight: 700;
+  display: block;
+  margin-top: 4px;
+}
+
+.choir-website {
+  display: block;
+  background-color: rgba(255, 237, 0, 1);
+  margin-top: 16px;
+  padding: 16px;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.contact-info {
+  display: flex;
+  margin-top: 16px;
+  gap: 24px;
+  flex-direction: column;
+}
+
+.contact-text {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+}
+
+.social-links {
+  display: flex;
+  gap: 8px;
+}
+
+.social-link img {
+  width: 24px;
+  height: 24px;
+}
+
+
+/* Mobile Ansicht: alles untereinander */
+@media (max-width: 768px) {
+  .choir-card {
+    width: 100%;
+    box-sizing: border-box;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .choir-image {
+    width: 100%;           /* Bild nimmt volle Breite ein */
+    height: auto;
+    max-width: none;
+  }
+    .choir-details {
+    padding: 0;           
+  }
+  
+  .choir-info,
+  .choir-details {
+    width: 100%;           /* volle Breite */
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-section {
+    padding: 40px 20px 0px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+    .filter-buttons, #bundesland-filter, #genre-filter {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 24px;
+  }
+    .filter-section select {
+    width: 100%;
+  }
+
+  #aufnahmestopp-filter {
+    margin-top: 24px;
+  }
+}
+
+
+/* ---------------------------------------- */
+/* ========== 7. Contact ========= */
+/* ---------------------------------------- */
+.contact-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 80px 100px;
+  gap: 40px;
+}
+
+.contact-content {
+  display: flex;
+  align-items: flex-start; /* sorgt für obere Ausrichtung */
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+}
+
+.contact-info,
+.contact-form {
+  flex: 1 1 300px;
+  min-width: 240px;
+}
+
+.contact-title {
+  color: rgba(43, 43, 43, 1);
+  font-size: 56px;
+  font-family: var(--font-alt);
+  font-weight: 500;
+  line-height: 60px;
+  margin: 0;
+}
+
+.contact-description {
+  color: rgba(0, 0, 0, 1);
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 28px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.contact-form label {
+  font-size: 12px;
+  font-weight: 700; /* falls gewünscht */
+  display: block;
+  margin-bottom: 4px;
+}
+
+.required {
+  font-weight: 300;
+}
+
+.name-inputs {
+  display: flex;
+  gap: 24px;
+}
+
+.input-group {
+  flex: 1;
+}
+
+.contact-form .form-input,
+.contact-form .form-textarea {
+  border-radius: 24px;
+  border: 1px solid black;
+  padding: 12px 16px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form .form-textarea {
+  min-height: 96px; /* doppelt so hoch wie min-height 39px */
+  resize: vertical;
+}
+.contact-description a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.submit-button {
+  border-radius: 24px;
+  background-color: var(--color-yellow);
+  min-height: 48px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 2.1px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.form-input:hover,
+.form-input:focus,
+.form-textarea:hover,
+.form-textarea:focus,
+.submit-btn:hover {
+  background-color: #fff;
+}
+
+@media (max-width: 768px) {
+  .contact-section {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 40px 20px 60px 20px;
+  }
+
+  .contact-info,
+  .contact-form {
+    width: 100%;
+  }
+
+  .name-inputs {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+/* ---------------------------------------- */
+/* ========== 8. Section Forum =================== */
+/* ---------------------------------------- */ 
+
+.forum-section {
+  background-color: rgba(0, 0, 0, 1);
+  display: flex;
+  padding: 80px 100px;
+  align-items: center;
+  gap: 40px 64px;
+  flex-wrap: wrap;
+}
+
+.forum-image {
+  flex: 1;
+  min-width: 240px;
+}
+
+.forum-img {
+  aspect-ratio: 0.83;
+  width: 100%;
+  max-width: 479px;
+  object-fit: contain;
+}
+
+.forum-content {
+  flex: 1;
+  min-width: 240px;
+  color: rgba(254, 244, 244, 1);
+}
+
+.forum-subtitle {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.forum-title {
+  font-size: 56px;
+  font-family:
+    Manrope,
+    -apple-system,
+    Roboto,
+    Helvetica,
+    sans-serif;
+  font-weight: 500;
+  line-height: 60px;
+  margin: 16px 0 0;
+}
+
+.forum-description {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 28px 0;
+}
+
+.forum-button {
+  border-radius: 24px;
+  background-color: rgba(255, 237, 0, 1);
+  min-height: 48px;
+  padding: 12px 24px;
+  color: rgba(0, 0, 0, 1);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2.1px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .forum-section {
+    padding: 40px 20px 60px 20px;
+  }
+}
+
+/* ---------------------------------------- */
+/* ========== 9. Footer =================== */
+/* ---------------------------------------- */
+
+.main-footer {
+  background-color: var(--color-yellow);
+  color: var(--color-black);
+  width: 100%;
+  overflow-x: hidden; /* verhindert horizontales Scrollen */
+  box-sizing: border-box;
+  padding: 60px 100px 80px 100px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* für mobile Fallback */
+  gap: 40px;
+}
+
+.footer-brand {
+  flex: 1;
+}
+
+.footer-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.footer-nav {
+  flex: 2;
+}
+
+.footer-sections {
+  display: flex;
+  max-width: 100%;
+  gap: 40px;
+  justify-content: flex-end; /* optional – richtet alle Sections nach rechts aus */
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: auto; /* lässt Breite vom Inhalt bestimmen */
+  max-width: 300px; /* optional: Begrenzung, falls Inhalte zu lang sind */
+}
+
+.section-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.section-content {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.section-link {
+  font-weight: bold !important;
+  font-size: 14px;
+  color: inherit !important;
+}
+
+/* 🔁 Responsive: untereinander auf kleinen Geräten */
+@media (max-width: 768px) {
+  .main-footer {
+    flex-direction: column;
+    padding: 40px 20px 60px 20px;
+  }
+
+  .footer-nav {
+    justify-content: flex-start;
+    margin-top: 40px;
+  }
+
+  .footer-sections {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .footer-section {
+    width: 100%; /* bei schmalem Screen wieder auf volle Breite */
+    max-width: none;
+  }
+  
+}
+
+/* ---------------------------------------- */
+/* ========== 10. Kalender ================ */
+/* ---------------------------------------- */
+
+.calendar-section {
+  padding: 0rem 2rem 0rem 2rem;
+  background-color: #fdfdfd;
+  text-align: left;
+}
+.calendar-section h2 {
+  text-align: left;
+}
+.hinweis-section {
+  padding: 0rem 2rem 4rem 2rem;
+}
+
+.calendar-section select {
+  max-width: 318px;
+}
+
+
+.calendar-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--text-color); /* passe ggf. deine Farbvariablen an */
+}
+
+.calendar-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.calendar-iframe {
+  width: 100%;
+  min-height: 600px;
+  border: none;
+}
+
+iframe[src*="docs.google.com/forms"] {
+  width: 100% !important;
+  max-width: 100%;
+  border: none;
+  margin: 2rem auto;
+  scrolling: no;
+}
+
+.form-intro {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 800px;
+  box-sizing: border-box;
+}
+.form-intro li {
+  margin-bottom: 16px;
+}
+.form-page {
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+.form-container {
+  width: 100%;
+  max-width: 900px;
+  height: 1700px;
+  border: none;
+  overflow: hidden;
+  display: block;
+  margin: 2rem auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+.form-container iframe {
+  width: 100%;
+  border: none;
+  display: block;
+}
+
+/* Für kleine Bildschirme: weniger Höhe, automatischer Rand */
+@media (max-width: 600px) {
+  .form-container iframe {
+    height: 1800px;
+    padding: 0 10px;
+  }
+}
+
+.content-section {
+  padding: 4rem 1rem;
+  background-color: #f9f9f9;
+  text-align: left;
+}
+
+.section-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.section-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+/* ---------------------------------------- */
+/* ========== Datenschutz ================ */
+/* ---------------------------------------- */
+
+/* Datenschutzerklärung linksbündig */
+.content-section.datenschutz-content {
+  text-align: left !important;
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+
+
+
+
+
+/* Leaflet-Karte ohne Mapbox-Zugangsschlüssel */
+.leaflet-popup-content {
+  margin: 0;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 14px;
+  overflow: hidden;
+}

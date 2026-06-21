@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kneipenchor Map</title>
+  <link rel="stylesheet" href="Kneipenchor.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+<header class="main-header">
+  <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+
+  <h1 class="site-title">Kneipenchöre vernetzt</h1>
+
+  <nav class="main-nav">
+    <ul class="nav-list">
+      <li><a href="index.html" class="nav-link">Startseite</a></li>
+      <li><a href="Karte.html" class="nav-link">Kneipenchor-Map</a></li>
+      <li><a href="kalender.html" class="nav-link">Kalender</a></li>
+      <li><a href="forum.html" class="nav-link">Forum</a></li>
+    </ul>
+    <a href="eintragen.html" class="register-btn">chor eintragen</a>
+  </nav>
+</header>
+
+<!-- Interaktive Karte -->
+<section class="map-section">
+  <div class="map-container">
+    <div id="map"></div>
+  </div>
+</section>
+
+<!-- Filter -->
+<section class="filter-section">
+  <h2 class="filter-title">Filter</h2>
+  <select id="bundesland-filter">
+    <option value="">Bundesland wählen</option>
+  </select>
+  <select id="genre-filter">
+    <option value="">Genre wählen</option>
+  </select>
+  <label>
+    <input type="checkbox" id="aufnahmestopp-filter" />
+    Nur Chöre ohne Aufnahmestopp
+  </label>
+</section>
+
+<!-- Chorauflistung -->
+<section id="chor-liste">
+  <div id="choir-list" class="choir-list"></div>
+</section>
+
+<!-- Chor-Overlay (Punkt 4: Wird dynamisch über karte.js eingeblendet) -->
+
+<!-- Kontaktbereich -->
+<section class="contact-section">
+  <div class="contact-content">
+    <div class="contact-info">
+      <h2 class="contact-title">Chor auf die Karte?<br>Einfach melden!</h2>
+      <p class="contact-description">
+        Gemeinsam klingen wir weiter – tragt euren Chor ein und werdet Teil der Kneipenchor-Community, die Musik und Miteinander liebt.<br><br>
+        <a href="eintragen.html" class="nav-link">Hier</a> könnt Ihr Euch direkt eintragen. Ihr habt Feedback, braucht Hilfe beim Eintragen oder das nötige Passwort?<br>
+        Meldet euch gerne: <strong><a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a></strong>
+      </p>
+    </div>
+
+    <form class="contact-form" action="https://formsubmit.co/info@karlsruherkneipenchor.de" method="POST">
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value="/danke.html" />
+      <input type="hidden" name="_subject" value="Neue Nachricht vom Kneipenchor-Formular" />
+      <input type="text" name="_honey" style="display: none;" />
+
+      <div class="form-group">
+        <label>Name <span class="required">(erforderlich)</span></label>
+        <div class="name-inputs">
+          <div class="input-group">
+            <label for="firstname">Vorname</label>
+            <input type="text" id="firstname" name="Vorname" class="form-input" required />
+          </div>
+          <div class="input-group">
+            <label for="lastname">Nachname</label>
+            <input type="text" id="lastname" name="Nachname" class="form-input" required />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-Mail-Adresse <span class="required">(erforderlich)</span></label>
+        <input type="email" id="email" name="Email" class="form-input" required />
+      </div>
+
+      <div class="form-group">
+        <label for="message">Nachricht <span class="required">(erforderlich)</span></label>
+        <textarea id="message" name="Nachricht" class="form-input" required style="min-height: 88px;"></textarea>
+      </div>
+
+      <button type="submit" class="submit-button">senden</button>
+    </form>
+  </div>
+</section>
+
+<footer class="main-footer">
+  <div class="footer-brand">
+    <h2 class="footer-title">Kneipenchöre<br>vernetzt</h2>
+  </div>
+
+  <nav class="footer-nav">
+    <div class="footer-sections">
+      <section class="footer-section">
+        <h3 class="section-title">Festival</h3>
+        <p class="section-content">
+          Infos zum jährlichen Kneipenchor-Festival:<br>
+          <a href="https://karlsruherkneipenchor.de/festival/" target="_blank" rel="noopener noreferrer">www.karlsruherkneipenchor.de</a>
+        </p>
+      </section>
+      <section class="footer-section">
+        <h3 class="section-title">Kontakt</h3>
+        <p class="section-content">
+          Jimmy Röck<br>
+          c/o Kulturzentrum Tollhaus<br>
+          Alter Schlachthof 35<br>
+          76131 Karlsruhe<br>
+          <a href="mailto:info@karlsruherkneipenchor.de">kontakt@kneipenchor.net</a>
+        </p>
+      </section>
+      <section class="footer-section">
+        <h3 class="section-title">Info</h3>
+<p class="section-content">
+  <a href="ueber-uns.html">Über uns</a><br>
+  <a href="impressum.html">Impressum</a><br>
+  <a href="datenschutz.html">Datenschutz</a>
+</p>
+      </section>
+    </div>
+  </nav>
+</footer>
+
+<!-- JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="daten-loader.js"></script>
+<script src="karte.js"></script>
+<script src="liste-filter.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.hamburger');
+    const mainNav = document.querySelector('.main-nav');
+
+    hamburger.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isOpen = mainNav.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      hamburger.classList.toggle('active', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    document.addEventListener('click', (event) => {
+      const isOpen = mainNav.classList.contains('open');
+      if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
+        mainNav.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.405,
+          52.52
+        ]
+      },
+      "properties": {
+        "name": "Kreuzberger Kneipenchor",
+        "stadt": "Berlin",
+        "bundesland": "Berlin",
+        "beschreibung": "Ein Feierabendchor für alle Stimmen in Kreuzberg. Seit 2011 singt der Berliner Kneipenchor in verrauchten Eckkneipen, auf bunten Festivals und in den Konzerthallen eurer Lieblingsartists.",
+        "leitung": "Lilli Born",
+        "saenger": 34,
+        "genres": [
+          "Pop"
+        ],
+        "aufnahmestopp": true,
+        "bild": "https://berliner-kneipenchor.de/wp-content/uploads/2022/09/BK_2019_1_credit_Julian_Mathieu-scaled.jpg",
+        "kontakt": "anfragen@berliner-kneipenchor.de",
+        "link": "https://berliner-kneipenchor.de/"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.5761,
+          48.1374
+        ]
+      },
+      "properties": {
+        "name": "Münchner Kneipenchor",
+        "stadt": "München",
+        "bundesland": "Bayern",
+        "beschreibung": "Lustiger Haufen mit bayrischem Einschlag. Auftritte vom Münchner Kneipenchor fühlen sich an wie ein Popkonzert, frei und irgendwie auch wild.",
+        "leitung": "Michel Berger, Linus Mödl",
+        "saenger": 50,
+        "genres": [
+          "Pop"
+        ],
+        "aufnahmestopp": true,
+        "bild": "https://www.muenchnerkneipenchor.de/wp-content/uploads/2022/06/MKC-Logo-RGB-gross.png",
+        "kontakt": "bewerben.mkc@googlemail.com",
+        "link": "https://www.muenchnerkneipenchor.de/"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.4037,
+          49.0069
+        ]
+      },
+      "properties": {
+        "name": "Kneipenchor Karlsruhe",
+        "stadt": "Karlsruhe",
+        "bundesland": "Baden-Württemberg",
+        "beschreibung": "Singen, feiern, Gänsehaut – seit 2012 bringt der Karlsruher Kneipenchor Musik und Menschen zusammen. Was einst mit ein paar sangesfreudigen Leuten in der Bento Bar begann, ist heute eine große, bunte Gemeinschaft von durchaus 200 Sänger*innen.",
+        "leitung": "Jimmy Röck",
+        "saenger": 200,
+        "genres": [
+          "Pop",
+          "Rock"
+        ],
+        "aufnahmestopp": false,
+        "bild": "bilder/Logo_Kneipenchor_Karlsruhe.png",
+        "kontakt": "kontakt@karlsruherkneipenchor.de",
+        "link": "https://karlsruherkneipenchor.de"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9312,
+          49.7913
+        ]
+      },
+      "properties": {
+        "name": "Würzburger Kneipenchor",
+        "stadt": "Würzburg",
+        "bundesland": "Bayern",
+        "beschreibung": "8 Jahre Würzburger Kneipenchor! Kinners wie die Zeit vergeht!!! Wir blicken zurück auf 8 Jahre voller Liebe, Wahnsinn, Abenteuer, Freundschaft",
+        "leitung": "Jonas Weger",
+        "saenger": 60,
+        "genres": [
+          "Pop"
+        ],
+        "aufnahmestopp": false,
+        "bild": "https://scontent-fra3-2.xx.fbcdn.net/v/t39.30808-1/308794082_980755889523667_6308189835304988009_n.jpg?stp=dst-jpg_s480x480_tt6&_nc_cat=104&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=ZlivlCSMNaQQ7kNvwGr2H9O&_nc_oc=Adkv7fxJgCAWfFEKZfNHRWmQwfZ2IOfQWSF26-M3awZGw0buPKEaNttcSxEyONtRqRkKe-uZfkPPsq66RQuRc1gq&_nc_zt=24&_nc_ht=scontent-fra3-2.xx&_nc_gid=amWIP0id9HzOhlVochq9fA&oh=00_AfVvYn2aqyamdJNNb0bn7Uoq_wU8DlrxfkF3MxHq8sV79A&oe=68B26142",
+        "kontakt": "wuerzburgerkneipenchor@gmail.com",
+        "link": "https://www.instagram.com/wuerzburgerkneipenchor/?hl=de"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.466,
+          49.4877
+        ]
+      },
+      "properties": {
+        "name": "Mannheimer Kneipenchor",
+        "stadt": "Mannheim",
+        "bundesland": "Baden-Württemberg",
+        "beschreibung": "Singen in ungezwungener Atmosphäre bei einem Bier mit Freunden und Fremden in Mannheim",
+        "leitung": "David Julian Kirchner",
+        "saenger": 50,
+        "genres": [
+          "Pop",
+          "Rock"
+        ],
+        "aufnahmestopp": true,
+        "bild": "https://kneipenchormannheim.wordpress.com/wp-content/uploads/2019/03/cropped-kneipencho2-1.png",
+        "kontakt": "kneipenchor-Mannheim@web.de",
+        "link": "https://kneipenchormannheim.wordpress.com/"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.686559,
+          53.865467
+        ]
+      },
+      "properties": {
+        "name": "Lübecker Kneipenchor",
+        "stadt": "Lübeck",
+        "bundesland": "Schleswig-Holstein",
+        "beschreibung": "Der Lübecker Kneipenchor ist der Action-Chor in der schönen Hansestadt. Bei Bier und Spaß – statt Wasser und Seidenschals – ballern wir die größten Ohrwürmer und die besten B-Sides der neueren Musikgeschichte.",
+        "leitung": "Christian Sondermann",
+        "saenger": 70,
+        "genres": [
+          "Indie-Coolesse",
+          "partypushender Trash"
+        ],
+        "aufnahmestopp": false,
+        "bild": "https://christiansondermann.de/wp-content/uploads/2023/12/LKC-Stagedive-Foto-Tim-Wichelmann-scaled.jpg",
+        "kontakt": "kontakt@christiansondermann.de",
+        "link": "https://christiansondermann.de/luebecker-kneipenchor/"
+      }
+    }
+  ]
+}

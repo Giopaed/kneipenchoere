@@ -1,0 +1,73 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: de
+media_folder: "bilder/uploads"
+public_folder: "bilder/uploads"
+
+collections:
+  - name: "daten"
+    label: "Daten"
+    files:
+      - name: "choere"
+        label: "Chöre"
+        file: "daten/choere.json"
+        format: "json"
+        fields:
+          - { label: "Typ", name: "type", widget: "hidden", default: "FeatureCollection" }
+          - label: "Chöre"
+            name: "features"
+            widget: "list"
+            summary: "{{fields.properties.name}} – {{fields.properties.stadt}}"
+            fields:
+              - { label: "Eintrags-Typ", name: "type", widget: "hidden", default: "Feature" }
+              - label: "Position auf der Karte"
+                name: "geometry"
+                widget: "object"
+                fields:
+                  - { label: "Geometrie-Typ", name: "type", widget: "hidden", default: "Point" }
+                  - label: "Koordinaten"
+                    name: "coordinates"
+                    widget: "list"
+                    hint: "Wichtig: zuerst Längengrad, dann Breitengrad. Beispiel Karlsruhe: 8.4037 und 49.0069"
+                    min: 2
+                    max: 2
+                    field: { label: "Zahl", name: "zahl", widget: "number", value_type: "float" }
+              - label: "Chor-Daten"
+                name: "properties"
+                widget: "object"
+                fields:
+                  - { label: "Name", name: "name", widget: "string" }
+                  - { label: "Stadt", name: "stadt", widget: "string" }
+                  - { label: "Bundesland", name: "bundesland", widget: "string" }
+                  - { label: "Beschreibung", name: "beschreibung", widget: "text" }
+                  - { label: "Chorleitung", name: "leitung", widget: "string", required: false }
+                  - { label: "Aktive Sänger:innen", name: "saenger", widget: "number", value_type: "int", required: false }
+                  - label: "Genres"
+                    name: "genres"
+                    widget: "list"
+                    required: false
+                    field: { label: "Genre", name: "genre", widget: "string" }
+                  - { label: "Aufnahmestopp", name: "aufnahmestopp", widget: "boolean", default: false }
+                  - { label: "Bild-URL oder Bildpfad", name: "bild", widget: "string", required: false, hint: "Für hochgeladene Bilder: bilder/uploads/dateiname.jpg" }
+                  - { label: "Kontakt-E-Mail", name: "kontakt", widget: "string", required: false }
+                  - { label: "Website-Link", name: "link", widget: "string", required: false }
+
+      - name: "konzerte"
+        label: "Konzerte"
+        file: "daten/konzerte.json"
+        format: "json"
+        fields:
+          - label: "Konzerte"
+            name: "events"
+            widget: "list"
+            summary: "{{fields.Konzertdatum}} – {{fields.Chorname}}"
+            fields:
+              - { label: "Chorname", name: "Chorname", widget: "string" }
+              - { label: "Eventtitel", name: "Eventtitel", widget: "string", required: false }
+              - { label: "Konzertdatum", name: "Konzertdatum", widget: "string", hint: "Format: TT.MM.JJJJ oder JJJJ-MM-TT" }
+              - { label: "Uhrzeit", name: "Uhrzeit", widget: "string", required: false, hint: "Beispiel: 20:00" }
+              - { label: "Veranstaltungsort", name: "Veranstaltungsort", widget: "string" }
+              - { label: "Beschreibung", name: "Beschreibung", widget: "text", required: false }
+              - { label: "Link", name: "Link", widget: "string", required: false }
