@@ -1,0 +1,20 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.7011,
+          49.0363
+        ]
+      },
+      "properties": {
+        "aufnahmestopp": false,
+        "name": "Kneipenchor Bretten",
+        "stadt": "Bretten",
+        "bundesland": "Baden-Württemberg"
+      }
+    }
+  ]
+}
