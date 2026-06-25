@@ -71,3 +71,55 @@ collections:
               - { label: "Veranstaltungsort", name: "Veranstaltungsort", widget: "string" }
               - { label: "Beschreibung", name: "Beschreibung", widget: "text", required: false }
               - { label: "Link", name: "Link", widget: "string", required: false }
+
+  - name: "forum"
+    label: "Forum"
+    files:
+      - name: "forum"
+        label: "Forum-Beiträge"
+        file: "daten/forum.json"
+        format: "json"
+        fields:
+          - label: "Themen"
+            name: "themen"
+            widget: "list"
+            summary: "{{fields.titel}} – {{fields.kategorie}}"
+            fields:
+              - { label: "ID", name: "id", widget: "string", hint: "Kurz und eindeutig, z. B. neue-saengerinnen-organisieren" }
+              - { label: "Veröffentlicht", name: "veroeffentlicht", widget: "boolean", default: true }
+              - { label: "Titel", name: "titel", widget: "string" }
+              - label: "Kategorie"
+                name: "kategorie"
+                widget: "select"
+                options: ["Fragen & Hilfe", "Vernetzung", "Auftritte & Termine", "Organisation", "Technik", "Rechtliches & Datenschutz", "Best Practice", "Allgemein"]
+              - label: "Status"
+                name: "status"
+                widget: "select"
+                options:
+                  - { label: "Offen", value: "offen" }
+                  - { label: "Gelöst", value: "gelöst" }
+                  - { label: "Info", value: "info" }
+              - { label: "Autor:in", name: "autor", widget: "string" }
+              - { label: "Chor / Organisation", name: "chor", widget: "string", required: false }
+              - { label: "Ort", name: "ort", widget: "string", required: false }
+              - { label: "Datum", name: "datum", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+              - { label: "Kurztext", name: "kurztext", widget: "text", hint: "Kurze Zusammenfassung für die Themenliste" }
+              - { label: "Beitrag", name: "text", widget: "text" }
+              - label: "Tags"
+                name: "tags"
+                widget: "list"
+                required: false
+                field: { label: "Tag", name: "tag", widget: "string" }
+              - { label: "Kontakt öffentlich anzeigen?", name: "kontakt_oeffentlich", widget: "boolean", default: false, required: false }
+              - { label: "Öffentliche Kontakt-E-Mail", name: "kontakt", widget: "string", required: false, hint: "Nur eintragen, wenn die Person zugestimmt hat. Diese Adresse wird öffentlich sichtbar." }
+              - label: "Antworten"
+                name: "antworten"
+                widget: "list"
+                required: false
+                summary: "{{fields.autor}} – {{fields.datum}}"
+                fields:
+                  - { label: "Autor:in", name: "autor", widget: "string" }
+                  - { label: "Chor / Organisation", name: "chor", widget: "string", required: false }
+                  - { label: "Datum", name: "datum", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+                  - { label: "Antwort", name: "text", widget: "text" }
+

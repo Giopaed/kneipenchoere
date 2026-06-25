@@ -1,0 +1,74 @@
+{
+  "themen": [
+    {
+      "id": "willkommen-im-forum",
+      "veroeffentlicht": true,
+      "titel": "Willkommen im Kneipenchor-Forum",
+      "kategorie": "Vernetzung",
+      "status": "info",
+      "autor": "Kneipenchöre vernetzt",
+      "chor": "Kneipenchöre-Netzwerk",
+      "ort": "Karlsruhe",
+      "datum": "2026-06-25",
+      "kurztext": "Dieses Forum ist der Ort für Austausch, Vernetzung und gegenseitigen Support zwischen Kneipenchören.",
+      "text": "Schön, dass ihr da seid! Hier können Kneipenchöre Fragen stellen, Erfahrungen teilen, Kooperationen suchen und Ideen sammeln. Damit das Forum freundlich und übersichtlich bleibt, werden neue Beiträge zuerst moderiert und dann veröffentlicht.",
+      "tags": [
+        "Start",
+        "Vernetzung",
+        "Support"
+      ],
+      "kontakt_oeffentlich": false,
+      "kontakt": "",
+      "antworten": []
+    },
+    {
+      "id": "wie-organisiert-ihr-neue-saengerinnen",
+      "veroeffentlicht": true,
+      "titel": "Wie organisiert ihr neue Sänger:innen?",
+      "kategorie": "Fragen & Hilfe",
+      "status": "offen",
+      "autor": "Beispielbeitrag",
+      "chor": "Kneipenchor-Beispiel",
+      "ort": "",
+      "datum": "2026-06-25",
+      "kurztext": "Habt ihr feste Schnuppertermine, Wartelisten oder Aufnahmephasen? Wir sammeln gern Erfahrungen aus anderen Chören.",
+      "text": "Viele Kneipenchöre wachsen schnell. Uns interessiert: Wie regelt ihr Schnuppertermine, Wartelisten, Aufnahmestopps oder neue Stimmen? Teilt gern, was bei euch gut funktioniert.",
+      "tags": [
+        "Organisation",
+        "Aufnahme",
+        "Choralltag"
+      ],
+      "kontakt_oeffentlich": false,
+      "kontakt": "",
+      "antworten": [
+        {
+          "autor": "Redaktion",
+          "chor": "Kneipenchöre vernetzt",
+          "datum": "2026-06-25",
+          "text": "Antworten können über das Formular unten vorgeschlagen werden. Nach Prüfung erscheinen sie hier im Beitrag."
+        }
+      ]
+    },
+    {
+      "id": "gemeinsame-auftritte-und-kooperationen",
+      "veroeffentlicht": true,
+      "titel": "Gemeinsame Auftritte und Kooperationen suchen",
+      "kategorie": "Vernetzung",
+      "status": "offen",
+      "autor": "Kneipenchöre vernetzt",
+      "chor": "Netzwerk",
+      "ort": "bundesweit",
+      "datum": "2026-06-25",
+      "kurztext": "Hier können Chöre Kooperationen, Gastauftritte oder gemeinsame Aktionen suchen.",
+      "text": "Ihr sucht einen Partnerchor für ein Konzert, eine Kneipentour, ein Festival oder eine gemeinsame Aktion? Dann könnt ihr hier einen Beitrag vorschlagen und euer Vorhaben beschreiben.",
+      "tags": [
+        "Kooperation",
+        "Auftritte",
+        "Festival"
+      ],
+      "kontakt_oeffentlich": false,
+      "kontakt": "",
+      "antworten": []
+    }
+  ]
+}
