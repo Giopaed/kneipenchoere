@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danke – Forum Kneipenchöre</title>
+  <link rel="stylesheet" href="Kneipenchor.css" />
+</head>
+<body>
+  <header class="main-header">
+    <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <h1 class="site-title">Kneipenchöre-Netzwerk</h1>
+
+    <nav class="main-nav">
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-link">Startseite</a></li>
+        <li><a href="Karte.html" class="nav-link">Kneipenchor-Map</a></li>
+        <li><a href="kalender.html" class="nav-link">Kalender</a></li>
+        <li><a href="forum.html" class="nav-link">Forum</a></li>
+      </ul>
+      <a href="eintragen.html" class="register-btn">Chor eintragen</a>
+    </nav>
+  </header>
+
+  <main class="content-section forum-page">
+    <div class="section-inner">
+      <p class="eyebrow">Forum</p>
+      <h2 class="section-title">Danke für deinen Beitrag!</h2>
+      <p class="section-description">
+        Dein Beitrag wurde abgeschickt und wird nun geprüft. Wenn er zum Forum passt, wird er anschließend veröffentlicht oder beantwortet.
+      </p>
+      <div class="forum-actions">
+        <a class="primary-btn" href="forum.html">Zurück zum Forum</a>
+        <a class="secondary-link" href="index.html">Zur Startseite</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-brand">
+      <h2 class="footer-title">Kneipenchöre<br>vernetzt</h2>
+    </div>
+
+    <nav class="footer-nav">
+      <div class="footer-sections">
+        <section class="footer-section">
+          <h3 class="section-title">Festival</h3>
+          <p class="section-content">
+            Infos zum jährlichen Kneipenchor-Festival:<br>
+            <a href="https://karlsruherkneipenchor.de/festival/" target="_blank" rel="noopener noreferrer">www.karlsruherkneipenchor.de</a>
+          </p>
+        </section>
+        <section class="footer-section">
+          <h3 class="section-title">Kontakt</h3>
+          <p class="section-content">
+            Jimmy Röck<br>
+            c/o Kulturzentrum Tollhaus<br>
+            Alter Schlachthof 35<br>
+            76131 Karlsruhe<br>
+            <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
+          </p>
+        </section>
+        <section class="footer-section">
+          <h3 class="section-title">Info</h3>
+          <p class="section-content">
+            <a href="ueber-uns.html">Über uns</a><br>
+            <a href="impressum.html">Impressum</a><br>
+            <a href="datenschutz.html">Datenschutz</a>
+          </p>
+        </section>
+      </div>
+    </nav>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburger = document.querySelector('.hamburger');
+      const mainNav = document.querySelector('.main-nav');
+      if (!hamburger || !mainNav) return;
+
+      hamburger.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = mainNav.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        hamburger.classList.toggle('active', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+
+      document.addEventListener('click', (event) => {
+        const isOpen = mainNav.classList.contains('open');
+        if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
+          mainNav.classList.remove('open');
+          hamburger.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
