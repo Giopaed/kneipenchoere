@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum – Kneipenchöre vernetzt</title>
+  <link rel="stylesheet" href="Kneipenchor.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    .forum-wrap {
+      max-width: 1100px;
+      margin: 80px auto;
+      padding: 24px;
+    }
+
+    .forum-box {
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .forum-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .forum-input,
+    .forum-select,
+    .forum-textarea {
+      width: 100%;
+      padding: 14px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      font-size: 16px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .forum-textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .forum-button {
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 26px;
+      background: #ffe600;
+      color: #000;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .forum-button[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .forum-button-black {
+      background: #000;
+      color: #fff;
+    }
+
+    .forum-topic {
+      border-top: 1px solid #ddd;
+      padding: 24px 0;
+    }
+
+    .forum-topic h3 {
+      margin-bottom: 8px;
+    }
+
+    .forum-meta {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-bottom: 10px;
+    }
+
+    .forum-reply {
+      margin-top: 14px;
+      padding: 14px;
+      border-left: 4px solid #ffe600;
+      background: #fafafa;
+    }
+
+    .forum-hidden {
+      display: none !important;
+    }
+
+    .forum-error {
+      color: #b00020;
+      font-weight: 700;
+    }
+
+    .forum-success {
+      color: #0a7d25;
+      font-weight: 700;
+    }
+
+    .forum-note {
+      background: #fff8bf;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 800px) {
+      .forum-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .forum-wrap {
+        margin: 40px auto;
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<header class="main-header">
+  <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+
+  <h1 class="site-title">Kneipenchöre vernetzt</h1>
+
+  <nav class="main-nav">
+    <ul class="nav-list">
+      <li><a href="index.html" class="nav-link">Startseite</a></li>
+      <li><a href="Karte.html" class="nav-link">Kneipenchor-Map</a></li>
+      <li><a href="kalender.html" class="nav-link">Kalender</a></li>
+      <li><a href="forum.html" class="nav-link active">Forum</a></li>
+    </ul>
+    <a href="eintragen.html" class="register-btn">chor eintragen</a>
+  </nav>
+</header>
+
+<main class="forum-wrap">
+
+  <section class="forum-box">
+    <p>Austausch · Vernetzung · Support</p>
+    <h2>Forum der Kneipenchöre</h2>
+    <p>
+      Dieses Forum ist nur für eingeloggte Chor-Administrator:innen.
+      Jeder Chor bestimmt eine verantwortliche Person, die einen eigenen Zugang mit Passwort bekommt.
+    </p>
+    <p class="forum-note">
+      Hinweis: Wenn der Login noch nicht funktioniert, müssen zuerst in Supabase die Datenbank eingerichtet
+      und in dieser Datei die Supabase-Zugangswerte eingetragen werden.
+    </p>
+  </section>
+
+  <section id="setup-warning" class="forum-box forum-hidden">
+    <h2>Forum noch nicht vollständig eingerichtet</h2>
+    <p class="forum-error">
+      In der Datei <strong>forum.html</strong> müssen noch <strong>SUPABASE_URL</strong> und
+      <strong>SUPABASE_ANON_KEY</strong> eingetragen werden.
+    </p>
+  </section>
+
+  <section id="login-box" class="forum-box forum-hidden">
+    <h2>Einloggen</h2>
+    <p>Bitte mit der E-Mail-Adresse und dem Passwort anmelden.</p>
+
+    <label>
+      E-Mail
+      <input id="login-email" class="forum-input" type="email" autocomplete="email" />
+    </label>
+
+    <label>
+      Passwort
+      <input id="login-password" class="forum-input" type="password" autocomplete="current-password" />
+    </label>
+
+    <button id="login-button" class="forum-button" type="button">Einloggen</button>
+    <p id="login-message"></p>
+  </section>
+
+  <section id="forum-app" class="forum-hidden">
+    <div class="forum-box">
+      <h2>Willkommen</h2>
+      <p id="user-info"></p>
+      <button id="logout-button" class="forum-button forum-button-black" type="button">Ausloggen</button>
+    </div>
+
+    <section class="forum-box">
+      <h2>Neues Thema erstellen</h2>
+
+      <label>
+        Titel
+        <input id="topic-title" class="forum-input" type="text" maxlength="120" />
+      </label>
+
+      <label>
+        Kategorie
+        <select id="topic-category" class="forum-select">
+          <option>Fragen & Hilfe</option>
+          <option>Vernetzung</option>
+          <option>Auftritte & Termine</option>
+          <option>Organisation</option>
+          <option>Technik</option>
+          <option>Räume & Probenorte</option>
+          <option>Rechtliches & Datenschutz</option>
+          <option>Best Practice</option>
+          <option>Festival</option>
+        </select>
+      </label>
+
+      <label>
+        Beitrag
+        <textarea id="topic-body" class="forum-textarea"></textarea>
+      </label>
+
+      <button id="create-topic-button" class="forum-button" type="button">Thema veröffentlichen</button>
+      <p id="topic-message"></p>
+    </section>
+
+    <section class="forum-box">
+      <div class="forum-grid">
+        <label>
+          Suche
+          <input id="search-input" class="forum-input" type="search" placeholder="Suchbegriff" />
+        </label>
+
+        <label>
+          Kategorie filtern
+          <select id="category-filter" class="forum-select">
+            <option value="">Alle Kategorien</option>
+            <option>Fragen & Hilfe</option>
+            <option>Vernetzung</option>
+            <option>Auftritte & Termine</option>
+            <option>Organisation</option>
+            <option>Technik</option>
+            <option>Räume & Probenorte</option>
+            <option>Rechtliches & Datenschutz</option>
+            <option>Best Practice</option>
+            <option>Festival</option>
+          </select>
+        </label>
+      </div>
+
+      <h2>Forum-Beiträge</h2>
+      <div id="topics-list">
+        <p>Beiträge werden geladen …</p>
+      </div>
+    </section>
+  </section>
+
+</main>
+
+<footer class="main-footer">
+  <div class="footer-brand">
+    <h2 class="footer-title">Kneipenchöre<br>vernetzt</h2>
+  </div>
+
+  <nav class="footer-nav">
+    <div class="footer-sections">
+      <section class="footer-section">
+        <h3 class="section-title">Festival</h3>
+        <p class="section-content">
+          Infos zum jährlichen Kneipenchor-Festival:<br>
+          <a href="https://karlsruherkneipenchor.de/festival/" target="_blank" rel="noopener noreferrer">www.karlsruherkneipenchor.de</a>
+        </p>
+      </section>
+
+      <section class="footer-section">
+        <h3 class="section-title">Kontakt</h3>
+        <p class="section-content">
+          Jimmy Röck<br>
+          c/o Kulturzentrum Tollhaus<br>
+          Alter Schlachthof 35<br>
+          76131 Karlsruhe<br>
+          <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
+        </p>
+      </section>
+
+      <section class="footer-section">
+        <h3 class="section-title">Info</h3>
+        <p class="section-content">
+          <a href="ueber-uns.html">Über uns</a><br>
+          <a href="impressum.html">Impressum</a><br>
+          <a href="datenschutz.html">Datenschutz</a>
+        </p>
+      </section>
+    </div>
+  </nav>
+</footer>
+
+<script>
+  // Schritt 1: Supabase-Projekt anlegen.
+  // Schritt 2: Die Werte aus Supabase → Project Settings → API hier einsetzen.
+  // Der anon public key darf öffentlich in der Website stehen.
+  const SUPABASE_URL = "HIER_DEINE_SUPABASE_URL";
+  const SUPABASE_ANON_KEY = "HIER_DEIN_SUPABASE_ANON_KEY";
+
+  let client = null;
+  let currentUser = null;
+  let currentProfile = null;
+  let allTopics = [];
+  let allReplies = [];
+  let allProfiles = [];
+
+  const setupWarning = document.getElementById("setup-warning");
+  const loginBox = document.getElementById("login-box");
+  const forumApp = document.getElementById("forum-app");
+  const loginMessage = document.getElementById("login-message");
+  const topicMessage = document.getElementById("topic-message");
+  const topicsList = document.getElementById("topics-list");
+
+  function hasSupabaseConfig() {
+    return SUPABASE_URL !== "HIER_DEINE_SUPABASE_URL" &&
+      SUPABASE_ANON_KEY !== "HIER_DEIN_SUPABASE_ANON_KEY" &&
+      SUPABASE_URL.startsWith("https://");
+  }
+
+  function showSetupWarning() {
+    setupWarning.classList.remove("forum-hidden");
+    loginBox.classList.add("forum-hidden");
+    forumApp.classList.add("forum-hidden");
+  }
+
+  function showLogin() {
+    setupWarning.classList.add("forum-hidden");
+    loginBox.classList.remove("forum-hidden");
+    forumApp.classList.add("forum-hidden");
+  }
+
+  function showForumShell() {
+    setupWarning.classList.add("forum-hidden");
+    loginBox.classList.add("forum-hidden");
+    forumApp.classList.remove("forum-hidden");
+  }
+
+  async function init() {
+    const hamburger = document.querySelector(".hamburger");
+    const mainNav = document.querySelector(".main-nav");
+
+    if (hamburger && mainNav) {
+      hamburger.addEventListener("click", () => {
+        const isOpen = mainNav.classList.toggle("open");
+        hamburger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        hamburger.classList.toggle("active", isOpen);
+      });
+    }
+
+    document.getElementById("login-button").addEventListener("click", login);
+    document.getElementById("logout-button").addEventListener("click", logout);
+    document.getElementById("create-topic-button").addEventListener("click", createTopic);
+    document.getElementById("search-input").addEventListener("input", renderTopics);
+    document.getElementById("category-filter").addEventListener("change", renderTopics);
+
+    if (!hasSupabaseConfig()) {
+      showSetupWarning();
+      return;
+    }
+
+    client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const { data } = await client.auth.getSession();
+
+    if (data.session && data.session.user) {
+      currentUser = data.session.user;
+      const profileLoaded = await loadProfile();
+      if (profileLoaded) {
+        await showForum();
+      }
+    } else {
+      showLogin();
+    }
+  }
+
+  async function login() {
+    loginMessage.textContent = "";
+
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value;
+
+    if (!email || !password) {
+      loginMessage.textContent = "Bitte E-Mail und Passwort eingeben.";
+      loginMessage.className = "forum-error";
+      return;
+    }
+
+    const button = document.getElementById("login-button");
+    button.disabled = true;
+    button.textContent = "Einloggen …";
+
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
+
+    button.disabled = false;
+    button.textContent = "Einloggen";
+
+    if (error) {
+      loginMessage.textContent = "Login nicht möglich. Bitte Zugangsdaten prüfen.";
+      loginMessage.className = "forum-error";
+      return;
+    }
+
+    currentUser = data.user;
+    const profileLoaded = await loadProfile();
+    if (profileLoaded) {
+      await showForum();
+    }
+  }
+
+  async function logout() {
+    await client.auth.signOut();
+    currentUser = null;
+    currentProfile = null;
+    showLogin();
+  }
+
+  async function showForum() {
+    showForumShell();
+
+    document.getElementById("user-info").textContent =
+      `Eingeloggt als ${currentProfile.display_name} · ${currentProfile.choir_name}`;
+
+    await loadForumData();
+  }
+
+  async function loadProfile() {
+    const { data, error } = await client
+      .from("profiles")
+      .select("*")
+      .eq("id", currentUser.id)
+      .single();
+
+    if (error || !data) {
+      alert("Dein Nutzerkonto hat noch kein Chor-Profil. Bitte Administrator kontaktieren.");
+      await client.auth.signOut();
+      showLogin();
+      return false;
+    }
+
+    currentProfile = data;
+    return true;
+  }
+
+  async function loadForumData() {
+    topicsList.innerHTML = "<p>Beiträge werden geladen …</p>";
+
+    const topicsResult = await client
+      .from("forum_topics")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    const repliesResult = await client
+      .from("forum_replies")
+      .select("*")
+      .order("created_at", { ascending: true });
+
+    const profilesResult = await client
+      .from("profiles")
+      .select("*");
+
+    if (topicsResult.error) {
+      topicsList.innerHTML = "<p class='forum-error'>Beiträge konnten nicht geladen werden. Bitte Supabase-Rechte prüfen.</p>";
+      return;
+    }
+
+    allTopics = topicsResult.data || [];
+    allReplies = repliesResult.data || [];
+    allProfiles = profilesResult.data || [];
+
+    renderTopics();
+  }
+
+  function renderTopics() {
+    const search = document.getElementById("search-input").value.toLowerCase();
+    const category = document.getElementById("category-filter").value;
+
+    let filtered = allTopics;
+
+    if (category) {
+      filtered = filtered.filter(topic => topic.category === category);
+    }
+
+    if (search) {
+      filtered = filtered.filter(topic =>
+        topic.title.toLowerCase().includes(search) ||
+        topic.body.toLowerCase().includes(search)
+      );
+    }
+
+    if (filtered.length === 0) {
+      topicsList.innerHTML = "<p>Noch keine passenden Beiträge vorhanden.</p>";
+      return;
+    }
+
+    topicsList.innerHTML = filtered.map(topic => {
+      const author = findProfile(topic.created_by);
+      const replies = allReplies.filter(reply => reply.topic_id === topic.id);
+
+      return `
+        <article class="forum-topic">
+          <p class="forum-meta">
+            ${escapeHtml(topic.category)} · ${formatDate(topic.created_at)} ·
+            ${escapeHtml(author.display_name)} / ${escapeHtml(author.choir_name)}
+          </p>
+
+          <h3>${escapeHtml(topic.title)}</h3>
+          <p>${escapeHtml(topic.body).replaceAll("\n", "<br>")}</p>
+
+          <h4>Antworten</h4>
+          ${replies.length ? replies.map(reply => {
+            const replyAuthor = findProfile(reply.created_by);
+            return `
+              <div class="forum-reply">
+                <p class="forum-meta">
+                  ${formatDate(reply.created_at)} ·
+                  ${escapeHtml(replyAuthor.display_name)} / ${escapeHtml(replyAuthor.choir_name)}
+                </p>
+                <p>${escapeHtml(reply.body).replaceAll("\n", "<br>")}</p>
+              </div>
+            `;
+          }).join("") : "<p>Noch keine Antworten.</p>"}
+
+          <label>
+            Antwort schreiben
+            <textarea class="forum-textarea" id="reply-${topic.id}"></textarea>
+          </label>
+          <button class="forum-button" type="button" onclick="createReply('${topic.id}')">Antwort senden</button>
+        </article>
+      `;
+    }).join("");
+  }
+
+  async function createTopic() {
+    topicMessage.textContent = "";
+
+    const title = document.getElementById("topic-title").value.trim();
+    const category = document.getElementById("topic-category").value;
+    const body = document.getElementById("topic-body").value.trim();
+
+    if (!title || !category || !body) {
+      topicMessage.textContent = "Bitte Titel, Kategorie und Beitrag ausfüllen.";
+      topicMessage.className = "forum-error";
+      return;
+    }
+
+    const button = document.getElementById("create-topic-button");
+    button.disabled = true;
+    button.textContent = "Speichern …";
+
+    const { error } = await client.from("forum_topics").insert({
+      title,
+      category,
+      body,
+      created_by: currentUser.id
+    });
+
+    button.disabled = false;
+    button.textContent = "Thema veröffentlichen";
+
+    if (error) {
+      topicMessage.textContent = "Beitrag konnte nicht gespeichert werden.";
+      topicMessage.className = "forum-error";
+      return;
+    }
+
+    document.getElementById("topic-title").value = "";
+    document.getElementById("topic-body").value = "";
+
+    topicMessage.textContent = "Beitrag wurde veröffentlicht.";
+    topicMessage.className = "forum-success";
+
+    await loadForumData();
+  }
+
+  async function createReply(topicId) {
+    const textarea = document.getElementById(`reply-${topicId}`);
+    const body = textarea.value.trim();
+
+    if (!body) {
+      alert("Bitte Antworttext eingeben.");
+      return;
+    }
+
+    const { error } = await client.from("forum_replies").insert({
+      topic_id: topicId,
+      body,
+      created_by: currentUser.id
+    });
+
+    if (error) {
+      alert("Antwort konnte nicht gespeichert werden.");
+      return;
+    }
+
+    textarea.value = "";
+    await loadForumData();
+  }
+
+  function findProfile(userId) {
+    return allProfiles.find(profile => profile.id === userId) || {
+      display_name: "Unbekannt",
+      choir_name: "Unbekannter Chor"
+    };
+  }
+
+  function formatDate(value) {
+    return new Date(value).toLocaleDateString("de-DE", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
+  function escapeHtml(text) {
+    return String(text || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+</script>
+
+</body>
+</html>
