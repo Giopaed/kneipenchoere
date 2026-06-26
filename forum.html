@@ -28,22 +28,7 @@
 </header>
 
 <main>
-  <!-- Netlify Forms Erkennungsformular: nicht sichtbar, sorgt dafür, dass Netlify das Formular sicher registriert. -->
-  <form name="forum-beitrag" method="POST" data-netlify="true" netlify data-netlify-honeypot="bot-field" hidden>
-    <input type="hidden" name="form-name" value="forum-beitrag" />
-    <input name="bot-field" />
-    <input name="art" />
-    <input name="kategorie" />
-    <input name="titel" />
-    <input name="bezugsbeitrag" />
-    <input name="name" />
-    <input name="chor" />
-    <input name="email" />
-    <input name="ort" />
-    <textarea name="beitrag"></textarea>
-    <input name="kontakt_darf_veroeffentlicht_werden" />
-    <input name="einverstaendnis" />
-  </form>
+
 
   <section class="forum-hero forum-page-hero">
     <div class="forum-hero-content">
@@ -124,14 +109,9 @@
       </p>
     </div>
 
-    <!-- Wichtig für Netlify Forms:
-         - name="forum-beitrag"
-         - method="POST"
-         - netlify und data-netlify="true"
-         - hidden input form-name
-         - action="/danke.html" für die Weiterleitung nach dem Absenden
-    -->
-    <form id="forum-beitrag-form" class="forum-form" name="forum-beitrag" method="POST" action="/" netlify data-netlify="true" data-netlify-honeypot="bot-field">
+    <!-- Das sichtbare Formular wird per JavaScript an Netlify Forms gesendet.
+         Die eigentliche Netlify-Formular-Erkennung liegt in netlify-form-detector.html. -->
+    <form id="forum-beitrag-form" class="forum-form" method="POST">
       <input type="hidden" name="form-name" value="forum-beitrag" />
 
       <p class="forum-hidden-field" hidden>
