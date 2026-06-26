@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum – Kneipenchöre vernetzt</title>
+  <link rel="stylesheet" href="Kneipenchor.css" />
+</head>
+<body>
+<header class="main-header">
+  <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+
+  <h1 class="site-title">Kneipenchöre vernetzt</h1>
+
+  <nav class="main-nav">
+    <ul class="nav-list">
+      <li><a href="index.html" class="nav-link">Startseite</a></li>
+      <li><a href="Karte.html" class="nav-link">Kneipenchor-Map</a></li>
+      <li><a href="kalender.html" class="nav-link">Kalender</a></li>
+      <li><a href="forum.html" class="nav-link active">Forum</a></li>
+    </ul>
+    <a href="eintragen.html" class="register-btn">chor eintragen</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Netlify Forms Erkennungsformular: nicht sichtbar, sorgt dafür, dass Netlify das Formular sicher registriert. -->
+  <form name="forum-beitrag" method="POST" data-netlify="true" netlify data-netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="forum-beitrag" />
+    <input name="bot-field" />
+    <input name="art" />
+    <input name="kategorie" />
+    <input name="titel" />
+    <input name="bezugsbeitrag" />
+    <input name="name" />
+    <input name="chor" />
+    <input name="email" />
+    <input name="ort" />
+    <textarea name="beitrag"></textarea>
+    <input name="kontakt_darf_veroeffentlicht_werden" />
+    <input name="einverstaendnis" />
+  </form>
+
+  <section class="forum-hero forum-page-hero">
+    <div class="forum-hero-content">
+      <p class="forum-kicker">Austausch · Vernetzung · Support</p>
+      <h2>Forum der Kneipenchöre</h2>
+      <p>
+        Hier können Chöre Fragen stellen, Erfahrungen teilen, Kooperationen suchen und sich gegenseitig unterstützen.
+        Neue Beiträge werden zuerst moderiert, damit die Seite freundlich, übersichtlich und spamfrei bleibt.
+      </p>
+      <div class="forum-actions">
+        <a class="forum-button-primary" href="#neuer-beitrag">Beitrag vorschlagen</a>
+        <a class="forum-button-secondary" href="#forum-themen">Themen ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="forum-info-grid" aria-label="Forum-Kategorien">
+    <article class="forum-info-card">
+      <span class="forum-card-icon">?</span>
+      <h3>Fragen & Hilfe</h3>
+      <p>Alles, was im Choralltag auftaucht: Organisation, Proben, Technik, Räume, Werbung oder Kommunikation.</p>
+    </article>
+    <article class="forum-info-card">
+      <span class="forum-card-icon">↔</span>
+      <h3>Vernetzung</h3>
+      <p>Kooperationen, Gastauftritte, gemeinsame Aktionen, Festival-Ideen oder Kontakte zu anderen Städten.</p>
+    </article>
+    <article class="forum-info-card">
+      <span class="forum-card-icon">★</span>
+      <h3>Best Practice</h3>
+      <p>Teilt, was bei euch gut funktioniert: Aufnahmeprozesse, Songauswahl, Kommunikation oder Finanzierung.</p>
+    </article>
+  </section>
+
+  <section id="forum-themen" class="forum-board-section">
+    <div class="forum-board-header">
+      <div>
+        <p class="forum-kicker">Aktuelle Themen</p>
+        <h2>Forum-Beiträge</h2>
+      </div>
+      <p class="forum-board-note">Veröffentlichte Beiträge werden aus dem CMS geladen.</p>
+    </div>
+
+    <div class="forum-controls">
+      <label class="forum-control">
+        <span>Suche</span>
+        <input id="forum-search" type="search" placeholder="Suchbegriff eingeben …" />
+      </label>
+      <label class="forum-control">
+        <span>Kategorie</span>
+        <select id="forum-category-filter">
+          <option value="">Alle Kategorien</option>
+        </select>
+      </label>
+      <label class="forum-control">
+        <span>Status</span>
+        <select id="forum-status-filter">
+          <option value="">Alle Status</option>
+          <option value="offen">Offen</option>
+          <option value="gelöst">Gelöst</option>
+          <option value="info">Info</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="forum-topics" class="forum-topic-list" aria-live="polite">
+      <p class="forum-loading">Forum-Beiträge werden geladen …</p>
+    </div>
+  </section>
+
+  <section id="neuer-beitrag" class="forum-submit-section">
+    <div class="forum-submit-intro">
+      <p class="forum-kicker">Mitmachen</p>
+      <h2>Neuen Beitrag vorschlagen</h2>
+      <p>
+        Dein Beitrag landet zuerst bei der Redaktion. Nach Prüfung wird er im Forum veröffentlicht.
+        Bitte keine privaten Telefonnummern, Passwörter oder internen Zugangsdaten eintragen.
+      </p>
+    </div>
+
+    <!-- Wichtig für Netlify Forms:
+         - name="forum-beitrag"
+         - method="POST"
+         - netlify und data-netlify="true"
+         - hidden input form-name
+         - action="/danke.html" für die Weiterleitung nach dem Absenden
+    -->
+    <form id="forum-beitrag-form" class="forum-form" name="forum-beitrag" method="POST" action="/" netlify data-netlify="true" data-netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="forum-beitrag" />
+
+      <p class="forum-hidden-field" hidden>
+        <label>Nicht ausfüllen: <input name="bot-field" /></label>
+      </p>
+
+      <div class="forum-form-row">
+        <label>
+          Art des Beitrags
+          <select name="art" required>
+            <option value="">Bitte wählen</option>
+            <option value="Frage">Frage</option>
+            <option value="Erfahrung teilen">Erfahrung teilen</option>
+            <option value="Kooperation suchen">Kooperation suchen</option>
+            <option value="Angebot">Angebot</option>
+            <option value="Antwort auf bestehenden Beitrag">Antwort auf bestehenden Beitrag</option>
+          </select>
+        </label>
+
+        <label>
+          Kategorie
+          <select name="kategorie" required>
+            <option value="">Bitte wählen</option>
+            <option value="Fragen & Hilfe">Fragen & Hilfe</option>
+            <option value="Vernetzung">Vernetzung</option>
+            <option value="Auftritte & Termine">Auftritte & Termine</option>
+            <option value="Organisation">Organisation</option>
+            <option value="Technik">Technik</option>
+            <option value="Rechtliches & Datenschutz">Rechtliches & Datenschutz</option>
+            <option value="Best Practice">Best Practice</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        Titel des Beitrags
+        <input name="titel" type="text" required maxlength="120" placeholder="z. B. Wie organisiert ihr neue Sänger:innen?" />
+      </label>
+
+      <label>
+        Bezug zu bestehendem Beitrag <span class="optional">optional</span>
+        <input id="forum-reference" name="bezugsbeitrag" type="text" placeholder="Wird automatisch gefüllt, wenn du auf „Antwort vorschlagen“ klickst." />
+      </label>
+
+      <div class="forum-form-row">
+        <label>
+          Dein Name
+          <input name="name" type="text" required />
+        </label>
+        <label>
+          Chor / Organisation <span class="optional">optional</span>
+          <input name="chor" type="text" />
+        </label>
+      </div>
+
+      <div class="forum-form-row">
+        <label>
+          E-Mail für Rückfragen
+          <input name="email" type="email" required />
+        </label>
+        <label>
+          Ort / Stadt <span class="optional">optional</span>
+          <input name="ort" type="text" />
+        </label>
+      </div>
+
+      <label>
+        Beitrag
+        <textarea name="beitrag" rows="8" required placeholder="Worum geht es? Welche Frage habt ihr? Welche Erfahrung möchtet ihr teilen?"></textarea>
+      </label>
+
+      <label class="forum-checkbox">
+        <input type="checkbox" name="kontakt_darf_veroeffentlicht_werden" value="ja" />
+        Meine E-Mail-Adresse darf öffentlich im Forum angezeigt werden, damit andere Chöre direkt antworten können.
+      </label>
+
+      <label class="forum-checkbox">
+        <input type="checkbox" name="einverstaendnis" value="ja" required />
+        Ich bin damit einverstanden, dass der Beitrag redaktionell geprüft und gekürzt veröffentlicht werden darf.
+      </label>
+
+      <button class="submit-button" type="submit">Beitrag absenden</button>
+      <p id="forum-submit-status" class="forum-submit-status" aria-live="polite"></p>
+    </form>
+  </section>
+</main>
+
+<footer class="main-footer">
+  <div class="footer-brand">
+    <h2 class="footer-title">Kneipenchöre<br>vernetzt</h2>
+  </div>
+
+  <nav class="footer-nav">
+    <div class="footer-sections">
+      <section class="footer-section">
+        <h3 class="section-title">Festival</h3>
+        <p class="section-content">
+          Infos zum jährlichen Kneipenchor-Festival:<br>
+          <a href="https://karlsruherkneipenchor.de/festival/" target="_blank" rel="noopener noreferrer">www.karlsruherkneipenchor.de</a>
+        </p>
+      </section>
+      <section class="footer-section">
+        <h3 class="section-title">Kontakt</h3>
+        <p class="section-content">
+          Jimmy Röck<br>
+          c/o Kulturzentrum Tollhaus<br>
+          Alter Schlachthof 35<br>
+          76131 Karlsruhe<br>
+          <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
+        </p>
+      </section>
+      <section class="footer-section">
+        <h3 class="section-title">Info</h3>
+        <p class="section-content">
+          <a href="ueber-uns.html">Über uns</a><br>
+          <a href="impressum.html">Impressum</a><br>
+          <a href="datenschutz.html">Datenschutz</a>
+        </p>
+      </section>
+    </div>
+  </nav>
+</footer>
+
+<script src="forum.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const forumForm = document.getElementById('forum-beitrag-form');
+    const status = document.getElementById('forum-submit-status');
+
+    if (!forumForm) return;
+
+    forumForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const submitButton = forumForm.querySelector('button[type="submit"]');
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Beitrag wird gesendet …';
+      }
+      if (status) status.textContent = 'Der Beitrag wird gesendet …';
+
+      const formData = new FormData(forumForm);
+      formData.set('form-name', 'forum-beitrag');
+
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
+        });
+
+        if (!response.ok) {
+          throw new Error('Formular konnte nicht gesendet werden.');
+        }
+
+        window.location.href = '/danke.html';
+      } catch (error) {
+        if (status) {
+          status.textContent = 'Das Absenden hat leider nicht geklappt. Bitte versuche es später erneut oder schreibe an kontakt@kneipenchor.net.';
+        }
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Beitrag absenden';
+        }
+      }
+    });
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.hamburger');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (!hamburger || !mainNav) return;
+
+    hamburger.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isOpen = mainNav.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      hamburger.classList.toggle('active', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    document.addEventListener('click', (event) => {
+      const isOpen = mainNav.classList.contains('open');
+      if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
+        mainNav.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+
+    mainNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mainNav.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  });
+</script>
+</body>
+</html>
