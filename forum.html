@@ -5,125 +5,144 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Forum – Kneipenchöre vernetzt</title>
   <link rel="stylesheet" href="Kneipenchor.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    .forum-wrap {
-      max-width: 1100px;
-      margin: 80px auto;
-      padding: 24px;
+    .forum-landing {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 90px 24px 100px;
     }
 
-    .forum-box {
-      background: #fff;
-      border-radius: 18px;
-      padding: 28px;
-      margin-bottom: 28px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    }
-
-    .forum-grid {
+    .forum-hero-box {
+      background: #f8f2eb;
+      border-radius: 28px;
+      padding: 64px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
     }
 
-    .forum-input,
-    .forum-select,
-    .forum-textarea {
-      width: 100%;
-      padding: 14px;
-      margin-top: 8px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      font-size: 16px;
-      box-sizing: border-box;
-      font-family: inherit;
-    }
-
-    .forum-textarea {
-      min-height: 140px;
-      resize: vertical;
-    }
-
-    .forum-button {
-      border: 0;
-      border-radius: 999px;
-      padding: 14px 26px;
-      background: #ffe600;
-      color: #000;
+    .forum-kicker {
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      cursor: pointer;
+      margin-bottom: 18px;
     }
 
-    .forum-button[disabled] {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .forum-hero-box h2 {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      line-height: 1;
+      margin: 0 0 28px;
+      color: #252525;
     }
 
-    .forum-button-black {
+    .forum-hero-box p {
+      font-size: 1.15rem;
+      line-height: 1.55;
+      margin-bottom: 22px;
+    }
+
+    .forum-button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .forum-primary-button,
+    .forum-secondary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 30px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .forum-primary-button {
+      background: #ffe600;
+      color: #000;
+    }
+
+    .forum-secondary-button {
       background: #000;
       color: #fff;
     }
 
-    .forum-topic {
-      border-top: 1px solid #ddd;
-      padding: 24px 0;
+    .forum-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 44px;
     }
 
-    .forum-topic h3 {
-      margin-bottom: 8px;
+    .forum-card {
+      background: #fff;
+      border-radius: 22px;
+      padding: 30px;
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.08);
     }
 
-    .forum-meta {
-      font-size: 14px;
-      opacity: 0.7;
-      margin-bottom: 10px;
+    .forum-card h3 {
+      font-size: 1.35rem;
+      margin: 0 0 12px;
     }
 
-    .forum-reply {
-      margin-top: 14px;
-      padding: 14px;
-      border-left: 4px solid #ffe600;
-      background: #fafafa;
+    .forum-card p {
+      line-height: 1.55;
+      margin: 0;
     }
 
-    .forum-hidden {
-      display: none !important;
+    .forum-info-section {
+      margin-top: 60px;
+      background: #ffe600;
+      padding: 48px;
+      border-radius: 26px;
     }
 
-    .forum-error {
-      color: #b00020;
+    .forum-info-section h2 {
+      margin-top: 0;
+      font-size: 2.2rem;
+    }
+
+    .forum-info-section ul {
+      margin: 20px 0 0;
+      padding-left: 22px;
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .forum-small-note {
+      font-size: 0.95rem;
+      opacity: 0.75;
+      margin-top: 22px;
+    }
+
+    .forum-link-fallback {
+      word-break: break-word;
       font-weight: 700;
     }
 
-    .forum-success {
-      color: #0a7d25;
-      font-weight: 700;
-    }
+    @media (max-width: 900px) {
+      .forum-hero-box {
+        grid-template-columns: 1fr;
+        padding: 38px 26px;
+      }
 
-    .forum-note {
-      background: #fff8bf;
-      border-radius: 14px;
-      padding: 16px;
-      margin-top: 16px;
-    }
-
-    @media (max-width: 800px) {
-      .forum-grid {
+      .forum-card-grid {
         grid-template-columns: 1fr;
       }
 
-      .forum-wrap {
-        margin: 40px auto;
-        padding: 18px;
+      .forum-info-section {
+        padding: 32px 24px;
       }
     }
   </style>
 </head>
-
 <body>
 <header class="main-header">
   <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
@@ -145,117 +164,69 @@
   </nav>
 </header>
 
-<main class="forum-wrap">
-
-  <section class="forum-box">
-    <p>Austausch · Vernetzung · Support</p>
-    <h2>Forum der Kneipenchöre</h2>
-    <p>
-      Dieses Forum ist nur für eingeloggte Chor-Administrator:innen.
-      Jeder Chor bestimmt eine verantwortliche Person, die einen eigenen Zugang mit Passwort bekommt.
-    </p>
-    <p class="forum-note">
-      Hinweis: Wenn der Login noch nicht funktioniert, müssen zuerst in Supabase die Datenbank eingerichtet
-      und in dieser Datei die Supabase-Zugangswerte eingetragen werden.
-    </p>
-  </section>
-
-  <section id="setup-warning" class="forum-box forum-hidden">
-    <h2>Forum noch nicht vollständig eingerichtet</h2>
-    <p class="forum-error">
-      In der Datei <strong>forum.html</strong> müssen noch <strong>SUPABASE_URL</strong> und
-      <strong>SUPABASE_ANON_KEY</strong> eingetragen werden.
-    </p>
-  </section>
-
-  <section id="login-box" class="forum-box forum-hidden">
-    <h2>Einloggen</h2>
-    <p>Bitte mit der E-Mail-Adresse und dem Passwort anmelden.</p>
-
-    <label>
-      E-Mail
-      <input id="login-email" class="forum-input" type="email" autocomplete="email" />
-    </label>
-
-    <label>
-      Passwort
-      <input id="login-password" class="forum-input" type="password" autocomplete="current-password" />
-    </label>
-
-    <button id="login-button" class="forum-button" type="button">Einloggen</button>
-    <p id="login-message"></p>
-  </section>
-
-  <section id="forum-app" class="forum-hidden">
-    <div class="forum-box">
-      <h2>Willkommen</h2>
-      <p id="user-info"></p>
-      <button id="logout-button" class="forum-button forum-button-black" type="button">Ausloggen</button>
+<main class="forum-landing">
+  <section class="forum-hero-box">
+    <div>
+      <p class="forum-kicker">Austausch · Vernetzung · Support</p>
+      <h2>Forum der Kneipenchöre</h2>
+      <p>
+        Im Forum können Kneipenchöre Erfahrungen teilen, Fragen stellen, Kooperationen suchen
+        und sich gegenseitig unterstützen.
+      </p>
+      <p>
+        Das Forum ist öffentlich lesbar. Beiträge schreiben und beantworten können nur freigeschaltete
+        Chor-Administrator:innen.
+      </p>
+      <div class="forum-button-row">
+        <!-- WICHTIG: Wenn eure Google-Gruppe anders heißt, den Link in der nächsten Zeile ersetzen. -->
+        <a class="forum-primary-button" href="https://groups.google.com/g/kneipenchoere-vernetzt" target="_blank" rel="noopener noreferrer">Zum Forum</a>
+        <a class="forum-secondary-button" href="mailto:kontakt@kneipenchor.net?subject=Zugang%20zum%20Kneipenchor-Forum">Zugang anfragen</a>
+      </div>
+      <p class="forum-small-note">
+        Falls der Forum-Link noch nicht funktioniert, bitte in dieser Datei den Google-Groups-Link durch den echten Gruppenlink ersetzen.
+      </p>
     </div>
 
-    <section class="forum-box">
-      <h2>Neues Thema erstellen</h2>
-
-      <label>
-        Titel
-        <input id="topic-title" class="forum-input" type="text" maxlength="120" />
-      </label>
-
-      <label>
-        Kategorie
-        <select id="topic-category" class="forum-select">
-          <option>Fragen & Hilfe</option>
-          <option>Vernetzung</option>
-          <option>Auftritte & Termine</option>
-          <option>Organisation</option>
-          <option>Technik</option>
-          <option>Räume & Probenorte</option>
-          <option>Rechtliches & Datenschutz</option>
-          <option>Best Practice</option>
-          <option>Festival</option>
-        </select>
-      </label>
-
-      <label>
-        Beitrag
-        <textarea id="topic-body" class="forum-textarea"></textarea>
-      </label>
-
-      <button id="create-topic-button" class="forum-button" type="button">Thema veröffentlichen</button>
-      <p id="topic-message"></p>
-    </section>
-
-    <section class="forum-box">
-      <div class="forum-grid">
-        <label>
-          Suche
-          <input id="search-input" class="forum-input" type="search" placeholder="Suchbegriff" />
-        </label>
-
-        <label>
-          Kategorie filtern
-          <select id="category-filter" class="forum-select">
-            <option value="">Alle Kategorien</option>
-            <option>Fragen & Hilfe</option>
-            <option>Vernetzung</option>
-            <option>Auftritte & Termine</option>
-            <option>Organisation</option>
-            <option>Technik</option>
-            <option>Räume & Probenorte</option>
-            <option>Rechtliches & Datenschutz</option>
-            <option>Best Practice</option>
-            <option>Festival</option>
-          </select>
-        </label>
-      </div>
-
-      <h2>Forum-Beiträge</h2>
-      <div id="topics-list">
-        <p>Beiträge werden geladen …</p>
-      </div>
-    </section>
+    <div class="forum-card">
+      <h3>So funktioniert es</h3>
+      <p>
+        Jeder Chor benennt eine verantwortliche Person. Diese Person wird als Mitglied der Google-Gruppe
+        freigeschaltet und darf Beiträge schreiben. Alle anderen Besucher:innen können mitlesen.
+      </p>
+    </div>
   </section>
 
+  <section class="forum-card-grid" aria-label="Forum-Themen">
+    <article class="forum-card">
+      <h3>Fragen & Hilfe</h3>
+      <p>Organisation, Proben, Auftritte, Technik, Räume, Kommunikation und alles, was im Choralltag auftaucht.</p>
+    </article>
+    <article class="forum-card">
+      <h3>Vernetzung</h3>
+      <p>Kooperationen, gemeinsame Aktionen, Gastauftritte, Festival-Ideen und Kontakte zu anderen Städten.</p>
+    </article>
+    <article class="forum-card">
+      <h3>Best Practice</h3>
+      <p>Erfahrungen teilen: Was funktioniert bei euch gut? Was können andere Chöre übernehmen?</p>
+    </article>
+  </section>
+
+  <section class="forum-info-section">
+    <h2>Wer darf schreiben?</h2>
+    <p>
+      Das Forum soll übersichtlich und verlässlich bleiben. Deshalb können nur freigeschaltete
+      Chor-Administrator:innen Beiträge veröffentlichen.
+    </p>
+    <ul>
+      <li>Alle Besucher:innen dürfen Beiträge lesen.</li>
+      <li>Nur eingeladene Gruppenmitglieder dürfen schreiben und antworten.</li>
+      <li>Jeder Chor bestimmt eine verantwortliche Person.</li>
+      <li>Neue Chor-Administrator:innen können per E-Mail Zugang anfragen.</li>
+    </ul>
+    <p class="forum-small-note">
+      Direkter Forum-Link: <span class="forum-link-fallback">https://groups.google.com/g/kneipenchoere-vernetzt</span>
+    </p>
+  </section>
 </main>
 
 <footer class="main-footer">
@@ -272,7 +243,6 @@
           <a href="https://karlsruherkneipenchor.de/festival/" target="_blank" rel="noopener noreferrer">www.karlsruherkneipenchor.de</a>
         </p>
       </section>
-
       <section class="footer-section">
         <h3 class="section-title">Kontakt</h3>
         <p class="section-content">
@@ -283,7 +253,6 @@
           <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
         </p>
       </section>
-
       <section class="footer-section">
         <h3 class="section-title">Info</h3>
         <p class="section-content">
@@ -297,339 +266,30 @@
 </footer>
 
 <script>
-  // Schritt 1: Supabase-Projekt anlegen.
-  // Schritt 2: Die Werte aus Supabase → Project Settings → API hier einsetzen.
-  // Der anon public key darf öffentlich in der Website stehen.
-  const SUPABASE_URL = "HIER_DEINE_SUPABASE_URL";
-  const SUPABASE_ANON_KEY = "HIER_DEIN_SUPABASE_ANON_KEY";
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.hamburger');
+    const mainNav = document.querySelector('.main-nav');
 
-  let client = null;
-  let currentUser = null;
-  let currentProfile = null;
-  let allTopics = [];
-  let allReplies = [];
-  let allProfiles = [];
+    if (!hamburger || !mainNav) return;
 
-  const setupWarning = document.getElementById("setup-warning");
-  const loginBox = document.getElementById("login-box");
-  const forumApp = document.getElementById("forum-app");
-  const loginMessage = document.getElementById("login-message");
-  const topicMessage = document.getElementById("topic-message");
-  const topicsList = document.getElementById("topics-list");
+    hamburger.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isOpen = mainNav.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      hamburger.classList.toggle('active', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
 
-  function hasSupabaseConfig() {
-    return SUPABASE_URL !== "HIER_DEINE_SUPABASE_URL" &&
-      SUPABASE_ANON_KEY !== "HIER_DEIN_SUPABASE_ANON_KEY" &&
-      SUPABASE_URL.startsWith("https://");
-  }
-
-  function showSetupWarning() {
-    setupWarning.classList.remove("forum-hidden");
-    loginBox.classList.add("forum-hidden");
-    forumApp.classList.add("forum-hidden");
-  }
-
-  function showLogin() {
-    setupWarning.classList.add("forum-hidden");
-    loginBox.classList.remove("forum-hidden");
-    forumApp.classList.add("forum-hidden");
-  }
-
-  function showForumShell() {
-    setupWarning.classList.add("forum-hidden");
-    loginBox.classList.add("forum-hidden");
-    forumApp.classList.remove("forum-hidden");
-  }
-
-  async function init() {
-    const hamburger = document.querySelector(".hamburger");
-    const mainNav = document.querySelector(".main-nav");
-
-    if (hamburger && mainNav) {
-      hamburger.addEventListener("click", () => {
-        const isOpen = mainNav.classList.toggle("open");
-        hamburger.setAttribute("aria-expanded", isOpen ? "true" : "false");
-        hamburger.classList.toggle("active", isOpen);
-      });
-    }
-
-    document.getElementById("login-button").addEventListener("click", login);
-    document.getElementById("logout-button").addEventListener("click", logout);
-    document.getElementById("create-topic-button").addEventListener("click", createTopic);
-    document.getElementById("search-input").addEventListener("input", renderTopics);
-    document.getElementById("category-filter").addEventListener("change", renderTopics);
-
-    if (!hasSupabaseConfig()) {
-      showSetupWarning();
-      return;
-    }
-
-    client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const { data } = await client.auth.getSession();
-
-    if (data.session && data.session.user) {
-      currentUser = data.session.user;
-      const profileLoaded = await loadProfile();
-      if (profileLoaded) {
-        await showForum();
+    document.addEventListener('click', (event) => {
+      const isOpen = mainNav.classList.contains('open');
+      if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
+        mainNav.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       }
-    } else {
-      showLogin();
-    }
-  }
-
-  async function login() {
-    loginMessage.textContent = "";
-
-    const email = document.getElementById("login-email").value.trim();
-    const password = document.getElementById("login-password").value;
-
-    if (!email || !password) {
-      loginMessage.textContent = "Bitte E-Mail und Passwort eingeben.";
-      loginMessage.className = "forum-error";
-      return;
-    }
-
-    const button = document.getElementById("login-button");
-    button.disabled = true;
-    button.textContent = "Einloggen …";
-
-    const { data, error } = await client.auth.signInWithPassword({ email, password });
-
-    button.disabled = false;
-    button.textContent = "Einloggen";
-
-    if (error) {
-      loginMessage.textContent = "Login nicht möglich. Bitte Zugangsdaten prüfen.";
-      loginMessage.className = "forum-error";
-      return;
-    }
-
-    currentUser = data.user;
-    const profileLoaded = await loadProfile();
-    if (profileLoaded) {
-      await showForum();
-    }
-  }
-
-  async function logout() {
-    await client.auth.signOut();
-    currentUser = null;
-    currentProfile = null;
-    showLogin();
-  }
-
-  async function showForum() {
-    showForumShell();
-
-    document.getElementById("user-info").textContent =
-      `Eingeloggt als ${currentProfile.display_name} · ${currentProfile.choir_name}`;
-
-    await loadForumData();
-  }
-
-  async function loadProfile() {
-    const { data, error } = await client
-      .from("profiles")
-      .select("*")
-      .eq("id", currentUser.id)
-      .single();
-
-    if (error || !data) {
-      alert("Dein Nutzerkonto hat noch kein Chor-Profil. Bitte Administrator kontaktieren.");
-      await client.auth.signOut();
-      showLogin();
-      return false;
-    }
-
-    currentProfile = data;
-    return true;
-  }
-
-  async function loadForumData() {
-    topicsList.innerHTML = "<p>Beiträge werden geladen …</p>";
-
-    const topicsResult = await client
-      .from("forum_topics")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    const repliesResult = await client
-      .from("forum_replies")
-      .select("*")
-      .order("created_at", { ascending: true });
-
-    const profilesResult = await client
-      .from("profiles")
-      .select("*");
-
-    if (topicsResult.error) {
-      topicsList.innerHTML = "<p class='forum-error'>Beiträge konnten nicht geladen werden. Bitte Supabase-Rechte prüfen.</p>";
-      return;
-    }
-
-    allTopics = topicsResult.data || [];
-    allReplies = repliesResult.data || [];
-    allProfiles = profilesResult.data || [];
-
-    renderTopics();
-  }
-
-  function renderTopics() {
-    const search = document.getElementById("search-input").value.toLowerCase();
-    const category = document.getElementById("category-filter").value;
-
-    let filtered = allTopics;
-
-    if (category) {
-      filtered = filtered.filter(topic => topic.category === category);
-    }
-
-    if (search) {
-      filtered = filtered.filter(topic =>
-        topic.title.toLowerCase().includes(search) ||
-        topic.body.toLowerCase().includes(search)
-      );
-    }
-
-    if (filtered.length === 0) {
-      topicsList.innerHTML = "<p>Noch keine passenden Beiträge vorhanden.</p>";
-      return;
-    }
-
-    topicsList.innerHTML = filtered.map(topic => {
-      const author = findProfile(topic.created_by);
-      const replies = allReplies.filter(reply => reply.topic_id === topic.id);
-
-      return `
-        <article class="forum-topic">
-          <p class="forum-meta">
-            ${escapeHtml(topic.category)} · ${formatDate(topic.created_at)} ·
-            ${escapeHtml(author.display_name)} / ${escapeHtml(author.choir_name)}
-          </p>
-
-          <h3>${escapeHtml(topic.title)}</h3>
-          <p>${escapeHtml(topic.body).replaceAll("\n", "<br>")}</p>
-
-          <h4>Antworten</h4>
-          ${replies.length ? replies.map(reply => {
-            const replyAuthor = findProfile(reply.created_by);
-            return `
-              <div class="forum-reply">
-                <p class="forum-meta">
-                  ${formatDate(reply.created_at)} ·
-                  ${escapeHtml(replyAuthor.display_name)} / ${escapeHtml(replyAuthor.choir_name)}
-                </p>
-                <p>${escapeHtml(reply.body).replaceAll("\n", "<br>")}</p>
-              </div>
-            `;
-          }).join("") : "<p>Noch keine Antworten.</p>"}
-
-          <label>
-            Antwort schreiben
-            <textarea class="forum-textarea" id="reply-${topic.id}"></textarea>
-          </label>
-          <button class="forum-button" type="button" onclick="createReply('${topic.id}')">Antwort senden</button>
-        </article>
-      `;
-    }).join("");
-  }
-
-  async function createTopic() {
-    topicMessage.textContent = "";
-
-    const title = document.getElementById("topic-title").value.trim();
-    const category = document.getElementById("topic-category").value;
-    const body = document.getElementById("topic-body").value.trim();
-
-    if (!title || !category || !body) {
-      topicMessage.textContent = "Bitte Titel, Kategorie und Beitrag ausfüllen.";
-      topicMessage.className = "forum-error";
-      return;
-    }
-
-    const button = document.getElementById("create-topic-button");
-    button.disabled = true;
-    button.textContent = "Speichern …";
-
-    const { error } = await client.from("forum_topics").insert({
-      title,
-      category,
-      body,
-      created_by: currentUser.id
     });
-
-    button.disabled = false;
-    button.textContent = "Thema veröffentlichen";
-
-    if (error) {
-      topicMessage.textContent = "Beitrag konnte nicht gespeichert werden.";
-      topicMessage.className = "forum-error";
-      return;
-    }
-
-    document.getElementById("topic-title").value = "";
-    document.getElementById("topic-body").value = "";
-
-    topicMessage.textContent = "Beitrag wurde veröffentlicht.";
-    topicMessage.className = "forum-success";
-
-    await loadForumData();
-  }
-
-  async function createReply(topicId) {
-    const textarea = document.getElementById(`reply-${topicId}`);
-    const body = textarea.value.trim();
-
-    if (!body) {
-      alert("Bitte Antworttext eingeben.");
-      return;
-    }
-
-    const { error } = await client.from("forum_replies").insert({
-      topic_id: topicId,
-      body,
-      created_by: currentUser.id
-    });
-
-    if (error) {
-      alert("Antwort konnte nicht gespeichert werden.");
-      return;
-    }
-
-    textarea.value = "";
-    await loadForumData();
-  }
-
-  function findProfile(userId) {
-    return allProfiles.find(profile => profile.id === userId) || {
-      display_name: "Unbekannt",
-      choir_name: "Unbekannter Chor"
-    };
-  }
-
-  function formatDate(value) {
-    return new Date(value).toLocaleDateString("de-DE", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    });
-  }
-
-  function escapeHtml(text) {
-    return String(text || "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  document.addEventListener("DOMContentLoaded", init);
+  });
 </script>
-
 </body>
 </html>
