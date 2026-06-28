@@ -3,59 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Konzertkalender</title>
-
-  <!-- FullCalendar CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.css" rel="stylesheet">
-
-  <!-- FullCalendar JS -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
-
-  <!-- PapaParse: CSV einlesen -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-
-  <!-- Dein Stylesheet -->
+  <title>Konzertkalender – Kneipenchöre vernetzt</title>
   <link rel="stylesheet" href="Kneipenchor.css" />
-
   <style>
-    .filter-controls {
+    .calendar-page {
+      padding: 48px 5vw 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .calendar-page h1 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      margin-bottom: 24px;
+    }
+
+    .calendar-intro {
+      max-width: 760px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .calendar-controls {
       display: flex;
-      gap: 1rem;
       flex-wrap: wrap;
-      margin: 1rem 0;
+      gap: 16px;
+      margin-bottom: 28px;
     }
-    .event-list {
+
+    .calendar-controls select {
+      min-width: 220px;
+      padding: 16px 48px 16px 24px;
+      border: 1.5px solid #111;
+      border-radius: 999px;
+      background: #fffaf3;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .calendar-list {
       display: grid;
-      gap: 1rem;
-    }
-    .event-item {
-      padding: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 1rem;
-      background: #fafafa;
-    }
-    #calendar {
-      max-width: 1000px;
-      margin: 2rem auto;
-      background: white;
-      padding: 1rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      gap: 18px;
     }
 
-    .fc-toolbar-title {
-      font-size: 1.6rem;
-      font-weight: bold;
+    .calendar-card,
+    .calendar-empty {
+      border: 1px solid rgba(0,0,0,0.18);
+      border-radius: 20px;
+      background: #fff;
+      padding: 24px;
     }
 
-    body {
-      background: var(--bg-color);
+    .calendar-card h2 {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+    }
+
+    .calendar-meta {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .calendar-title {
+      margin-bottom: 10px;
+    }
+
+    .calendar-empty {
+      text-align: center;
+      padding: 48px 24px;
+    }
+
+    #kalender-status {
+      margin: 12px 0;
+      font-weight: 700;
+    }
+
+    @media (max-width: 700px) {
+      .calendar-page {
+        padding: 32px 20px 64px;
+      }
+
+      .calendar-controls {
+        display: grid;
+      }
+
+      .calendar-controls select {
+        min-width: 0;
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-
-<!-- HEADER -->
 <header class="main-header">
   <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
     <span class="bar"></span>
@@ -64,56 +104,45 @@
   </button>
 
   <h1 class="site-title">Kneipenchöre vernetzt</h1>
+
   <nav class="main-nav">
     <ul class="nav-list">
       <li><a href="index.html" class="nav-link">Startseite</a></li>
       <li><a href="Karte.html" class="nav-link">Kneipenchor-Map</a></li>
-      <li><a href="kalender.html" class="nav-link">Kalender</a></li>
+      <li><a href="kalender.html" class="nav-link active">Kalender</a></li>
       <li><a href="forum.html" class="nav-link">Forum</a></li>
     </ul>
     <a href="eintragen.html" class="register-btn">chor eintragen</a>
   </nav>
 </header>
 
-<!-- MAIN -->
-<main>
-  <section class="calendar-section">
-    <h2>Konzertkalender der Kneipenchöre</h2>
-     <div class="filter-controls">
-    <select id="month-filter">
+<main class="calendar-page">
+  <h1>Konzertkalender der Kneipenchöre</h1>
+  <p class="calendar-intro">
+    Hier erscheinen freigegebene Konzerttermine der eingetragenen Kneipenchöre. Aktuell sind keine Termine eingetragen.
+  </p>
+
+  <div class="calendar-controls" aria-label="Kalender filtern">
+    <select id="monat-filter" aria-label="Monat wählen">
       <option value="">Monat wählen</option>
     </select>
-    <select id="chor-filter">
+    <select id="chor-filter" aria-label="Chor wählen">
       <option value="">Chor wählen</option>
     </select>
-    <select id="veranstaltungsort-filter">
-      <option value="">Veranstaltungsort wählen</option>
+    <select id="ort-filter" aria-label="Ort wählen">
+      <option value="">Ort wählen</option>
     </select>
   </div>
 
-  <div id="events" class="event-list"></div>
-    <div id="calendar"></div>
-  </section>
-  
-  <section class="hinweis-section">
-  <p>Du möchtest einen Konzerttermin eintragen? Kein Problem!</p>
-  <p>Nutze einfach das Formular – du findest es hier:</p>
-  <a href="konzert-eintragen.html" class="register-btn" style="margin-top: 1rem; display: inline-block;">
-    Konzert eintragen
-  </a>
-  <p style="margin-top: 1rem;">
-    Falls du das Passwort zum Formular noch nicht hast, schreib uns gerne eine kurze Mail an<br>
-    <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
-  </p>
-</section>
-
+  <p id="kalender-status" role="status"></p>
+  <section id="konzert-liste" class="calendar-list" aria-live="polite"></section>
 </main>
 
-<!-- FOOTER -->
 <footer class="main-footer">
   <div class="footer-brand">
     <h2 class="footer-title">Kneipenchöre<br>vernetzt</h2>
   </div>
+
   <nav class="footer-nav">
     <div class="footer-sections">
       <section class="footer-section">
@@ -128,181 +157,31 @@
       </section>
       <section class="footer-section">
         <h3 class="section-title">Info</h3>
-<p class="section-content">
-  <a href="ueber-uns.html">Über uns</a><br>
-  <a href="impressum.html">Impressum</a><br>
-  <a href="datenschutz.html">Datenschutz</a>
-</p>
+        <p class="section-content">
+          <a href="ueber-uns.html">Über uns</a><br>
+          <a href="impressum.html">Impressum</a><br>
+          <a href="datenschutz.html">Datenschutz</a>
+        </p>
       </section>
     </div>
   </nav>
 </footer>
 
-<!-- Kalender-Skript: liest Termine aus daten/konzerte.json -->
-<script>
-  const filters = {
-    Monat: document.getElementById('month-filter'),
-    Chor: document.getElementById('chor-filter'),
-    Veranstaltungsort: document.getElementById('veranstaltungsort-filter'),
-  };
-
-  const eventContainer = document.getElementById('events');
-  let alleEvents = [];
-
-  function escapeHtml(value) {
-    return String(value ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  function parseDatum(dateStr) {
-    if (!dateStr || typeof dateStr !== 'string') return null;
-    const cleaned = dateStr.trim().replace(/\./g, '-').replace(/\//g, '-');
-    const parts = cleaned.split('-');
-    if (parts.length !== 3) return null;
-
-    // Erlaubt sowohl TT-MM-JJJJ als auch JJJJ-MM-TT.
-    if (parts[0].length === 4) {
-      return { jahr: parseInt(parts[0], 10), monat: parseInt(parts[1], 10), tag: parseInt(parts[2], 10) };
-    }
-    return { tag: parseInt(parts[0], 10), monat: parseInt(parts[1], 10), jahr: parseInt(parts[2], 10) };
-  }
-
-  function formatMonat(dateStr) {
-    const parsed = parseDatum(dateStr);
-    if (!parsed || !parsed.monat || parsed.monat < 1 || parsed.monat > 12) return 'Unbekannt';
-
-    const monate = [
-      'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
-      'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
-    ];
-
-    return `${monate[parsed.monat - 1]} ${parsed.jahr}`;
-  }
-
-  function monatSortKey(monatJahrStr) {
-    const parts = monatJahrStr.split(' ');
-    const monate = {
-      Januar: 1, Februar: 2, März: 3, April: 4, Mai: 5, Juni: 6,
-      Juli: 7, August: 8, September: 9, Oktober: 10, November: 11, Dezember: 12
-    };
-    return parseInt(parts[1], 10) * 100 + monate[parts[0]];
-  }
-
-  function addOptions(select, options, placeholderText) {
-    const currentValue = select.value;
-    select.innerHTML = '';
-
-    const placeholder = document.createElement('option');
-    placeholder.value = '';
-    placeholder.textContent = placeholderText;
-    placeholder.disabled = true;
-    placeholder.selected = !currentValue;
-    select.appendChild(placeholder);
-
-    const alleOption = document.createElement('option');
-    alleOption.value = '';
-    alleOption.textContent = 'Alle anzeigen';
-    select.appendChild(alleOption);
-
-    options.forEach((opt) => {
-      const o = document.createElement('option');
-      o.value = opt;
-      o.textContent = opt;
-      if (opt === currentValue) o.selected = true;
-      select.appendChild(o);
-    });
-  }
-
-  function populateDropdowns(events) {
-    const monate = new Set();
-    const orte = new Set();
-    const choere = new Set();
-
-    events.forEach((ev) => {
-      const monat = formatMonat(ev.Konzertdatum);
-      if (monat !== 'Unbekannt') monate.add(monat);
-      if (ev.Veranstaltungsort && ev.Veranstaltungsort.trim() !== '') orte.add(ev.Veranstaltungsort.trim());
-      if (ev.Chorname && ev.Chorname.trim() !== '') choere.add(ev.Chorname.trim());
-    });
-
-    addOptions(filters.Monat, [...monate].sort((a, b) => monatSortKey(a) - monatSortKey(b)), 'Monat wählen');
-    addOptions(filters.Veranstaltungsort, [...orte].sort(), 'Ort wählen');
-    addOptions(filters.Chor, [...choere].sort(), 'Chor wählen');
-  }
-
-  function renderEvents(events) {
-    eventContainer.innerHTML = '';
-    if (events.length === 0) {
-      eventContainer.innerHTML = '<p>Keine Einträge gefunden.</p>';
-      return;
-    }
-
-    events.forEach((ev) => {
-      const el = document.createElement('div');
-      el.className = 'event-item';
-      el.innerHTML = `
-        <strong>${escapeHtml(ev.Chorname)}</strong><br>
-        <em>${escapeHtml(ev.Konzertdatum)} ${escapeHtml(ev.Uhrzeit)} — ${escapeHtml(ev.Veranstaltungsort)}</em><br>
-        ${ev.Eventtitel ? `Titel: ${escapeHtml(ev.Eventtitel)}<br>` : ''}
-        ${ev.Beschreibung ? `${escapeHtml(ev.Beschreibung)}<br>` : ''}
-        ${ev.Link ? `<a href="${escapeHtml(ev.Link)}" target="_blank" rel="noopener noreferrer">Mehr Infos</a>` : ''}
-      `;
-      eventContainer.appendChild(el);
-    });
-  }
-
-  function filterAndRender() {
-    const selectedMonat = filters.Monat.value;
-    const selectedOrt = filters.Veranstaltungsort.value;
-    const selectedChor = filters.Chor.value;
-
-    const gefiltert = alleEvents.filter((ev) => {
-      const monat = formatMonat(ev.Konzertdatum);
-      const ort = ev.Veranstaltungsort?.trim() || '';
-      const chor = ev.Chorname?.trim() || '';
-      return (!selectedMonat || monat === selectedMonat)
-        && (!selectedOrt || ort === selectedOrt)
-        && (!selectedChor || chor === selectedChor);
-    });
-
-    renderEvents(gefiltert);
-  }
-
-  async function ladeKonzerte() {
-    try {
-      const response = await fetch('daten/konzerte.json', { cache: 'no-store' });
-      if (!response.ok) throw new Error(`Termine konnten nicht geladen werden: ${response.status}`);
-      const data = await response.json();
-      alleEvents = data.events || [];
-      populateDropdowns(alleEvents);
-      renderEvents(alleEvents);
-    } catch (error) {
-      console.error(error);
-      eventContainer.innerHTML = '<p>Die Konzerttermine konnten nicht geladen werden.</p>';
-    }
-  }
-
-  Object.values(filters).forEach((f) => f.addEventListener('change', filterAndRender));
-  ladeKonzerte();
-</script>
-
-<!-- Hamburger Script -->
+<script src="kalender.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const mainNav = document.querySelector('.main-nav');
 
+    if (!hamburger || !mainNav) return;
+
     hamburger.addEventListener('click', () => {
       const isOpen = mainNav.classList.toggle('open');
       hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       hamburger.classList.toggle('active', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
   });
 </script>
-
 </body>
 </html>
