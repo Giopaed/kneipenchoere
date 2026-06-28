@@ -52,7 +52,7 @@ function createPopupHtml(props) {
   const safeSaenger = escapeHtml(props.saenger);
   const safeBild = escapeHtml(props.bild || props.logo || '');
   const safeLink = escapeHtml(props.link || '#');
-  const safeKontakt = escapeHtml(props.kontakt);
+  const safeKontakt = escapeHtml(props.kontakt || '');
   const bildHtml = safeBild ? `<img class="chor-popup-img" src="${safeBild}" alt="${safeName}">` : '';
 
   return `
@@ -76,8 +76,8 @@ function createPopupHtml(props) {
           <div class="value">${props.aufnahmestopp ? 'Ja' : 'Nein'}</div>
         </div>
       </div>
-      <a class="chor-popup-btn" href="${safeLink}" target="_blank" rel="noopener noreferrer">Zur Website</a>
-      <div class="chor-popup-kontakt">Kontakt: <a href="mailto:${safeKontakt}">${safeKontakt}</a></div>
+      ${props.link ? `<a class="chor-popup-btn" href="${safeLink}" target="_blank" rel="noopener noreferrer">Zur Website</a>` : ''}
+      ${safeKontakt ? `<div class="chor-popup-kontakt">Kontakt: <a href="mailto:${safeKontakt}">${safeKontakt}</a></div>` : ''}
     </div>
   `;
 }
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (error) {
     console.error(error);
     if (mapElement) {
-      mapElement.innerHTML = '<p style="padding:1rem;">Die Chor-Karte konnte nicht geladen werden. Bitte prüfen, ob <strong>daten/choere.json</strong>, <strong>daten-loader.js</strong> und <strong>karte.js</strong> in GitHub vorhanden sind.</p>';
+      mapElement.innerHTML = '<p style="padding:1rem;">Die Chor-Karte konnte nicht geladen werden. Bitte prüfen, ob <strong>daten-loader.js</strong> und <strong>karte.js</strong> in GitHub vorhanden sind und ob das Google Apps Script veröffentlicht ist.</p>';
     }
   }
 });

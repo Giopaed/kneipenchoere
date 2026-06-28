@@ -59,9 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
           </div>
           ${props.link ? `<a href="${escapeHtml(props.link)}" class="choir-website" target="_blank" rel="noopener noreferrer">Website öffnen</a>` : ''}
-          <div class="contact-info">
-            <p class="contact-text">Kontakt:<br><strong>${escapeHtml(props.kontakt)}</strong></p>
-          </div>
+          ${props.kontakt ? `<div class="contact-info"><p class="contact-text">Kontakt:<br><strong>${escapeHtml(props.kontakt)}</strong></p></div>` : ''}
         </div>
       `;
       container.appendChild(card);
