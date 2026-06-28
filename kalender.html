@@ -6,105 +6,27 @@
   <title>Konzertkalender – Kneipenchöre vernetzt</title>
   <link rel="stylesheet" href="Kneipenchor.css" />
   <style>
-    .calendar-page {
-      padding: 48px 5vw 80px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .calendar-page h1 {
-      font-size: clamp(2rem, 4vw, 4rem);
-      margin-bottom: 24px;
-    }
-
-    .calendar-intro {
-      max-width: 760px;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 32px;
-    }
-
-    .calendar-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-
-    .calendar-controls select {
-      min-width: 220px;
-      padding: 16px 48px 16px 24px;
-      border: 1.5px solid #111;
-      border-radius: 999px;
-      background: #fffaf3;
-      font-size: 1rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .calendar-list {
-      display: grid;
-      gap: 18px;
-    }
-
-    .calendar-card,
-    .calendar-empty {
-      border: 1px solid rgba(0,0,0,0.18);
-      border-radius: 20px;
-      background: #fff;
-      padding: 24px;
-    }
-
-    .calendar-card h2 {
-      margin: 0 0 8px;
-      font-size: 1.35rem;
-    }
-
-    .calendar-meta {
-      margin: 0 0 10px;
-      font-size: 1.05rem;
-    }
-
-    .calendar-title {
-      margin-bottom: 10px;
-    }
-
-    .calendar-empty {
-      text-align: center;
-      padding: 48px 24px;
-    }
-
-    #kalender-status {
-      margin: 12px 0;
-      font-weight: 700;
-    }
-
-    @media (max-width: 700px) {
-      .calendar-page {
-        padding: 32px 20px 64px;
-      }
-
-      .calendar-controls {
-        display: grid;
-      }
-
-      .calendar-controls select {
-        min-width: 0;
-        width: 100%;
-      }
-    }
+    .calendar-page { padding: 2rem; }
+    .calendar-header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .calendar-actions { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; }
+    .calendar-submit-button { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; padding: 0.95rem 1.6rem; background: #ffeb00; color: #000; text-transform: uppercase; letter-spacing: .15em; font-weight: 700; text-decoration: none; border: 2px solid #ffeb00; }
+    .calendar-submit-button:hover, .calendar-submit-button:focus { background: #000; color: #fff; border-color: #000; }
+    .calendar-filter-row { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.5rem 0; }
+    .calendar-filter-row select { min-width: 220px; border: 1.5px solid #111; border-radius: 999px; padding: .9rem 2.4rem .9rem 1.2rem; background: #fffaf3; text-transform: uppercase; letter-spacing: .12em; font-size: 1rem; }
+    .calendar-list { display: grid; gap: 1rem; margin-top: 1rem; }
+    .calendar-card { border: 1px solid #d6d2ca; border-radius: 18px; padding: 1.25rem; background: #fff; }
+    .calendar-card h3 { margin: 0 0 .35rem; }
+    .calendar-meta { margin: 0 0 .35rem; font-style: italic; }
+    .calendar-empty { border: 1px dashed #bbb; border-radius: 18px; padding: 1.5rem; background: #fff; }
+    @media (max-width: 700px) { .calendar-page { padding: 1.1rem; } .calendar-filter-row select, .calendar-submit-button { width: 100%; } }
   </style>
 </head>
 <body>
 <header class="main-header">
   <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
-    <span class="bar"></span>
-    <span class="bar"></span>
-    <span class="bar"></span>
+    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
   </button>
-
   <h1 class="site-title">Kneipenchöre vernetzt</h1>
-
   <nav class="main-nav">
     <ul class="nav-list">
       <li><a href="index.html" class="nav-link">Startseite</a></li>
@@ -112,56 +34,53 @@
       <li><a href="kalender.html" class="nav-link active">Kalender</a></li>
       <li><a href="forum.html" class="nav-link">Forum</a></li>
     </ul>
-    <a href="eintragen.html" class="register-btn">chor eintragen</a>
+    <a href="eintragen.html" class="register-btn">Chor eintragen</a>
   </nav>
 </header>
 
 <main class="calendar-page">
-  <h1>Konzertkalender der Kneipenchöre</h1>
-  <p class="calendar-intro">
-    Hier erscheinen freigegebene Konzerttermine der eingetragenen Kneipenchöre. Aktuell sind keine Termine eingetragen.
-  </p>
-
-  <div class="calendar-controls" aria-label="Kalender filtern">
-    <select id="monat-filter" aria-label="Monat wählen">
-      <option value="">Monat wählen</option>
-    </select>
-    <select id="chor-filter" aria-label="Chor wählen">
-      <option value="">Chor wählen</option>
-    </select>
-    <select id="ort-filter" aria-label="Ort wählen">
-      <option value="">Ort wählen</option>
-    </select>
+  <div class="calendar-header-row">
+    <div>
+      <h2>Konzertkalender der Kneipenchöre</h2>
+      <p>Hier findet ihr kommende Termine der eingetragenen Kneipenchöre.</p>
+    </div>
+    <div class="calendar-actions">
+      <a class="calendar-submit-button" href="konzert-eintragen.html">Konzert eintragen</a>
+    </div>
   </div>
 
-  <p id="kalender-status" role="status"></p>
-  <section id="konzert-liste" class="calendar-list" aria-live="polite"></section>
+  <section aria-label="Kalender filtern">
+    <div class="calendar-filter-row">
+      <select id="filter-month" aria-label="Monat wählen">
+        <option value="">Monat wählen</option>
+      </select>
+      <select id="filter-choir" aria-label="Chor wählen">
+        <option value="">Chor wählen</option>
+      </select>
+      <select id="filter-place" aria-label="Ort wählen">
+        <option value="">Ort wählen</option>
+      </select>
+    </div>
+  </section>
+
+  <section>
+    <div id="calendar-list" class="calendar-list" aria-live="polite">
+      <p class="calendar-empty">Termine werden geladen …</p>
+    </div>
+  </section>
 </main>
 
 <footer class="main-footer">
-  <div class="footer-brand">
-    <h2 class="footer-title">Kneipenchöre<br>vernetzt</h2>
-  </div>
-
+  <div class="footer-brand"><h2 class="footer-title">Kneipenchöre<br>vernetzt</h2></div>
   <nav class="footer-nav">
     <div class="footer-sections">
       <section class="footer-section">
         <h3 class="section-title">Kontakt</h3>
-        <p class="section-content">
-          Jimmy Röck<br>
-          c/o Kulturzentrum Tollhaus<br>
-          Alter Schlachthof 35<br>
-          76131 Karlsruhe<br>
-          <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
-        </p>
+        <p class="section-content">Jimmy Röck<br>c/o Kulturzentrum Tollhaus<br>Alter Schlachthof 35<br>76131 Karlsruhe<br><a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a></p>
       </section>
       <section class="footer-section">
         <h3 class="section-title">Info</h3>
-        <p class="section-content">
-          <a href="ueber-uns.html">Über uns</a><br>
-          <a href="impressum.html">Impressum</a><br>
-          <a href="datenschutz.html">Datenschutz</a>
-        </p>
+        <p class="section-content"><a href="ueber-uns.html">Über uns</a><br><a href="impressum.html">Impressum</a><br><a href="datenschutz.html">Datenschutz</a></p>
       </section>
     </div>
   </nav>
@@ -172,15 +91,13 @@
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const mainNav = document.querySelector('.main-nav');
-
-    if (!hamburger || !mainNav) return;
-
-    hamburger.addEventListener('click', () => {
-      const isOpen = mainNav.classList.toggle('open');
-      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      hamburger.classList.toggle('active', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
+    if (hamburger && mainNav) {
+      hamburger.addEventListener('click', () => {
+        const isOpen = mainNav.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        hamburger.classList.toggle('active', isOpen);
+      });
+    }
   });
 </script>
 </body>

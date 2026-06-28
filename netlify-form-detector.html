@@ -1,29 +1,22 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <title>Netlify Formular-Erkennung</title>
-</head>
+<head><meta charset="utf-8"><title>Form detector</title></head>
 <body>
-  <!--
-    Diese Datei ist nur für Netlify Forms.
-    Bitte nicht löschen.
-    Sie sorgt dafür, dass Netlify das Formular "forum-beitrag" sicher erkennt.
-  -->
-  <form name="forum-beitrag" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke.html">
-    <input type="hidden" name="form-name" value="forum-beitrag" />
-    <input name="bot-field" />
-    <select name="art"><option>Frage</option></select>
-    <select name="kategorie"><option>Fragen & Hilfe</option></select>
-    <input name="titel" type="text" />
-    <input name="bezugsbeitrag" type="text" />
-    <input name="name" type="text" />
-    <input name="chor" type="text" />
-    <input name="email" type="email" />
-    <input name="ort" type="text" />
-    <textarea name="beitrag"></textarea>
-    <input name="kontakt_darf_veroeffentlicht_werden" />
-    <input name="einverstaendnis" />
-  </form>
+<form name="konzert-eintragen" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="konzert-eintragen">
+  <input name="bot-field">
+  <input name="chor">
+  <input name="kontaktperson">
+  <input name="email" type="email">
+  <input name="telefon">
+  <input name="titel">
+  <input name="datum" type="date">
+  <input name="uhrzeit" type="time">
+  <input name="ort">
+  <input name="stadt">
+  <input name="link" type="url">
+  <textarea name="beschreibung"></textarea>
+  <input name="einverstaendnis">
+</form>
 </body>
 </html>
