@@ -1,11 +1,3 @@
-const pinImages = {
-  1: 'pins/pin_01.png',
-  2: 'pins/pin_02.png',
-  3: 'pins/pin_03.png',
-  4: 'pins/pin_04.png',
-  5: 'pins/pin_05.png'
-};
-
 function escapeHtml(value) {
   return String(value ?? '')
     .replace(/&/g, '&amp;')
@@ -15,20 +7,108 @@ function escapeHtml(value) {
     .replace(/'/g, '&#039;');
 }
 
+function firstLetter(name) {
+  return String(name || '?').trim().charAt(0).toUpperCase() || '?';
+}
+
+function createLogoIcon(props) {
+  const name = props.name || 'Kneipenchor';
+  const logo = props.logo || props.logo_url || props.logoUrl || props.bild || '';
+  const safeName = escapeHtml(name);
+  const safeLogo = escapeHtml(logo);
+
+  const imageHtml = safeLogo
+    ? `<img src="${safeLogo}" alt="${safeName}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" onerror="this.style.display='none';this.parentElement.querySelector('span').style.display='flex';">`
+    : '';
+
+  const fallbackHtml = `<span style="${safeLogo ? 'display:none;' : 'display:flex;'}width:100%;height:100%;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#000;">${escapeHtml(firstLetter(name))}</span>`;
+
+  return L.divIcon({
+    className: '',
+    html: `
+      <div title="${safeName}" style="
+        width:38px;
+        height:38px;
+        border-radius:50%;
+        overflow:hidden;
+        background:#ffed00;
+        border:3px solid #111;
+        box-shadow:0 3px 10px rgba(0,0,0,.28);
+      ">
+        ${imageHtml}
+        ${fallbackHtml}
+      </div>
+    `,
+    iconSize: [38, 38],
+    iconAnchor: [19, 19],
+    popupAnchor: [0, -22]
+  });
+}
+
+function createPopupHtml(props) {
+  const safeName = escapeHtml(props.name);
+  const safeBeschreibung = escapeHtml(props.beschreibung);
+  const safeLeitung = escapeHtml(props.leitung);
+  const safeSaenger = escapeHtml(props.saenger);
+  const safeBild = escapeHtml(props.bild || props.logo || '');
+  const safeLink = escapeHtml(props.link || '#');
+  const safeKontakt = escapeHtml(props.kontakt);
+  const bildHtml = safeBild ? `<img class="chor-popup-img" src="${safeBild}" alt="${safeName}">` : '';
+
+  return `
+    <div class="chor-popup">
+      <div class="chor-popup-facts">
+        ${bildHtml}
+        <div class="chor-popup-text">
+          <div class="chor-popup-title">${safeName}</div>
+          <div class="chor-popup-desc">${safeBeschreibung}</div>
+        </div>
+      </div>
+      <hr class="chor-popup-line">
+      <div class="chor-popup-leitung">Leitung: ${safeLeitung}</div>
+      <div class="chor-popup-stats">
+        <div>
+          <div class="label">Sänger:innen</div>
+          <div class="value">${safeSaenger}</div>
+        </div>
+        <div>
+          <div class="label">Aufnahmestopp</div>
+          <div class="value">${props.aufnahmestopp ? 'Ja' : 'Nein'}</div>
+        </div>
+      </div>
+      <a class="chor-popup-btn" href="${safeLink}" target="_blank" rel="noopener noreferrer">Zur Website</a>
+      <div class="chor-popup-kontakt">Kontakt: <a href="mailto:${safeKontakt}">${safeKontakt}</a></div>
+    </div>
+  `;
+}
+
 function initKneipenchorMap(chorDaten) {
   const mapElement = document.getElementById('map');
-  if (!mapElement || typeof L === 'undefined') return;
+  if (!mapElement) return;
 
-  const map = L.map('map').setView([51, 10.5], 5);
+  if (typeof L === 'undefined') {
+    mapElement.innerHTML = '<p style="padding:1rem;">Die Kartenbibliothek konnte nicht geladen werden.</p>';
+    return;
+  }
+
+  if (!mapElement.style.height) {
+    mapElement.style.height = '520px';
+  }
+
+  const map = L.map('map', {
+    scrollWheelZoom: true
+  }).setView([51, 10.5], 5);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; OpenStreetMap-Mitwirkende'
   }).addTo(map);
 
+  const bounds = [];
+
   (chorDaten.features || []).forEach((feature) => {
     const props = feature.properties || {};
-    const coords = feature.geometry?.coordinates || [0, 0];
+    const coords = feature.geometry?.coordinates || [];
 
     if (!Array.isArray(coords) || coords.length < 2) return;
 
@@ -36,61 +116,30 @@ function initKneipenchorMap(chorDaten) {
     const lat = Number(coords[1]);
     if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
 
-    const randomPinType = Math.floor(Math.random() * 5) + 1;
-    const icon = L.icon({
-      iconUrl: pinImages[randomPinType],
-      iconSize: [40, 52],
-      iconAnchor: [20, 52],
-      popupAnchor: [0, -52]
-    });
+    const marker = L.marker([lat, lng], { icon: createLogoIcon(props) })
+      .bindPopup(createPopupHtml(props), { maxWidth: 360 })
+      .addTo(map);
 
-    const safeName = escapeHtml(props.name);
-    const safeBeschreibung = escapeHtml(props.beschreibung);
-    const safeLeitung = escapeHtml(props.leitung);
-    const safeSaenger = escapeHtml(props.saenger);
-    const safeBild = escapeHtml(props.bild);
-    const safeLink = escapeHtml(props.link || '#');
-    const safeKontakt = escapeHtml(props.kontakt);
-
-    const html = `
-      <div class="chor-popup">
-        <div class="chor-popup-facts">
-          <img class="chor-popup-img" src="${safeBild}" alt="${safeName}">
-          <div class="chor-popup-text">
-            <div class="chor-popup-title">${safeName}</div>
-            <div class="chor-popup-desc">${safeBeschreibung}</div>
-          </div>
-        </div>
-        <hr class="chor-popup-line">
-        <div class="chor-popup-leitung">Leitung: ${safeLeitung}</div>
-        <div class="chor-popup-stats">
-          <div>
-            <div class="label">Sänger:innen</div>
-            <div class="value">${safeSaenger}</div>
-          </div>
-          <div>
-            <div class="label">Aufnahmestopp</div>
-            <div class="value">${props.aufnahmestopp ? 'Ja' : 'Nein'}</div>
-          </div>
-        </div>
-        <a class="chor-popup-btn" href="${safeLink}" target="_blank" rel="noopener noreferrer">Zur Website</a>
-        <div class="chor-popup-kontakt">Kontakt: <a href="mailto:${safeKontakt}">${safeKontakt}</a></div>
-      </div>
-    `;
-
-    L.marker([lat, lng], { icon }).bindPopup(html, { maxWidth: 360 }).addTo(map);
+    bounds.push([lat, lng]);
   });
+
+  if (bounds.length > 1) {
+    map.fitBounds(bounds, { padding: [40, 40], maxZoom: 8 });
+  }
+
+  setTimeout(() => map.invalidateSize(), 250);
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const mapElement = document.getElementById('map');
+
   try {
     const chorDaten = await window.loadChorDaten();
     initKneipenchorMap(chorDaten);
   } catch (error) {
     console.error(error);
-    const mapElement = document.getElementById('map');
     if (mapElement) {
-      mapElement.innerHTML = '<p style="padding: 1rem; color: white;">Die Chor-Karte konnte nicht geladen werden.</p>';
+      mapElement.innerHTML = '<p style="padding:1rem;">Die Chor-Karte konnte nicht geladen werden. Bitte prüfen, ob <strong>daten/choere.json</strong>, <strong>daten-loader.js</strong> und <strong>karte.js</strong> in GitHub vorhanden sind.</p>';
     }
   }
 });

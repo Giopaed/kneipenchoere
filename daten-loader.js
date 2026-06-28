@@ -1,10 +1,12 @@
 // Lädt die Chor-Daten aus daten/choere.json.
-// Diese Datei sorgt dafür, dass Karte und Liste dieselben CMS-Daten verwenden.
+// Karte und Liste verwenden dadurch dieselbe Datenquelle.
 window.loadChorDaten = async function loadChorDaten() {
   if (window.chorDaten) return window.chorDaten;
   if (window._chorDatenPromise) return window._chorDatenPromise;
 
-  window._chorDatenPromise = fetch('daten/choere.json', { cache: 'no-store' })
+  const datenPfad = 'daten/choere.json';
+
+  window._chorDatenPromise = fetch(datenPfad, { cache: 'no-store' })
     .then((response) => {
       if (!response.ok) {
         throw new Error(`Chor-Daten konnten nicht geladen werden: ${response.status}`);
@@ -12,6 +14,9 @@ window.loadChorDaten = async function loadChorDaten() {
       return response.json();
     })
     .then((data) => {
+      if (!data || !Array.isArray(data.features)) {
+        throw new Error('Chor-Daten haben nicht das erwartete Format.');
+      }
       window.chorDaten = data;
       return data;
     });

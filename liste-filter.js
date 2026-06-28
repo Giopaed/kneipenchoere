@@ -24,12 +24,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       .replace(/'/g, '&#039;');
   }
 
-  function asArray(value) {
-    if (Array.isArray(value)) return value;
-    if (!value) return [];
-    return [value];
-  }
-
   function renderList(features) {
     container.innerHTML = '';
 
@@ -40,23 +34,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     features.forEach((feature) => {
       const props = feature.properties || {};
+      const image = props.logo || props.logo_url || props.logoUrl || props.bild || '';
       const card = document.createElement('article');
       card.className = 'choir-card';
-      const genres = asArray(props.genres).join(', ');
-      const link = props.link || '#';
-
       card.innerHTML = `
-        <img src="${escapeHtml(props.bild)}" alt="${escapeHtml(props.name)}" class="choir-image" />
+        ${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(props.name)}" class="choir-image" />` : ''}
         <div class="choir-info">
           <h3 class="choir-name">${escapeHtml(props.name)}</h3>
           <p class="choir-description">${escapeHtml(props.beschreibung)}</p>
           <div class="conductor-info">
             <span class="label">Chorleitung:</span>
             <span class="conductor-name">${escapeHtml(props.leitung)}</span>
-          </div>
-          <div class="conductor-info">
-            <span class="label">Genre:</span>
-            <span class="conductor-name">${escapeHtml(genres)}</span>
           </div>
         </div>
         <div class="choir-details">
@@ -70,12 +58,9 @@ document.addEventListener('DOMContentLoaded', async () => {
               <span class="stat-value">${props.aufnahmestopp ? 'ja' : 'nein'}</span>
             </div>
           </div>
-          <a href="${escapeHtml(link)}" class="choir-website" target="_blank" rel="noopener noreferrer">${escapeHtml(link)}</a>
+          ${props.link ? `<a href="${escapeHtml(props.link)}" class="choir-website" target="_blank" rel="noopener noreferrer">Website öffnen</a>` : ''}
           <div class="contact-info">
-            <p class="contact-text">
-              Kontakt:<br>
-              <strong>${escapeHtml(props.kontakt)}</strong>
-            </p>
+            <p class="contact-text">Kontakt:<br><strong>${escapeHtml(props.kontakt)}</strong></p>
           </div>
         </div>
       `;
@@ -90,11 +75,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const filtered = (chorDaten.features || []).filter((feature) => {
       const props = feature.properties || {};
-      const genres = asArray(props.genres);
-      const matchBundesland = !bundesland || props.bundesland === bundesland;
-      const matchGenre = !genre || genres.includes(genre);
-      const matchAufnahmestopp = !ohneAufnahmestopp || props.aufnahmestopp === false;
-      return matchBundesland && matchGenre && matchAufnahmestopp;
+      const genres = Array.isArray(props.genres) ? props.genres : [props.genres].filter(Boolean);
+      return (!bundesland || props.bundesland === bundesland)
+        && (!genre || genres.includes(genre))
+        && (!ohneAufnahmestopp || props.aufnahmestopp === false);
     });
 
     renderList(filtered);
@@ -107,7 +91,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     (chorDaten.features || []).forEach((feature) => {
       const props = feature.properties || {};
       if (props.bundesland) bundeslaender.add(props.bundesland);
-      asArray(props.genres).forEach((g) => genres.add(g));
+      const genreValues = Array.isArray(props.genres) ? props.genres : [props.genres].filter(Boolean);
+      genreValues.forEach((g) => genres.add(g));
     });
 
     [...bundeslaender].sort().forEach((bl) => {
