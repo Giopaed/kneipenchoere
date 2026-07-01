@@ -4,8 +4,107 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kneipenchor-Map</title>
-  <link rel="stylesheet" href="Kneipenchor.css" />
-  <link rel="stylesheet" href="karten-listen-fix.css" />
+  <link rel="stylesheet" href="Kneipenchor.css?v=20260701" />
+  <style>
+    /* Direkte Korrektur für die Chorliste, damit sie sicher greift. */
+    #chor-liste {
+      padding: 0 0 40px 0;
+    }
+
+    #choir-list .choir-card {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr) minmax(180px, 260px) !important;
+      gap: 24px !important;
+      align-items: start !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      background: #fff !important;
+      border-radius: 8px !important;
+      margin: 24px 0 0 0 !important;
+      padding: 32px 40px !important;
+    }
+
+    #choir-list .choir-info,
+    #choir-list .choir-details {
+      min-width: 0 !important;
+      padding: 0 !important;
+    }
+
+    #choir-list .choir-logo-area {
+      display: flex !important;
+      justify-content: flex-end !important;
+      align-items: flex-start !important;
+    }
+
+    #choir-list .choir-logo {
+      display: block !important;
+      width: 240px !important;
+      max-width: 100% !important;
+      max-height: 180px !important;
+      object-fit: contain !important;
+      background: #fff !important;
+      border-radius: 10px !important;
+    }
+
+    #choir-list .choir-logo-placeholder {
+      width: 240px !important;
+      min-height: 120px !important;
+      border-radius: 10px !important;
+      background: #ffed00 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-weight: 800 !important;
+      text-align: center !important;
+      padding: 12px !important;
+      box-sizing: border-box !important;
+    }
+
+    #choir-list .choir-website {
+      display: block !important;
+      background-color: #ffed00 !important;
+      color: #000 !important;
+      font-size: 12px !important;
+      line-height: 1.35 !important;
+      padding: 12px 14px !important;
+      text-align: center !important;
+      text-decoration: none !important;
+      font-weight: 800 !important;
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+      margin-top: 16px !important;
+    }
+
+    #choir-list .choir-link-protocol {
+      font-size: 9px !important;
+      opacity: 0.72 !important;
+      text-transform: lowercase !important;
+      letter-spacing: 0 !important;
+    }
+
+    #choir-list .stats {
+      display: flex !important;
+      gap: 18px !important;
+      justify-content: space-between !important;
+      padding: 0 !important;
+    }
+
+    @media (max-width: 900px) {
+      #choir-list .choir-card {
+        grid-template-columns: 1fr !important;
+        padding: 24px 20px !important;
+      }
+
+      #choir-list .choir-logo-area {
+        justify-content: flex-start !important;
+      }
+
+      #choir-list .choir-logo,
+      #choir-list .choir-logo-placeholder {
+        width: 220px !important;
+      }
+    }
+  </style>
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.11.1/mapbox-gl.css" rel="stylesheet" />
 </head>
 <body>
@@ -85,8 +184,8 @@
 </footer>
 
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
-<script src="karte.js"></script>
-<script src="liste-filter.js"></script>
+<script src="karte.js?v=20260701"></script>
+<script src="liste-filter.js?v=20260701"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');

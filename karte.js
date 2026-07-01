@@ -48,6 +48,16 @@ function parseGenres(value) {
     .filter(Boolean);
 }
 
+function hashText(value) {
+  let hash = 0;
+  const text = String(value || '');
+  for (let i = 0; i < text.length; i += 1) {
+    hash = ((hash << 5) - hash) + text.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
 function normalisiereDaten(rohdaten) {
   return {
     type: 'FeatureCollection',
@@ -63,8 +73,11 @@ function normalisiereDaten(rohdaten) {
 
         if (Number.isNaN(lat) || Number.isNaN(lng)) return null;
 
-        const bild = holeWert(eintrag, ['bild', 'Bild', 'Foto hochladen', 'Foto', 'Chorbild']);
-        const logo = holeWert(eintrag, ['logo', 'Logo']);
+        const bild = holeWert(eintrag, [
+          'logo', 'Logo',
+          'bild', 'Bild',
+          'Foto hochladen', 'Foto', 'Chorbild'
+        ]);
 
         const genres = parseGenres(holeWert(eintrag, [
           'genres', 'Genres', 'Genre', 'Musikrichtung'
@@ -86,7 +99,7 @@ function normalisiereDaten(rohdaten) {
             genres,
             aufnahmestopp: parseBoolean(holeWert(eintrag, ['aufnahmestopp', 'Aufnahmestopp'])),
             bild: bild,
-            logo: logo || bild,
+            logo: bild,
             link: holeWert(eintrag, ['link', 'Link', 'Link zur Homepage', 'Website', 'Homepage'])
           }
         };
@@ -104,16 +117,24 @@ function escapeHtml(value) {
     .replace(/'/g, '&#039;');
 }
 
-function markerBild(index) {
-  return pinImages[index % pinImages.length];
+function pinIndexFuerChor(props, index) {
+  const basis = props.name || `${props.stadt || ''}-${index}`;
+  return hashText(basis) % pinImages.length;
 }
 
-function markerFallbackSvg() {
+function markerFallbackSvg(pinIndex) {
+  const faces = [
+    '<circle cx="27" cy="26" r="12" fill="#fff" stroke="#111" stroke-width="2"/><path d="M19 23q3-4 6 0M29 23q3-4 6 0" stroke="#111" stroke-width="2" fill="none"/><ellipse cx="27" cy="32" rx="5" ry="7" fill="#111"/>',
+    '<circle cx="27" cy="26" r="12" fill="#fff" stroke="#111" stroke-width="2"/><circle cx="22" cy="23" r="2" fill="#111"/><circle cx="32" cy="23" r="2" fill="#111"/><ellipse cx="27" cy="32" rx="6" ry="5" fill="#111"/>',
+    '<circle cx="27" cy="26" r="12" fill="#fff" stroke="#111" stroke-width="2"/><path d="M19 18q8-8 16 0" stroke="#111" stroke-width="3" fill="none"/><circle cx="22" cy="24" r="2" fill="#111"/><circle cx="32" cy="24" r="2" fill="#111"/><ellipse cx="27" cy="32" rx="4" ry="7" fill="#111"/>',
+    '<circle cx="27" cy="26" r="12" fill="#fff" stroke="#111" stroke-width="2"/><circle cx="22" cy="22" r="4" fill="none" stroke="#111" stroke-width="2"/><circle cx="32" cy="22" r="4" fill="none" stroke="#111" stroke-width="2"/><path d="M26 22h2" stroke="#111" stroke-width="2"/><ellipse cx="27" cy="32" rx="5" ry="6" fill="#111"/>',
+    '<circle cx="27" cy="26" r="12" fill="#fff" stroke="#111" stroke-width="2"/><path d="M17 19q6-8 20 0" stroke="#111" stroke-width="3" fill="none"/><path d="M21 25q2-3 4 0M29 25q2-3 4 0" stroke="#111" stroke-width="2" fill="none"/><ellipse cx="27" cy="33" rx="5" ry="6" fill="#111"/>'
+  ];
+
   const svg = `
   <svg xmlns="http://www.w3.org/2000/svg" width="54" height="70" viewBox="0 0 54 70">
     <path d="M27 2C14 2 3 13 3 26c0 18 24 42 24 42s24-24 24-42C51 13 40 2 27 2z" fill="#ffed00" stroke="#000" stroke-width="2"/>
-    <circle cx="27" cy="26" r="12" fill="#fff" stroke="#000" stroke-width="2"/>
-    <circle cx="27" cy="31" r="6" fill="#000"/>
+    ${faces[pinIndex % faces.length]}
   </svg>`;
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }
@@ -166,6 +187,9 @@ function zeichneMarker(features) {
     const coords = feature.geometry.coordinates;
     const props = feature.properties;
 
+    const pinIndex = pinIndexFuerChor(props, index);
+    const pinPfad = pinImages[pinIndex];
+
     const el = document.createElement('div');
     el.className = 'marker';
     el.style.width = '46px';
@@ -174,13 +198,13 @@ function zeichneMarker(features) {
     el.style.backgroundSize = 'contain';
     el.style.backgroundRepeat = 'no-repeat';
     el.style.backgroundPosition = 'center';
-    el.style.backgroundImage = `url(${markerBild(index)})`;
+    el.style.backgroundImage = `url(${pinPfad})`;
 
     const testImg = new Image();
     testImg.onerror = () => {
-      el.style.backgroundImage = `url(${markerFallbackSvg()})`;
+      el.style.backgroundImage = `url(${markerFallbackSvg(pinIndex)})`;
     };
-    testImg.src = markerBild(index);
+    testImg.src = pinPfad;
 
     const popup = new mapboxgl.Popup({ maxWidth: '360px' }).setHTML(popupHtml(props));
 

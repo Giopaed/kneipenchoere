@@ -30,6 +30,36 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  function istBildLink(url) {
+    const text = String(url || '').trim();
+    if (!text) return false;
+
+    return (
+      /\.(png|jpe?g|gif|webp|svg)(\?|#|$)/i.test(text) ||
+      /drive\.google\.com\/thumbnail/i.test(text) ||
+      /googleusercontent\.com/i.test(text) ||
+      /wp-content\/uploads/i.test(text)
+    );
+  }
+
+  function bildHtml(props) {
+    const bildQuelle = props.logo || props.bild || '';
+
+    if (istBildLink(bildQuelle)) {
+      return `
+        <div class="choir-logo-area">
+          <img src="${escapeHtml(bildQuelle)}" alt="Logo ${escapeHtml(props.name || '')}" class="choir-logo" loading="lazy" />
+        </div>
+      `;
+    }
+
+    return `
+      <div class="choir-logo-area">
+        <div class="choir-logo-placeholder">${escapeHtml(props.name || 'Kneipenchor')}</div>
+      </div>
+    `;
+  }
+
   function renderList(features) {
     container.innerHTML = '';
 
@@ -40,17 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     features.forEach((feature) => {
       const props = feature.properties || {};
-      const bildQuelle = props.logo || props.bild || '';
       const genresText = Array.isArray(props.genres) ? props.genres.join(', ') : (props.genres || '');
       const websiteHtml = linkMitKleinemHttps(props.link);
-
-      const imageHtml = bildQuelle
-        ? `
-          <div class="choir-logo-area">
-            <img src="${escapeHtml(bildQuelle)}" alt="Logo ${escapeHtml(props.name || '')}" class="choir-logo" loading="lazy" />
-          </div>
-        `
-        : '<div class="choir-logo-area choir-logo-area-empty"></div>';
 
       const card = document.createElement('article');
       card.className = 'choir-card';
@@ -84,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ${websiteHtml}
         </div>
 
-        ${imageHtml}
+        ${bildHtml(props)}
       `;
       container.appendChild(card);
     });
