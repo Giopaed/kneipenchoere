@@ -1,5 +1,90 @@
+const MAP_DATA_URL = 'https://script.google.com/macros/s/AKfycbzt2DTR1djboA_HP0NzpZeHj-TZB5PQmhX8FM6cJFiOyjQwsZyz8Jl-xOLqLPDJ3fCZlw/exec';
+
+mapboxgl.accessToken = 'pk.eyJ1IjoidmllcnZpZXJ0ZWwiLCJhIjoiY21hbnN4c3V5MDJkeDJrczl1ZjIxaGIzMyJ9.7GPJr4HzvulQJmMXY72CEA';
+
+const pinImages = [
+  'pins/pin_01.png',
+  'pins/pin_02.png',
+  'pins/pin_03.png',
+  'pins/pin_04.png',
+  'pins/pin_05.png'
+];
+
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/dark-v11',
+  center: [10.5, 51],
+  zoom: 5
+});
+
+let chorDaten = { type: 'FeatureCollection', features: [] };
+window.chorDaten = chorDaten;
+window.kneipenchorMap = map;
+
+function parseBoolean(value) {
+  if (value === true) return true;
+  const normalisiert = String(value || '').trim().toLowerCase();
+  return ['ja', 'true', '1', 'yes'].includes(normalisiert);
+}
+
+function parseGenres(value) {
+  if (Array.isArray(value)) return value;
+  if (!value) return [];
+  return String(value)
+    .split(',')
+    .map((eintrag) => eintrag.trim())
+    .filter(Boolean);
+}
+
+function holeWert(obj, keys) {
+  for (const key of keys) {
+    if (obj[key] !== undefined && obj[key] !== null && obj[key] !== '') {
+      return obj[key];
+    }
+  }
+  return '';
+}
+
+function normalisiereDaten(rohdaten) {
+  return {
+    type: 'FeatureCollection',
+    features: (Array.isArray(rohdaten) ? rohdaten : [])
+      .map((eintrag) => {
+        const lat = parseFloat(String(holeWert(eintrag, ['lat', 'Lat', 'latitude', 'Latitude', 'Breitengrad'])).replace(',', '.'));
+        const lng = parseFloat(String(holeWert(eintrag, ['lng', 'Lng', 'lon', 'Lon', 'longitude', 'Longitude', 'Längengrad'])).replace(',', '.'));
+
+        if (Number.isNaN(lat) || Number.isNaN(lng)) return null;
+
+        const genres = parseGenres(holeWert(eintrag, ['genres', 'Genres', 'Genre']));
+
+        return {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [lng, lat]
+          },
+          properties: {
+            name: holeWert(eintrag, ['name', 'Name des Chors', 'Name des Chores', 'Chorname', 'Chor']),
+            stadt: holeWert(eintrag, ['stadt', 'Stadt', 'Ort']),
+            bundesland: holeWert(eintrag, ['bundesland', 'Bundesland']),
+            beschreibung: holeWert(eintrag, ['beschreibung', 'Beschreibung']),
+            leitung: holeWert(eintrag, ['leitung', 'Leitung']),
+            saenger: holeWert(eintrag, ['saenger', 'Sänger*innenanzahl', 'Sänger', 'Saenger']),
+            genres,
+            aufnahmestopp: parseBoolean(holeWert(eintrag, ['aufnahmestopp', 'Aufnahmestopp'])),
+            bild: holeWert(eintrag, ['bild', 'Bild', 'Foto hochladen', 'Foto', 'Logo']),
+            link: holeWert(eintrag, ['link', 'Link zur Homepage', 'Link', 'Website']),
+            kontakt: holeWert(eintrag, ['kontakt', 'Kontakt', 'E-Mail-Adresse', 'Email', 'E-Mail']),
+            logo: holeWert(eintrag, ['logo', 'Logo'])
+          }
+        };
+      })
+      .filter(Boolean)
+  };
+}
+
 function escapeHtml(value) {
-  return String(value ?? '')
+  return String(value || '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -7,139 +92,106 @@ function escapeHtml(value) {
     .replace(/'/g, '&#039;');
 }
 
-function firstLetter(name) {
-  return String(name || '?').trim().charAt(0).toUpperCase() || '?';
+function markerBild(index) {
+  return pinImages[index % pinImages.length];
 }
 
-function createLogoIcon(props) {
-  const name = props.name || 'Kneipenchor';
-  const logo = props.logo || props.logo_url || props.logoUrl || props.bild || '';
-  const safeName = escapeHtml(name);
-  const safeLogo = escapeHtml(logo);
-
-  const imageHtml = safeLogo
-    ? `<img src="${safeLogo}" alt="${safeName}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" onerror="this.style.display='none';this.parentElement.querySelector('span').style.display='flex';">`
+function popupHtml(props) {
+  const bildHtml = props.bild
+    ? `<img class="chor-popup-img" src="${escapeHtml(props.bild)}" alt="${escapeHtml(props.name)}">`
     : '';
 
-  const fallbackHtml = `<span style="${safeLogo ? 'display:none;' : 'display:flex;'}width:100%;height:100%;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#000;">${escapeHtml(firstLetter(name))}</span>`;
+  const websiteHtml = props.link
+    ? `<a class="chor-popup-btn" href="${escapeHtml(props.link)}" target="_blank" rel="noopener noreferrer">Zur Website</a>`
+    : '';
 
-  return L.divIcon({
-    className: '',
-    html: `
-      <div title="${safeName}" style="
-        width:38px;
-        height:38px;
-        border-radius:50%;
-        overflow:hidden;
-        background:#ffed00;
-        border:3px solid #111;
-        box-shadow:0 3px 10px rgba(0,0,0,.28);
-      ">
-        ${imageHtml}
-        ${fallbackHtml}
-      </div>
-    `,
-    iconSize: [38, 38],
-    iconAnchor: [19, 19],
-    popupAnchor: [0, -22]
-  });
-}
-
-function createPopupHtml(props) {
-  const safeName = escapeHtml(props.name);
-  const safeBeschreibung = escapeHtml(props.beschreibung);
-  const safeLeitung = escapeHtml(props.leitung);
-  const safeSaenger = escapeHtml(props.saenger);
-  const safeBild = escapeHtml(props.bild || props.logo || '');
-  const safeLink = escapeHtml(props.link || '#');
-  const safeKontakt = escapeHtml(props.kontakt || '');
-  const bildHtml = safeBild ? `<img class="chor-popup-img" src="${safeBild}" alt="${safeName}">` : '';
+  const kontaktHtml = props.kontakt
+    ? `<div class="chor-popup-kontakt">E-Mail-Adresse: <a href="mailto:${escapeHtml(props.kontakt)}">${escapeHtml(props.kontakt)}</a></div>`
+    : '';
 
   return `
     <div class="chor-popup">
       <div class="chor-popup-facts">
         ${bildHtml}
         <div class="chor-popup-text">
-          <div class="chor-popup-title">${safeName}</div>
-          <div class="chor-popup-desc">${safeBeschreibung}</div>
+          <div class="chor-popup-title">${escapeHtml(props.name)}</div>
+          <div class="chor-popup-desc">${escapeHtml(props.beschreibung)}</div>
         </div>
       </div>
       <hr class="chor-popup-line">
-      <div class="chor-popup-leitung">Leitung: ${safeLeitung}</div>
+      <div class="chor-popup-leitung">Leitung: ${escapeHtml(props.leitung)}</div>
       <div class="chor-popup-stats">
         <div>
-          <div class="label">Sänger:innen</div>
-          <div class="value">${safeSaenger}</div>
+          <div class="label">Sänger*innenanzahl</div>
+          <div class="value">${escapeHtml(props.saenger)}</div>
         </div>
         <div>
           <div class="label">Aufnahmestopp</div>
           <div class="value">${props.aufnahmestopp ? 'Ja' : 'Nein'}</div>
         </div>
       </div>
-      ${props.link ? `<a class="chor-popup-btn" href="${safeLink}" target="_blank" rel="noopener noreferrer">Zur Website</a>` : ''}
-      ${safeKontakt ? `<div class="chor-popup-kontakt">Kontakt: <a href="mailto:${safeKontakt}">${safeKontakt}</a></div>` : ''}
+      ${websiteHtml}
+      ${kontaktHtml}
     </div>
   `;
 }
 
-function initKneipenchorMap(chorDaten) {
-  const mapElement = document.getElementById('map');
-  if (!mapElement) return;
+function zeichneMarker(features) {
+  features.forEach((feature, index) => {
+    const coords = feature.geometry.coordinates;
+    const props = feature.properties;
 
-  if (typeof L === 'undefined') {
-    mapElement.innerHTML = '<p style="padding:1rem;">Die Kartenbibliothek konnte nicht geladen werden.</p>';
-    return;
-  }
+    const el = document.createElement('div');
+    el.className = 'marker';
+    el.style.backgroundImage = `url(${markerBild(index)})`;
+    el.style.width = '40px';
+    el.style.height = '52px';
+    el.style.backgroundSize = '100%';
+    el.style.backgroundRepeat = 'no-repeat';
+    el.style.cursor = 'pointer';
 
-  if (!mapElement.style.height) {
-    mapElement.style.height = '520px';
-  }
+    const popup = new mapboxgl.Popup({ maxWidth: '360px' }).setHTML(popupHtml(props));
 
-  const map = L.map('map', {
-    scrollWheelZoom: true
-  }).setView([51, 10.5], 5);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap-Mitwirkende'
-  }).addTo(map);
-
-  const bounds = [];
-
-  (chorDaten.features || []).forEach((feature) => {
-    const props = feature.properties || {};
-    const coords = feature.geometry?.coordinates || [];
-
-    if (!Array.isArray(coords) || coords.length < 2) return;
-
-    const lng = Number(coords[0]);
-    const lat = Number(coords[1]);
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
-
-    const marker = L.marker([lat, lng], { icon: createLogoIcon(props) })
-      .bindPopup(createPopupHtml(props), { maxWidth: 360 })
+    new mapboxgl.Marker(el)
+      .setLngLat(coords)
+      .setPopup(popup)
       .addTo(map);
-
-    bounds.push([lat, lng]);
   });
 
-  if (bounds.length > 1) {
-    map.fitBounds(bounds, { padding: [40, 40], maxZoom: 8 });
+  if (features.length > 0) {
+    const bounds = new mapboxgl.LngLatBounds();
+    features.forEach((feature) => bounds.extend(feature.geometry.coordinates));
+    map.fitBounds(bounds, { padding: 60, maxZoom: 7 });
   }
-
-  setTimeout(() => map.invalidateSize(), 250);
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const mapElement = document.getElementById('map');
-
+async function ladeKneipenchorDaten() {
   try {
-    const chorDaten = await window.loadChorDaten();
-    initKneipenchorMap(chorDaten);
+    const response = await fetch(MAP_DATA_URL, { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error('HTTP ' + response.status);
+    }
+
+    const rohdaten = await response.json();
+    chorDaten = normalisiereDaten(rohdaten);
+    window.chorDaten = chorDaten;
+
+    map.on('load', () => {
+      zeichneMarker(chorDaten.features);
+      document.dispatchEvent(new CustomEvent('chorDatenGeladen', { detail: chorDaten }));
+    });
+
+    if (map.loaded()) {
+      zeichneMarker(chorDaten.features);
+      document.dispatchEvent(new CustomEvent('chorDatenGeladen', { detail: chorDaten }));
+    }
   } catch (error) {
-    console.error(error);
-    if (mapElement) {
-      mapElement.innerHTML = '<p style="padding:1rem;">Die Chor-Karte konnte nicht geladen werden. Bitte prüfen, ob <strong>daten-loader.js</strong> und <strong>karte.js</strong> in GitHub vorhanden sind und ob das Google Apps Script veröffentlicht ist.</p>';
+    console.error('Fehler beim Laden der Chordaten:', error);
+    const list = document.getElementById('choir-list');
+    if (list) {
+      list.innerHTML = '<p>Die Chordaten konnten leider nicht geladen werden.</p>';
     }
   }
-});
+}
+
+ladeKneipenchorDaten();

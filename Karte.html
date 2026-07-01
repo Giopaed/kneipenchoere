@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kneipenchor Map</title>
+  <title>Kneipenchor-Map</title>
   <link rel="stylesheet" href="Kneipenchor.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  </head>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.11.1/mapbox-gl.css" rel="stylesheet" />
+</head>
 <body>
-
 <header class="main-header">
   <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
     <span class="bar"></span>
@@ -21,22 +20,20 @@
   <nav class="main-nav">
     <ul class="nav-list">
       <li><a href="index.html" class="nav-link">Startseite</a></li>
-      <li><a href="Karte.html" class="nav-link">Kneipenchor-Map</a></li>
+      <li><a href="Karte.html" class="nav-link active">Kneipenchor-Map</a></li>
       <li><a href="kalender.html" class="nav-link">Kalender</a></li>
       <li><a href="forum.html" class="nav-link">Forum</a></li>
     </ul>
-    <a href="eintragen.html" class="register-btn">chor eintragen</a>
+    <a href="eintragen.html" class="register-btn">Chor eintragen</a>
   </nav>
 </header>
 
-<!-- Interaktive Karte -->
 <section class="map-section">
   <div class="map-container">
     <div id="map"></div>
   </div>
 </section>
 
-<!-- Filter -->
 <section class="filter-section">
   <h2 class="filter-title">Filter</h2>
   <select id="bundesland-filter">
@@ -51,57 +48,22 @@
   </label>
 </section>
 
-<!-- Chorauflistung -->
 <section id="chor-liste">
-  <div id="choir-list" class="choir-list"></div>
+  <div id="choir-list" class="choir-list">
+    <p class="forum-loading">Chöre werden geladen …</p>
+  </div>
 </section>
 
-<!-- Chor-Overlay (Punkt 4: Wird dynamisch über karte.js eingeblendet) -->
-
-<!-- Kontaktbereich -->
 <section class="contact-section">
   <div class="contact-content">
     <div class="contact-info">
       <h2 class="contact-title">Chor auf die Karte?<br>Einfach melden!</h2>
       <p class="contact-description">
         Gemeinsam klingen wir weiter – tragt euren Chor ein und werdet Teil der Kneipenchor-Community, die Musik und Miteinander liebt.<br><br>
-        <a href="eintragen.html" class="nav-link">Hier</a> könnt Ihr Euch direkt eintragen. Ihr habt Feedback, braucht Hilfe beim Eintragen oder das nötige Passwort?<br>
+        <a href="eintragen.html" class="nav-link">Hier</a> könnt ihr euch direkt eintragen.<br>
         Meldet euch gerne: <strong><a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a></strong>
       </p>
     </div>
-
-    <form class="contact-form" action="https://formsubmit.co/info@karlsruherkneipenchor.de" method="POST">
-      <input type="hidden" name="_captcha" value="false" />
-      <input type="hidden" name="_next" value="/danke.html" />
-      <input type="hidden" name="_subject" value="Neue Nachricht vom Kneipenchor-Formular" />
-      <input type="text" name="_honey" style="display: none;" />
-
-      <div class="form-group">
-        <label>Name <span class="required">(erforderlich)</span></label>
-        <div class="name-inputs">
-          <div class="input-group">
-            <label for="firstname">Vorname</label>
-            <input type="text" id="firstname" name="Vorname" class="form-input" required />
-          </div>
-          <div class="input-group">
-            <label for="lastname">Nachname</label>
-            <input type="text" id="lastname" name="Nachname" class="form-input" required />
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="email">E-Mail-Adresse <span class="required">(erforderlich)</span></label>
-        <input type="email" id="email" name="Email" class="form-input" required />
-      </div>
-
-      <div class="form-group">
-        <label for="message">Nachricht <span class="required">(erforderlich)</span></label>
-        <textarea id="message" name="Nachricht" class="form-input" required style="min-height: 88px;"></textarea>
-      </div>
-
-      <button type="submit" class="submit-button">senden</button>
-    </form>
   </div>
 </section>
 
@@ -124,26 +86,24 @@
       </section>
       <section class="footer-section">
         <h3 class="section-title">Info</h3>
-<p class="section-content">
-  <a href="ueber-uns.html">Über uns</a><br>
-  <a href="impressum.html">Impressum</a><br>
-  <a href="datenschutz.html">Datenschutz</a>
-</p>
+        <p class="section-content">
+          <a href="ueber-uns.html">Über uns</a><br>
+          <a href="impressum.html">Impressum</a><br>
+          <a href="datenschutz.html">Datenschutz</a>
+        </p>
       </section>
     </div>
   </nav>
 </footer>
 
-<!-- JavaScript -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="daten-loader.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
 <script src="karte.js"></script>
 <script src="liste-filter.js"></script>
-
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const mainNav = document.querySelector('.main-nav');
+    if (!hamburger || !mainNav) return;
 
     hamburger.addEventListener('click', (event) => {
       event.stopPropagation();
@@ -164,6 +124,5 @@
     });
   });
 </script>
-
 </body>
 </html>
