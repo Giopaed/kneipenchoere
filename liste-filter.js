@@ -15,6 +15,18 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/'/g, '&#039;');
   }
 
+  function bildUrlBereinigen(url) {
+    const text = String(url || '').trim();
+    if (!text) return '';
+
+    const idMatch = text.match(/[?&]id=([^&]+)/) || text.match(/\/file\/d\/([^/]+)/);
+    if (idMatch && idMatch[1]) {
+      return `https://drive.google.com/thumbnail?id=${encodeURIComponent(idMatch[1])}&sz=w1000`;
+    }
+
+    return text;
+  }
+
   function linkMitKleinemHttps(url) {
     const text = String(url || '').trim();
     if (!text) return '';
@@ -31,20 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function bildHtml(props) {
-    const bildQuelle = props.logo || props.bild || '';
+    const bildQuelle = bildUrlBereinigen(props.logo || props.bild || '');
 
-    if (bildQuelle) {
-      return `
-        <div class="choir-image-wrap">
-          <img src="${escapeHtml(bildQuelle)}" alt="Bild ${escapeHtml(props.name || '')}" class="choir-image" loading="lazy"
-            onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;choir-image-placeholder&quot;>${escapeHtml(props.name || 'Kneipenchor')}</div>';" />
-        </div>
-      `;
+    if (!bildQuelle) {
+      return '<div class="choir-image-wrap choir-image-missing"></div>';
     }
 
     return `
       <div class="choir-image-wrap">
-        <div class="choir-image-placeholder">${escapeHtml(props.name || 'Kneipenchor')}</div>
+        <img src="${escapeHtml(bildQuelle)}" alt="Bild ${escapeHtml(props.name || '')}" class="choir-image" loading="lazy"
+          onerror="this.parentElement.classList.add('choir-image-missing'); this.remove();" />
       </div>
     `;
   }

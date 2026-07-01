@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kneipenchor-Map</title>
-  <link rel="stylesheet" href="Kneipenchor.css?v=20260701b" />
+  <link rel="stylesheet" href="Kneipenchor.css?v=20260701-final" />
   <style>
     #chor-liste {
       padding: 0 0 48px 0;
@@ -12,7 +12,7 @@
 
     #choir-list .choir-card {
       display: grid !important;
-      grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.85fr) minmax(180px, 280px) !important;
+      grid-template-columns: minmax(0, 1.12fr) minmax(260px, 0.82fr) minmax(190px, 300px) !important;
       gap: 28px !important;
       align-items: start !important;
       width: 100% !important;
@@ -37,27 +37,17 @@
 
     #choir-list .choir-image {
       display: block !important;
-      width: 260px !important;
+      width: 290px !important;
       max-width: 100% !important;
       height: auto !important;
-      max-height: 190px !important;
+      max-height: 210px !important;
       object-fit: contain !important;
       background: #fff !important;
       border-radius: 12px !important;
     }
 
-    #choir-list .choir-image-placeholder {
-      width: 240px !important;
-      min-height: 132px !important;
-      border-radius: 12px !important;
-      background: #ffed00 !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      font-weight: 800 !important;
-      text-align: center !important;
-      padding: 14px !important;
-      box-sizing: border-box !important;
+    #choir-list .choir-image-missing {
+      display: none !important;
     }
 
     #choir-list .choir-website {
@@ -104,9 +94,8 @@
         justify-content: flex-start !important;
       }
 
-      #choir-list .choir-image,
-      #choir-list .choir-image-placeholder {
-        width: 220px !important;
+      #choir-list .choir-image {
+        width: 240px !important;
       }
     }
   </style>
@@ -189,8 +178,8 @@
 </footer>
 
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
-<script src="karte.js?v=20260701b"></script>
-<script src="liste-filter.js?v=20260701b"></script>
+<script src="karte.js?v=20260701-final"></script>
+<script src="liste-filter.js?v=20260701-final"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
