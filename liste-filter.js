@@ -32,12 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!text) return '';
 
     const sichererHref = /^https?:\/\//i.test(text) ? text : `https://${text}`;
-    const anzeige = text.replace(/^https?:\/\//i, '');
-    const protokoll = text.match(/^https?:\/\//i)?.[0] || 'https://';
 
     return `
       <a href="${escapeHtml(sichererHref)}" class="choir-website" target="_blank" rel="noopener noreferrer">
-        <span class="choir-link-protocol">${escapeHtml(protokoll)}</span>${escapeHtml(anzeige)}
+        Zur Homepage
       </a>
     `;
   }

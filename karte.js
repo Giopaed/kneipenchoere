@@ -136,7 +136,7 @@ function popupHtml(props) {
     : '';
 
   const websiteHtml = props.link
-    ? `<a class="chor-popup-btn" href="${escapeHtml(props.link)}" target="_blank" rel="noopener noreferrer">Zur Website</a>`
+    ? `<a class="chor-popup-btn" href="${escapeHtml(props.link)}" target="_blank" rel="noopener noreferrer">Zur Homepage</a>`
     : '';
 
   return `
