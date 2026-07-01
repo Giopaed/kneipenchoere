@@ -16,8 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     features.forEach((feature) => {
       const props = feature.properties || {};
-      const imageHtml = props.bild
-        ? `<img src="${props.bild}" alt="${props.name || ''}" class="choir-image" />`
+      const bildQuelle = props.bild || props.logo || '';
+      const imageHtml = bildQuelle
+        ? `<img src="${bildQuelle}" alt="${props.name || ''}" class="choir-image" />`
         : '';
 
       const genresText = Array.isArray(props.genres) ? props.genres.join(', ') : (props.genres || '');
@@ -25,12 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ? `<a href="${props.link}" class="choir-website" target="_blank" rel="noopener noreferrer">${props.link}</a>`
         : '';
 
-      const kontaktHtml = props.kontakt ? `<strong>${props.kontakt}</strong>` : '–';
-
       const card = document.createElement('article');
       card.className = 'choir-card';
       card.innerHTML = `
-        ${imageHtml}
         <div class="choir-info">
           <h3 class="choir-name">${props.name || ''}</h3>
           <p class="choir-description">${props.beschreibung || ''}</p>
@@ -57,13 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           ${websiteHtml}
-          <div class="contact-info">
-            <p class="contact-text">
-              E-Mail-Adresse:<br>
-              ${kontaktHtml}
-            </p>
-          </div>
         </div>
+        ${imageHtml}
       `;
       container.appendChild(card);
     });

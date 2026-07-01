@@ -54,14 +54,17 @@ function normalisiereDaten(rohdaten) {
     features: (Array.isArray(rohdaten) ? rohdaten : [])
       .map((eintrag) => {
         const lat = parseFloat(String(holeWert(eintrag, [
-          'lat', 'Lat', 'latitude', 'Latitude', 'Breitengrad'
+          'lat', 'Lat', 'Latitude', 'latitude', 'Breitengrad'
         ])).replace(',', '.'));
 
         const lng = parseFloat(String(holeWert(eintrag, [
-          'lng', 'Lng', 'lon', 'Lon', 'longitude', 'Longitude', 'Längengrad', 'Laengengrad'
+          'lng', 'Lng', 'lon', 'Lon', 'Longitude', 'longitude', 'Längengrad', 'Laengengrad'
         ])).replace(',', '.'));
 
         if (Number.isNaN(lat) || Number.isNaN(lng)) return null;
+
+        const bild = holeWert(eintrag, ['bild', 'Bild', 'Foto hochladen', 'Foto', 'Chorbild']);
+        const logo = holeWert(eintrag, ['logo', 'Logo']);
 
         const genres = parseGenres(holeWert(eintrag, [
           'genres', 'Genres', 'Genre', 'Musikrichtung'
@@ -82,9 +85,9 @@ function normalisiereDaten(rohdaten) {
             saenger: holeWert(eintrag, ['saenger', 'Sänger*innenanzahl', 'Sänger', 'Saenger']),
             genres,
             aufnahmestopp: parseBoolean(holeWert(eintrag, ['aufnahmestopp', 'Aufnahmestopp'])),
-            bild: holeWert(eintrag, ['bild', 'Bild', 'Foto hochladen', 'Foto', 'Chorbild']),
-            link: holeWert(eintrag, ['link', 'Link', 'Link zur Homepage', 'Website', 'Homepage']),
-            kontakt: holeWert(eintrag, ['kontakt', 'Kontakt', 'E-Mail-Adresse', 'Email', 'E-Mail', 'Mail'])
+            bild: bild,
+            logo: logo || bild,
+            link: holeWert(eintrag, ['link', 'Link', 'Link zur Homepage', 'Website', 'Homepage'])
           }
         };
       })
@@ -105,17 +108,24 @@ function markerBild(index) {
   return pinImages[index % pinImages.length];
 }
 
+function markerFallbackSvg() {
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="54" height="70" viewBox="0 0 54 70">
+    <path d="M27 2C14 2 3 13 3 26c0 18 24 42 24 42s24-24 24-42C51 13 40 2 27 2z" fill="#ffed00" stroke="#000" stroke-width="2"/>
+    <circle cx="27" cy="26" r="12" fill="#fff" stroke="#000" stroke-width="2"/>
+    <circle cx="27" cy="31" r="6" fill="#000"/>
+  </svg>`;
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+
 function popupHtml(props) {
-  const bildHtml = props.bild
-    ? `<img class="chor-popup-img" src="${escapeHtml(props.bild)}" alt="${escapeHtml(props.name)}">`
+  const bildQuelle = props.bild || props.logo || '';
+  const bildHtml = bildQuelle
+    ? `<img class="chor-popup-img" src="${escapeHtml(bildQuelle)}" alt="${escapeHtml(props.name)}">`
     : '';
 
   const websiteHtml = props.link
     ? `<a class="chor-popup-btn" href="${escapeHtml(props.link)}" target="_blank" rel="noopener noreferrer">Zur Website</a>`
-    : '';
-
-  const kontaktHtml = props.kontakt
-    ? `<div class="chor-popup-kontakt">E-Mail-Adresse: <a href="mailto:${escapeHtml(props.kontakt)}">${escapeHtml(props.kontakt)}</a></div>`
     : '';
 
   return `
@@ -140,7 +150,6 @@ function popupHtml(props) {
         </div>
       </div>
       ${websiteHtml}
-      ${kontaktHtml}
     </div>
   `;
 }
@@ -159,12 +168,19 @@ function zeichneMarker(features) {
 
     const el = document.createElement('div');
     el.className = 'marker';
-    el.style.backgroundImage = `url(${markerBild(index)})`;
-    el.style.width = '40px';
-    el.style.height = '52px';
-    el.style.backgroundSize = '100%';
-    el.style.backgroundRepeat = 'no-repeat';
+    el.style.width = '46px';
+    el.style.height = '60px';
     el.style.cursor = 'pointer';
+    el.style.backgroundSize = 'contain';
+    el.style.backgroundRepeat = 'no-repeat';
+    el.style.backgroundPosition = 'center';
+    el.style.backgroundImage = `url(${markerBild(index)})`;
+
+    const testImg = new Image();
+    testImg.onerror = () => {
+      el.style.backgroundImage = `url(${markerFallbackSvg()})`;
+    };
+    testImg.src = markerBild(index);
 
     const popup = new mapboxgl.Popup({ maxWidth: '360px' }).setHTML(popupHtml(props));
 
