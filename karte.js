@@ -10,6 +10,11 @@ const pinImages = [
   'pins/pin_05.png'
 ];
 
+let chorDaten = { type: 'FeatureCollection', features: [] };
+window.chorDaten = chorDaten;
+
+const markerListe = [];
+
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/dark-v11',
@@ -17,9 +22,16 @@ const map = new mapboxgl.Map({
   zoom: 5
 });
 
-let chorDaten = { type: 'FeatureCollection', features: [] };
-window.chorDaten = chorDaten;
 window.kneipenchorMap = map;
+
+function holeWert(obj, keys) {
+  for (const key of keys) {
+    if (obj[key] !== undefined && obj[key] !== null && obj[key] !== '') {
+      return obj[key];
+    }
+  }
+  return '';
+}
 
 function parseBoolean(value) {
   if (value === true) return true;
@@ -36,26 +48,38 @@ function parseGenres(value) {
     .filter(Boolean);
 }
 
-function holeWert(obj, keys) {
-  for (const key of keys) {
-    if (obj[key] !== undefined && obj[key] !== null && obj[key] !== '') {
-      return obj[key];
-    }
-  }
-  return '';
-}
-
 function normalisiereDaten(rohdaten) {
   return {
     type: 'FeatureCollection',
     features: (Array.isArray(rohdaten) ? rohdaten : [])
       .map((eintrag) => {
-        const lat = parseFloat(String(holeWert(eintrag, ['lat', 'Lat', 'latitude', 'Latitude', 'Breitengrad'])).replace(',', '.'));
-        const lng = parseFloat(String(holeWert(eintrag, ['lng', 'Lng', 'lon', 'Lon', 'longitude', 'Longitude', 'Längengrad'])).replace(',', '.'));
+        const lat = parseFloat(String(holeWert(eintrag, [
+          'lat',
+          'Lat',
+          'latitude',
+          'Latitude',
+          'Breitengrad'
+        ])).replace(',', '.'));
+
+        const lng = parseFloat(String(holeWert(eintrag, [
+          'lng',
+          'Lng',
+          'lon',
+          'Lon',
+          'longitude',
+          'Longitude',
+          'Längengrad',
+          'Laengengrad'
+        ])).replace(',', '.'));
 
         if (Number.isNaN(lat) || Number.isNaN(lng)) return null;
 
-        const genres = parseGenres(holeWert(eintrag, ['genres', 'Genres', 'Genre']));
+        const genres = parseGenres(holeWert(eintrag, [
+          'genres',
+          'Genres',
+          'Genre',
+          'Musikrichtung'
+        ]));
 
         return {
           type: 'Feature',
@@ -64,18 +88,65 @@ function normalisiereDaten(rohdaten) {
             coordinates: [lng, lat]
           },
           properties: {
-            name: holeWert(eintrag, ['name', 'Name des Chors', 'Name des Chores', 'Chorname', 'Chor']),
-            stadt: holeWert(eintrag, ['stadt', 'Stadt', 'Ort']),
-            bundesland: holeWert(eintrag, ['bundesland', 'Bundesland']),
-            beschreibung: holeWert(eintrag, ['beschreibung', 'Beschreibung']),
-            leitung: holeWert(eintrag, ['leitung', 'Leitung']),
-            saenger: holeWert(eintrag, ['saenger', 'Sänger*innenanzahl', 'Sänger', 'Saenger']),
+            name: holeWert(eintrag, [
+              'name',
+              'Name',
+              'Name des Chores',
+              'Name des Chors',
+              'Chorname',
+              'Chor'
+            ]),
+            stadt: holeWert(eintrag, [
+              'stadt',
+              'Stadt',
+              'Ort'
+            ]),
+            bundesland: holeWert(eintrag, [
+              'bundesland',
+              'Bundesland'
+            ]),
+            beschreibung: holeWert(eintrag, [
+              'beschreibung',
+              'Beschreibung'
+            ]),
+            leitung: holeWert(eintrag, [
+              'leitung',
+              'Leitung',
+              'Chorleitung'
+            ]),
+            saenger: holeWert(eintrag, [
+              'saenger',
+              'Sänger*innenanzahl',
+              'Sänger',
+              'Saenger'
+            ]),
             genres,
-            aufnahmestopp: parseBoolean(holeWert(eintrag, ['aufnahmestopp', 'Aufnahmestopp'])),
-            bild: holeWert(eintrag, ['bild', 'Bild', 'Foto hochladen', 'Foto', 'Logo']),
-            link: holeWert(eintrag, ['link', 'Link zur Homepage', 'Link', 'Website']),
-            kontakt: holeWert(eintrag, ['kontakt', 'Kontakt', 'E-Mail-Adresse', 'Email', 'E-Mail']),
-            logo: holeWert(eintrag, ['logo', 'Logo'])
+            aufnahmestopp: parseBoolean(holeWert(eintrag, [
+              'aufnahmestopp',
+              'Aufnahmestopp'
+            ])),
+            bild: holeWert(eintrag, [
+              'bild',
+              'Bild',
+              'Foto hochladen',
+              'Foto',
+              'Chorbild'
+            ]),
+            link: holeWert(eintrag, [
+              'link',
+              'Link',
+              'Link zur Homepage',
+              'Website',
+              'Homepage'
+            ]),
+            kontakt: holeWert(eintrag, [
+              'kontakt',
+              'Kontakt',
+              'E-Mail-Adresse',
+              'Email',
+              'E-Mail',
+              'Mail'
+            ])
           }
         };
       })
@@ -136,7 +207,14 @@ function popupHtml(props) {
   `;
 }
 
+function entferneMarker() {
+  markerListe.forEach((marker) => marker.remove());
+  markerListe.length = 0;
+}
+
 function zeichneMarker(features) {
+  entferneMarker();
+
   features.forEach((feature, index) => {
     const coords = feature.geometry.coordinates;
     const props = feature.properties;
@@ -152,10 +230,12 @@ function zeichneMarker(features) {
 
     const popup = new mapboxgl.Popup({ maxWidth: '360px' }).setHTML(popupHtml(props));
 
-    new mapboxgl.Marker(el)
+    const marker = new mapboxgl.Marker(el)
       .setLngLat(coords)
       .setPopup(popup)
       .addTo(map);
+
+    markerListe.push(marker);
   });
 
   if (features.length > 0) {
@@ -165,25 +245,43 @@ function zeichneMarker(features) {
   }
 }
 
+function ladeDatenPerJsonp(url) {
+  return new Promise((resolve, reject) => {
+    const callbackName = 'kneipenchorCallback_' + Date.now();
+
+    window[callbackName] = (daten) => {
+      delete window[callbackName];
+      script.remove();
+      resolve(daten);
+    };
+
+    const script = document.createElement('script');
+    script.src = `${url}?callback=${callbackName}&_=${Date.now()}`;
+    script.onerror = () => {
+      delete window[callbackName];
+      script.remove();
+      reject(new Error('JSONP konnte nicht geladen werden.'));
+    };
+
+    document.body.appendChild(script);
+  });
+}
+
 async function ladeKneipenchorDaten() {
   try {
-    const response = await fetch(MAP_DATA_URL, { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error('HTTP ' + response.status);
-    }
-
-    const rohdaten = await response.json();
+    const rohdaten = await ladeDatenPerJsonp(MAP_DATA_URL);
     chorDaten = normalisiereDaten(rohdaten);
     window.chorDaten = chorDaten;
 
-    map.on('load', () => {
+    const starteAnzeige = () => {
       zeichneMarker(chorDaten.features);
       document.dispatchEvent(new CustomEvent('chorDatenGeladen', { detail: chorDaten }));
-    });
+    };
 
     if (map.loaded()) {
-      zeichneMarker(chorDaten.features);
-      document.dispatchEvent(new CustomEvent('chorDatenGeladen', { detail: chorDaten }));
+      starteAnzeige();
+    } else {
+      map.once('load', starteAnzeige);
     }
   } catch (error) {
     console.error('Fehler beim Laden der Chordaten:', error);

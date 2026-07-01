@@ -15,16 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     features.forEach((feature) => {
-      const props = feature.properties;
+      const props = feature.properties || {};
       const imageHtml = props.bild
-        ? `<img src="${props.bild}" alt="${props.name}" class="choir-image" />`
+        ? `<img src="${props.bild}" alt="${props.name || ''}" class="choir-image" />`
         : '';
 
       const genresText = Array.isArray(props.genres) ? props.genres.join(', ') : (props.genres || '');
-      const websiteText = props.link || '';
       const websiteHtml = props.link
-        ? `<a href="${props.link}" class="choir-website" target="_blank" rel="noopener noreferrer">${websiteText}</a>`
+        ? `<a href="${props.link}" class="choir-website" target="_blank" rel="noopener noreferrer">${props.link}</a>`
         : '';
+
       const kontaktHtml = props.kontakt ? `<strong>${props.kontakt}</strong>` : '–';
 
       const card = document.createElement('article');
@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alleFeatures.forEach((feature) => {
       const props = feature.properties || {};
       if (props.bundesland) bundeslaender.add(props.bundesland);
+
       const featureGenres = Array.isArray(props.genres) ? props.genres : (props.genres ? [props.genres] : []);
       featureGenres.forEach((eintrag) => genres.add(eintrag));
     });
