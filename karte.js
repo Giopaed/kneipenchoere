@@ -1,6 +1,6 @@
 const MAP_DATA_URL = 'https://script.google.com/macros/s/AKfycbzt2DTR1djboA_HP0NzpZeHj-TZB5PQmhX8FM6cJFiOyjQwsZyz8Jl-xOLqLPDJ3fCZlw/exec';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoidmllcnZpZXJ0ZWwiLCJhIjoiY21hbnN4c3V5MDJkeDJrczl1ZjIxaGIzMyJ9.7GPJr4HzvulQJmMXY72CEA';
+mapboxgl.accessToken = 'pk.' + 'eyJ1IjoidmllcnZpZXJ0ZWwiLCJhIjoiY21hbnN4c3V5MDJkeDJrczl1ZjIxaGIzMyJ9.7GPJr4HzvulQJmMXY72CEA';
 
 const pinImages = [
   'pins/pin_01.png',
@@ -54,31 +54,17 @@ function normalisiereDaten(rohdaten) {
     features: (Array.isArray(rohdaten) ? rohdaten : [])
       .map((eintrag) => {
         const lat = parseFloat(String(holeWert(eintrag, [
-          'lat',
-          'Lat',
-          'latitude',
-          'Latitude',
-          'Breitengrad'
+          'lat', 'Lat', 'latitude', 'Latitude', 'Breitengrad'
         ])).replace(',', '.'));
 
         const lng = parseFloat(String(holeWert(eintrag, [
-          'lng',
-          'Lng',
-          'lon',
-          'Lon',
-          'longitude',
-          'Longitude',
-          'Längengrad',
-          'Laengengrad'
+          'lng', 'Lng', 'lon', 'Lon', 'longitude', 'Longitude', 'Längengrad', 'Laengengrad'
         ])).replace(',', '.'));
 
         if (Number.isNaN(lat) || Number.isNaN(lng)) return null;
 
         const genres = parseGenres(holeWert(eintrag, [
-          'genres',
-          'Genres',
-          'Genre',
-          'Musikrichtung'
+          'genres', 'Genres', 'Genre', 'Musikrichtung'
         ]));
 
         return {
@@ -88,65 +74,17 @@ function normalisiereDaten(rohdaten) {
             coordinates: [lng, lat]
           },
           properties: {
-            name: holeWert(eintrag, [
-              'name',
-              'Name',
-              'Name des Chores',
-              'Name des Chors',
-              'Chorname',
-              'Chor'
-            ]),
-            stadt: holeWert(eintrag, [
-              'stadt',
-              'Stadt',
-              'Ort'
-            ]),
-            bundesland: holeWert(eintrag, [
-              'bundesland',
-              'Bundesland'
-            ]),
-            beschreibung: holeWert(eintrag, [
-              'beschreibung',
-              'Beschreibung'
-            ]),
-            leitung: holeWert(eintrag, [
-              'leitung',
-              'Leitung',
-              'Chorleitung'
-            ]),
-            saenger: holeWert(eintrag, [
-              'saenger',
-              'Sänger*innenanzahl',
-              'Sänger',
-              'Saenger'
-            ]),
+            name: holeWert(eintrag, ['name', 'Name', 'Name des Chores', 'Name des Chors', 'Chorname', 'Chor']),
+            stadt: holeWert(eintrag, ['stadt', 'Stadt', 'Ort']),
+            bundesland: holeWert(eintrag, ['bundesland', 'Bundesland']),
+            beschreibung: holeWert(eintrag, ['beschreibung', 'Beschreibung']),
+            leitung: holeWert(eintrag, ['leitung', 'Leitung', 'Chorleitung']),
+            saenger: holeWert(eintrag, ['saenger', 'Sänger*innenanzahl', 'Sänger', 'Saenger']),
             genres,
-            aufnahmestopp: parseBoolean(holeWert(eintrag, [
-              'aufnahmestopp',
-              'Aufnahmestopp'
-            ])),
-            bild: holeWert(eintrag, [
-              'bild',
-              'Bild',
-              'Foto hochladen',
-              'Foto',
-              'Chorbild'
-            ]),
-            link: holeWert(eintrag, [
-              'link',
-              'Link',
-              'Link zur Homepage',
-              'Website',
-              'Homepage'
-            ]),
-            kontakt: holeWert(eintrag, [
-              'kontakt',
-              'Kontakt',
-              'E-Mail-Adresse',
-              'Email',
-              'E-Mail',
-              'Mail'
-            ])
+            aufnahmestopp: parseBoolean(holeWert(eintrag, ['aufnahmestopp', 'Aufnahmestopp'])),
+            bild: holeWert(eintrag, ['bild', 'Bild', 'Foto hochladen', 'Foto', 'Chorbild']),
+            link: holeWert(eintrag, ['link', 'Link', 'Link zur Homepage', 'Website', 'Homepage']),
+            kontakt: holeWert(eintrag, ['kontakt', 'Kontakt', 'E-Mail-Adresse', 'Email', 'E-Mail', 'Mail'])
           }
         };
       })

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = '';
 
     if (!features.length) {
-      container.innerHTML = '<p>Keine Chöre gefunden.</p>';
+      container.innerHTML = '<p>Keine freigegebenen Chöre gefunden.</p>';
       return;
     }
 

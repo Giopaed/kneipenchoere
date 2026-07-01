@@ -7,11 +7,9 @@
   <link rel="stylesheet" href="Kneipenchor.css" />
   <style>
     .form-page {
-      width: 100%;
-      max-width: 1120px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: 36px 24px 64px;
-      box-sizing: border-box;
+      padding: 48px 24px 80px;
     }
 
     .form-intro {
@@ -19,135 +17,96 @@
     }
 
     .form-intro h1 {
-      margin: 0 0 12px;
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      line-height: 1.05;
-    }
-
-    .form-intro p {
-      max-width: 780px;
-      font-size: 1.05rem;
-      line-height: 1.6;
+      margin-bottom: 12px;
     }
 
     .chor-form {
-      background: #fffdf7;
-      border: 1px solid rgba(0, 0, 0, 0.12);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.06);
-    }
-
-    .form-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      gap: 18px;
+      background: #fffaf2;
+      border: 1px solid #e8ddcb;
+      border-radius: 18px;
+      padding: 28px;
     }
 
-    .form-field {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
+    .form-row {
+      display: grid;
+      gap: 8px;
     }
 
-    .form-field.full-width {
-      grid-column: 1 / -1;
-    }
-
-    .form-field label {
+    .form-row label {
       font-weight: 700;
-      font-size: 0.98rem;
     }
 
-    .required-note {
-      color: #9d1c1c;
-      font-size: 0.95rem;
-      margin-bottom: 18px;
-    }
-
-    .help-text {
-      font-size: 0.88rem;
-      line-height: 1.4;
-      color: #555;
-    }
-
-    .form-field input,
-    .form-field select,
-    .form-field textarea {
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
       width: 100%;
-      min-height: 48px;
-      padding: 12px 14px;
-      border: 1px solid rgba(0, 0, 0, 0.25);
-      border-radius: 14px;
-      background: #fff;
-      color: #111;
-      font: inherit;
       box-sizing: border-box;
+      border: 1px solid #222;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font: inherit;
+      background: #fffaf7;
     }
 
-    .form-field textarea {
+    .form-row textarea {
       min-height: 110px;
       resize: vertical;
     }
 
-    .form-field input[type="file"] {
-      padding: 11px;
-      background: #fff;
-      cursor: pointer;
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
     }
 
-    .form-actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 26px;
+    .small-help {
+      font-size: 0.92rem;
+      opacity: 0.75;
     }
 
-    .submit-btn {
-      appearance: none;
+    .required {
+      color: #b00020;
+    }
+
+    .form-message {
+      display: none;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: #fff2a8;
+      font-weight: 700;
+    }
+
+    .form-message.show {
+      display: block;
+    }
+
+    .submit-button {
+      justify-self: start;
       border: 0;
       border-radius: 999px;
-      padding: 14px 28px;
-      background: #ffe100;
+      padding: 14px 26px;
+      background: #ffe600;
       color: #111;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     }
 
-    .submit-btn:hover,
-    .submit-btn:focus-visible {
-      transform: translateY(-1px);
+    .submit-button:disabled {
+      opacity: 0.6;
+      cursor: wait;
     }
 
-    .privacy-note {
-      max-width: 760px;
-      font-size: 0.9rem;
-      line-height: 1.45;
-      color: #555;
-      margin: 18px 0 0;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    @media (max-width: 760px) {
-      .form-page {
-        padding: 24px 14px 48px;
+    @media (max-width: 720px) {
+      .form-grid {
+        grid-template-columns: 1fr;
       }
 
       .chor-form {
         padding: 20px;
-        border-radius: 18px;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
       }
     }
   </style>
@@ -177,40 +136,38 @@
 <main class="form-page">
   <section class="form-intro">
     <h1>Chor eintragen</h1>
-    <p>Bitte tragt euren Chor sorgfältig ein. Nach dem Absenden prüfen wir eure Angaben und schalten den Chor anschließend für die Karte frei.</p>
+    <p>
+      Tragt euren Chor hier ein. Die Daten werden in die Google-Tabelle geschrieben.
+      Nach der Prüfung und Freigabe erscheint der Chor auf der Kneipenchor-Map.
+    </p>
+    <p class="small-help">
+      Latitude und Longitude könnt ihr zum Beispiel über eine Kartensuche ermitteln.
+      Ohne Latitude und Longitude kann kein gelber Pin auf der Karte gesetzt werden.
+    </p>
   </section>
 
-  <form
-    name="chor-eintragen"
-    method="POST"
-    action="/eintragen-danke.html"
-    data-netlify="true"
-    netlify-honeypot="bot-field"
-    enctype="multipart/form-data"
-    class="chor-form">
+  <div id="form-message" class="form-message"></div>
 
-    <input type="hidden" name="form-name" value="chor-eintragen" />
+  <form id="chor-form" class="chor-form" action="https://script.google.com/macros/s/AKfycbzt2DTR1djboA_HP0NzpZeHj-TZB5PQmhX8FM6cJFiOyjQwsZyz8Jl-xOLqLPDJ3fCZlw/exec" method="POST" target="hidden-submit-frame">
+    <input type="hidden" name="Quelle" value="Website" />
+    <input type="hidden" id="foto-base64" name="Foto-Base64" />
+    <input type="hidden" id="foto-dateiname" name="Foto-Dateiname" />
+    <input type="hidden" id="foto-mimetype" name="Foto-MimeType" />
 
-    <p class="hidden">
-      <label>Dieses Feld bitte leer lassen: <input name="bot-field" /></label>
-    </p>
-
-    <p class="required-note">* Pflichtfelder</p>
+    <div class="form-row">
+      <label for="chorname">Name des Chores <span class="required">*</span></label>
+      <input id="chorname" name="Name des Chores" type="text" required />
+    </div>
 
     <div class="form-grid">
-      <div class="form-field">
-        <label for="name_des_chores">Name des Chores *</label>
-        <input id="name_des_chores" name="name_des_chores" type="text" autocomplete="organization" required />
+      <div class="form-row">
+        <label for="stadt">Stadt <span class="required">*</span></label>
+        <input id="stadt" name="Stadt" type="text" required />
       </div>
 
-      <div class="form-field">
-        <label for="stadt">Stadt *</label>
-        <input id="stadt" name="stadt" type="text" autocomplete="address-level2" required />
-      </div>
-
-      <div class="form-field">
-        <label for="bundesland">Bundesland *</label>
-        <select id="bundesland" name="bundesland" required>
+      <div class="form-row">
+        <label for="bundesland">Bundesland <span class="required">*</span></label>
+        <select id="bundesland" name="Bundesland" required>
           <option value="">Bitte auswählen</option>
           <option>Baden-Württemberg</option>
           <option>Bayern</option>
@@ -230,70 +187,67 @@
           <option>Thüringen</option>
         </select>
       </div>
+    </div>
 
-      <div class="form-field">
-        <label for="email">E-Mail-Adresse *</label>
-        <input id="email" name="email" type="email" autocomplete="email" required />
+    <div class="form-grid">
+      <div class="form-row">
+        <label for="latitude">Latitude <span class="required">*</span></label>
+        <input id="latitude" name="Latitude" type="text" required placeholder="z. B. 49.008901" />
       </div>
 
-      <div class="form-field">
-        <label for="latitude">Latitude *</label>
-        <input id="latitude" name="latitude" type="text" inputmode="decimal" placeholder="z. B. 49.008901" required />
-        <span class="help-text">Latitude ist der Breitengrad.</span>
+      <div class="form-row">
+        <label for="longitude">Longitude <span class="required">*</span></label>
+        <input id="longitude" name="Longitude" type="text" required placeholder="z. B. 8.403760" />
       </div>
+    </div>
 
-      <div class="form-field">
-        <label for="longitude">Longitude *</label>
-        <input id="longitude" name="longitude" type="text" inputmode="decimal" placeholder="z. B. 8.403760" required />
-        <span class="help-text">Longitude ist der Längengrad.</span>
-      </div>
-
-      <div class="form-field">
+    <div class="form-grid">
+      <div class="form-row">
         <label for="leitung">Leitung</label>
-        <input id="leitung" name="leitung" type="text" />
+        <input id="leitung" name="Leitung" type="text" />
       </div>
 
-      <div class="form-field">
-        <label for="saengerinnenanzahl">Sänger*innenanzahl</label>
-        <input id="saengerinnenanzahl" name="saengerinnenanzahl" type="number" min="0" step="1" />
+      <div class="form-row">
+        <label for="saenger">Sänger*innenanzahl</label>
+        <input id="saenger" name="Sänger*innenanzahl" type="text" />
       </div>
+    </div>
 
-      <div class="form-field">
+    <div class="form-grid">
+      <div class="form-row">
         <label for="genres">Genres</label>
-        <input id="genres" name="genres" type="text" placeholder="z. B. Pop, Rock, Schlager" />
+        <input id="genres" name="Genres" type="text" placeholder="z. B. Pop, Rock" />
       </div>
 
-      <div class="form-field">
+      <div class="form-row">
         <label for="aufnahmestopp">Aufnahmestopp</label>
-        <select id="aufnahmestopp" name="aufnahmestopp">
-          <option value="Nein">Nein</option>
-          <option value="Ja">Ja</option>
+        <select id="aufnahmestopp" name="Aufnahmestopp">
+          <option value="nein">Nein</option>
+          <option value="ja">Ja</option>
         </select>
       </div>
-
-      <div class="form-field full-width">
-        <label for="link_zur_homepage">Link zur Homepage</label>
-        <input id="link_zur_homepage" name="link_zur_homepage" type="url" placeholder="https://..." autocomplete="url" />
-      </div>
-
-      <div class="form-field full-width">
-        <label for="foto">Foto hochladen</label>
-        <input id="foto" name="foto" type="file" accept="image/*" />
-        <span class="help-text">Beim Klicken öffnet sich die Dateiauswahl auf dem Computer oder Handy. Bitte nur ein Foto des Chores hochladen.</span>
-      </div>
-
-      <div class="form-field full-width">
-        <label for="notiz">Interne Notiz</label>
-        <textarea id="notiz" name="notiz" placeholder="Optional: Hinweise für das Team von Kneipenchöre vernetzt"></textarea>
-      </div>
     </div>
 
-    <p class="privacy-note">Mit dem Absenden erklärt ihr euch einverstanden, dass wir eure Angaben zur Prüfung und Veröffentlichung auf kneipenchor.net verwenden. Eure E-Mail-Adresse wird nicht öffentlich auf der Karte angezeigt.</p>
-
-    <div class="form-actions">
-      <button class="submit-btn" type="submit">Absenden</button>
+    <div class="form-row">
+      <label for="email">E-Mail-Adresse <span class="required">*</span></label>
+      <input id="email" name="E-Mail-Adresse" type="email" required />
     </div>
+
+    <div class="form-row">
+      <label for="homepage">Link zur Homepage</label>
+      <input id="homepage" name="Link zur Homepage" type="url" placeholder="https://..." />
+    </div>
+
+    <div class="form-row">
+      <label for="foto">Foto hochladen</label>
+      <input id="foto" type="file" accept="image/*" />
+      <div class="small-help">Beim Klicken öffnet sich die Dateiauswahl. Bitte nur ein Bild bis maximal 4 MB hochladen.</div>
+    </div>
+
+    <button id="submit-button" class="submit-button" type="submit">Absenden</button>
   </form>
+
+  <iframe name="hidden-submit-frame" id="hidden-submit-frame" style="display:none;"></iframe>
 </main>
 
 <footer class="main-footer">
@@ -325,10 +279,81 @@
 </footer>
 
 <script>
+  const form = document.getElementById('chor-form');
+  const submitButton = document.getElementById('submit-button');
+  const message = document.getElementById('form-message');
+  const iframe = document.getElementById('hidden-submit-frame');
+  let formWurdeAbgeschickt = false;
+
+  function zeigeMeldung(text) {
+    message.textContent = text;
+    message.classList.add('show');
+    message.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function dateiAlsBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = String(reader.result || '');
+        resolve(result.split(',')[1] || '');
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Wird gesendet …';
+
+    const fotoInput = document.getElementById('foto');
+    const file = fotoInput.files && fotoInput.files[0] ? fotoInput.files[0] : null;
+
+    document.getElementById('foto-base64').value = '';
+    document.getElementById('foto-dateiname').value = '';
+    document.getElementById('foto-mimetype').value = '';
+
+    try {
+      if (file) {
+        if (file.size > 4 * 1024 * 1024) {
+          zeigeMeldung('Das Foto ist zu groß. Bitte ein Bild bis maximal 4 MB hochladen.');
+          submitButton.disabled = false;
+          submitButton.textContent = 'Absenden';
+          return;
+        }
+
+        document.getElementById('foto-base64').value = await dateiAlsBase64(file);
+        document.getElementById('foto-dateiname').value = file.name;
+        document.getElementById('foto-mimetype').value = file.type || 'image/jpeg';
+      }
+
+      formWurdeAbgeschickt = true;
+      form.submit();
+    } catch (fehler) {
+      console.error(fehler);
+      zeigeMeldung('Das Foto konnte nicht vorbereitet werden. Bitte versuche es erneut oder sende das Formular ohne Foto.');
+      submitButton.disabled = false;
+      submitButton.textContent = 'Absenden';
+    }
+  });
+
+  iframe.addEventListener('load', () => {
+    if (!formWurdeAbgeschickt) return;
+
+    form.reset();
+    submitButton.disabled = false;
+    submitButton.textContent = 'Absenden';
+    formWurdeAbgeschickt = false;
+
+    zeigeMeldung('Vielen Dank. Eure Angaben wurden gespeichert und werden nun geprüft. Nach der Freigabe erscheint euer Chor auf der Karte.');
+  });
+
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const mainNav = document.querySelector('.main-nav');
-
     if (!hamburger || !mainNav) return;
 
     hamburger.addEventListener('click', (event) => {
@@ -350,6 +375,5 @@
     });
   });
 </script>
-
 </body>
 </html>
