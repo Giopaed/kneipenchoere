@@ -3,8 +3,154 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kneipenchöre Vernetzt – Chor eintragen</title>
+  <title>Kneipenchöre vernetzt – Chor eintragen</title>
   <link rel="stylesheet" href="Kneipenchor.css" />
+  <style>
+    .form-page {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 36px 24px 64px;
+      box-sizing: border-box;
+    }
+
+    .form-intro {
+      margin-bottom: 28px;
+    }
+
+    .form-intro h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.05;
+    }
+
+    .form-intro p {
+      max-width: 780px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .chor-form {
+      background: #fffdf7;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.06);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-field.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+
+    .required-note {
+      color: #9d1c1c;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+
+    .help-text {
+      font-size: 0.88rem;
+      line-height: 1.4;
+      color: #555;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      border-radius: 14px;
+      background: #fff;
+      color: #111;
+      font: inherit;
+      box-sizing: border-box;
+    }
+
+    .form-field textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .form-field input[type="file"] {
+      padding: 11px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .submit-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 28px;
+      background: #ffe100;
+      color: #111;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .submit-btn:hover,
+    .submit-btn:focus-visible {
+      transform: translateY(-1px);
+    }
+
+    .privacy-note {
+      max-width: 760px;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      color: #555;
+      margin: 18px 0 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 760px) {
+      .form-page {
+        padding: 24px 14px 48px;
+      }
+
+      .chor-form {
+        padding: 20px;
+        border-radius: 18px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -24,35 +170,130 @@
       <li><a href="kalender.html" class="nav-link">Kalender</a></li>
       <li><a href="forum.html" class="nav-link">Forum</a></li>
     </ul>
-    <a href="eintragen.html" class="register-btn">chor eintragen</a>
+    <a href="eintragen.html" class="register-btn">Chor eintragen</a>
   </nav>
 </header>
 
 <main class="form-page">
   <section class="form-intro">
-    <h1>Chor auf Karte eintragen</h1>
-    <p>Bitte tragt euren Chor sorgfältig ein. Wichtig:</p>
-    <ul>
-      <li>Füllt das Formular bitte vollständig aus. Nach dem Absenden prüfen wir eure Angaben und schalten den Chor anschließend frei.</li>
-      <li>Beim Bundesland bitte eines der angebotenen Bundesländer auswählen.</li>
-      <li>Bei „Sänger*innenanzahl“ bitte die ungefähre Anzahl der Mitsingenden eintragen.</li>
-      <li>Beim Bild kann eine Bilddatei aus den eigenen Dateien ausgewählt werden, sobald das Feld im Google-Formular entsprechend angelegt ist.</li>
-      <li>Latitude / Longitude könnt ihr mit <a href="https://www.latlong.net/" target="_blank">latlong.net</a> ermitteln.</li>
-    </ul>
+    <h1>Chor eintragen</h1>
+    <p>Bitte tragt euren Chor sorgfältig ein. Nach dem Absenden prüfen wir eure Angaben und schalten den Chor anschließend für die Karte frei.</p>
   </section>
 
-  <section class="form-container">
-    <iframe 
-      src="https://docs.google.com/forms/d/e/1FAIpQLSdx90-uXSSqq8Zvs-kCJeH1LVFkvhfF1RJA3fEdL56BVjAUeA/viewform?embedded=true" 
-      width="100%" 
-      height="2100" 
-      frameborder="0" 
-      marginheight="0" 
-      marginwidth="0" 
-      style="border: none; overflow: hidden;">
-      Wird geladen…
-    </iframe>
-  </section>
+  <form
+    name="chor-eintragen"
+    method="POST"
+    action="/eintragen-danke.html"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    enctype="multipart/form-data"
+    class="chor-form">
+
+    <input type="hidden" name="form-name" value="chor-eintragen" />
+
+    <p class="hidden">
+      <label>Dieses Feld bitte leer lassen: <input name="bot-field" /></label>
+    </p>
+
+    <p class="required-note">* Pflichtfelder</p>
+
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="name_des_chores">Name des Chores *</label>
+        <input id="name_des_chores" name="name_des_chores" type="text" autocomplete="organization" required />
+      </div>
+
+      <div class="form-field">
+        <label for="stadt">Stadt *</label>
+        <input id="stadt" name="stadt" type="text" autocomplete="address-level2" required />
+      </div>
+
+      <div class="form-field">
+        <label for="bundesland">Bundesland *</label>
+        <select id="bundesland" name="bundesland" required>
+          <option value="">Bitte auswählen</option>
+          <option>Baden-Württemberg</option>
+          <option>Bayern</option>
+          <option>Berlin</option>
+          <option>Brandenburg</option>
+          <option>Bremen</option>
+          <option>Hamburg</option>
+          <option>Hessen</option>
+          <option>Mecklenburg-Vorpommern</option>
+          <option>Niedersachsen</option>
+          <option>Nordrhein-Westfalen</option>
+          <option>Rheinland-Pfalz</option>
+          <option>Saarland</option>
+          <option>Sachsen</option>
+          <option>Sachsen-Anhalt</option>
+          <option>Schleswig-Holstein</option>
+          <option>Thüringen</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="email">E-Mail-Adresse *</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+      </div>
+
+      <div class="form-field">
+        <label for="latitude">Latitude *</label>
+        <input id="latitude" name="latitude" type="text" inputmode="decimal" placeholder="z. B. 49.008901" required />
+        <span class="help-text">Latitude ist der Breitengrad.</span>
+      </div>
+
+      <div class="form-field">
+        <label for="longitude">Longitude *</label>
+        <input id="longitude" name="longitude" type="text" inputmode="decimal" placeholder="z. B. 8.403760" required />
+        <span class="help-text">Longitude ist der Längengrad.</span>
+      </div>
+
+      <div class="form-field">
+        <label for="leitung">Leitung</label>
+        <input id="leitung" name="leitung" type="text" />
+      </div>
+
+      <div class="form-field">
+        <label for="saengerinnenanzahl">Sänger*innenanzahl</label>
+        <input id="saengerinnenanzahl" name="saengerinnenanzahl" type="number" min="0" step="1" />
+      </div>
+
+      <div class="form-field">
+        <label for="genres">Genres</label>
+        <input id="genres" name="genres" type="text" placeholder="z. B. Pop, Rock, Schlager" />
+      </div>
+
+      <div class="form-field">
+        <label for="aufnahmestopp">Aufnahmestopp</label>
+        <select id="aufnahmestopp" name="aufnahmestopp">
+          <option value="Nein">Nein</option>
+          <option value="Ja">Ja</option>
+        </select>
+      </div>
+
+      <div class="form-field full-width">
+        <label for="link_zur_homepage">Link zur Homepage</label>
+        <input id="link_zur_homepage" name="link_zur_homepage" type="url" placeholder="https://..." autocomplete="url" />
+      </div>
+
+      <div class="form-field full-width">
+        <label for="foto">Foto hochladen</label>
+        <input id="foto" name="foto" type="file" accept="image/*" />
+        <span class="help-text">Beim Klicken öffnet sich die Dateiauswahl auf dem Computer oder Handy. Bitte nur ein Foto des Chores hochladen.</span>
+      </div>
+
+      <div class="form-field full-width">
+        <label for="notiz">Interne Notiz</label>
+        <textarea id="notiz" name="notiz" placeholder="Optional: Hinweise für das Team von Kneipenchöre vernetzt"></textarea>
+      </div>
+    </div>
+
+    <p class="privacy-note">Mit dem Absenden erklärt ihr euch einverstanden, dass wir eure Angaben zur Prüfung und Veröffentlichung auf kneipenchor.net verwenden. Eure E-Mail-Adresse wird nicht öffentlich auf der Karte angezeigt.</p>
+
+    <div class="form-actions">
+      <button class="submit-btn" type="submit">Absenden</button>
+    </div>
+  </form>
 </main>
 
 <footer class="main-footer">
@@ -73,11 +314,11 @@
       </section>
       <section class="footer-section">
         <h3 class="section-title">Info</h3>
-<p class="section-content">
-  <a href="ueber-uns.html">Über uns</a><br>
-  <a href="impressum.html">Impressum</a><br>
-  <a href="datenschutz.html">Datenschutz</a>
-</p>
+        <p class="section-content">
+          <a href="ueber-uns.html">Über uns</a><br>
+          <a href="impressum.html">Impressum</a><br>
+          <a href="datenschutz.html">Datenschutz</a>
+        </p>
       </section>
     </div>
   </nav>
@@ -87,6 +328,8 @@
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const mainNav = document.querySelector('.main-nav');
+
+    if (!hamburger || !mainNav) return;
 
     hamburger.addEventListener('click', (event) => {
       event.stopPropagation();
