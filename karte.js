@@ -119,7 +119,7 @@ function markerFallbackSvg() {
 }
 
 function popupHtml(props) {
-  const bildQuelle = props.bild || props.logo || '';
+  const bildQuelle = props.logo || props.bild || '';
   const bildHtml = bildQuelle
     ? `<img class="chor-popup-img" src="${escapeHtml(bildQuelle)}" alt="${escapeHtml(props.name)}">`
     : '';

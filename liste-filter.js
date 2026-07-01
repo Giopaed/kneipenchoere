@@ -6,6 +6,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!container || !bundeslandFilter || !genreFilter || !aufnahmestoppFilter) return;
 
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function linkMitKleinemHttps(url) {
+    const text = String(url || '').trim();
+    if (!text) return '';
+
+    const sichererHref = /^https?:\/\//i.test(text) ? text : `https://${text}`;
+    const anzeige = text.replace(/^https?:\/\//i, '');
+    const protokoll = text.match(/^https?:\/\//i)?.[0] || 'https://';
+
+    return `
+      <a href="${escapeHtml(sichererHref)}" class="choir-website" target="_blank" rel="noopener noreferrer">
+        <span class="choir-link-protocol">${escapeHtml(protokoll)}</span>${escapeHtml(anzeige)}
+      </a>
+    `;
+  }
+
   function renderList(features) {
     container.innerHTML = '';
 
@@ -16,38 +40,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     features.forEach((feature) => {
       const props = feature.properties || {};
-      const bildQuelle = props.bild || props.logo || '';
-      const imageHtml = bildQuelle
-        ? `<img src="${bildQuelle}" alt="${props.name || ''}" class="choir-image" />`
-        : '';
-
+      const bildQuelle = props.logo || props.bild || '';
       const genresText = Array.isArray(props.genres) ? props.genres.join(', ') : (props.genres || '');
-      const websiteHtml = props.link
-        ? `<a href="${props.link}" class="choir-website" target="_blank" rel="noopener noreferrer">${props.link}</a>`
-        : '';
+      const websiteHtml = linkMitKleinemHttps(props.link);
+
+      const imageHtml = bildQuelle
+        ? `
+          <div class="choir-logo-area">
+            <img src="${escapeHtml(bildQuelle)}" alt="Logo ${escapeHtml(props.name || '')}" class="choir-logo" loading="lazy" />
+          </div>
+        `
+        : '<div class="choir-logo-area choir-logo-area-empty"></div>';
 
       const card = document.createElement('article');
       card.className = 'choir-card';
       card.innerHTML = `
         <div class="choir-info">
-          <h3 class="choir-name">${props.name || ''}</h3>
-          <p class="choir-description">${props.beschreibung || ''}</p>
-          <p><strong>Stadt:</strong> ${props.stadt || ''}</p>
-          <p><strong>Bundesland:</strong> ${props.bundesland || ''}</p>
+          <h3 class="choir-name">${escapeHtml(props.name || '')}</h3>
+          <p class="choir-description">${escapeHtml(props.beschreibung || '')}</p>
+          <p><strong>Stadt:</strong> ${escapeHtml(props.stadt || '')}</p>
+          <p><strong>Bundesland:</strong> ${escapeHtml(props.bundesland || '')}</p>
           <div class="conductor-info">
             <span class="label">Chorleitung:</span>
-            <span class="conductor-name">${props.leitung || ''}</span>
+            <span class="conductor-name">${escapeHtml(props.leitung || '')}</span>
           </div>
         </div>
+
         <div class="choir-details">
           <div class="stats">
             <div class="stat-item">
               <span class="stat-label">Sänger*innenanzahl:</span>
-              <span class="stat-value">${props.saenger || ''}</span>
+              <span class="stat-value">${escapeHtml(props.saenger || '')}</span>
             </div>
             <div class="stat-item">
               <span class="stat-label">Genre:</span>
-              <span class="stat-value">${genresText}</span>
+              <span class="stat-value">${escapeHtml(genresText)}</span>
             </div>
             <div class="stat-item">
               <span class="stat-label">Aufnahmestopp:</span>
@@ -56,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           ${websiteHtml}
         </div>
+
         ${imageHtml}
       `;
       container.appendChild(card);

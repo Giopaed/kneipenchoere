@@ -1,0 +1,62 @@
+/* Zusatzkorrektur: Chorliste mit Logo rechts und kleinerem https */
+
+.choir-card {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.95fr) minmax(160px, 260px) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+.choir-logo-area {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.choir-logo {
+  width: 240px;
+  max-width: 100%;
+  max-height: 170px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 12px;
+}
+
+.choir-logo-area-empty {
+  display: none;
+}
+
+.choir-website {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  padding: 12px 14px !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+.choir-link-protocol {
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  opacity: 0.75;
+  text-transform: lowercase;
+}
+
+.choir-details .contact-info,
+.choir-details .contact-text {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .choir-card {
+    grid-template-columns: 1fr !important;
+  }
+
+  .choir-logo-area {
+    justify-content: flex-start;
+  }
+
+  .choir-logo {
+    width: 220px;
+  }
+}
