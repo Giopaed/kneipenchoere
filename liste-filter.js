@@ -30,32 +30,21 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  function istBildLink(url) {
-    const text = String(url || '').trim();
-    if (!text) return false;
-
-    return (
-      /\.(png|jpe?g|gif|webp|svg)(\?|#|$)/i.test(text) ||
-      /drive\.google\.com\/thumbnail/i.test(text) ||
-      /googleusercontent\.com/i.test(text) ||
-      /wp-content\/uploads/i.test(text)
-    );
-  }
-
   function bildHtml(props) {
     const bildQuelle = props.logo || props.bild || '';
 
-    if (istBildLink(bildQuelle)) {
+    if (bildQuelle) {
       return `
-        <div class="choir-logo-area">
-          <img src="${escapeHtml(bildQuelle)}" alt="Logo ${escapeHtml(props.name || '')}" class="choir-logo" loading="lazy" />
+        <div class="choir-image-wrap">
+          <img src="${escapeHtml(bildQuelle)}" alt="Bild ${escapeHtml(props.name || '')}" class="choir-image" loading="lazy"
+            onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;choir-image-placeholder&quot;>${escapeHtml(props.name || 'Kneipenchor')}</div>';" />
         </div>
       `;
     }
 
     return `
-      <div class="choir-logo-area">
-        <div class="choir-logo-placeholder">${escapeHtml(props.name || 'Kneipenchor')}</div>
+      <div class="choir-image-wrap">
+        <div class="choir-image-placeholder">${escapeHtml(props.name || 'Kneipenchor')}</div>
       </div>
     `;
   }

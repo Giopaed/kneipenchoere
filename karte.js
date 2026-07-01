@@ -122,23 +122,6 @@ function pinIndexFuerChor(props, index) {
   return hashText(basis) % pinImages.length;
 }
 
-function markerFallbackSvg(pinIndex) {
-  const faces = [
-    '<circle cx="27" cy="26" r="12" fill="#fff" stroke="#111" stroke-width="2"/><path d="M19 23q3-4 6 0M29 23q3-4 6 0" stroke="#111" stroke-width="2" fill="none"/><ellipse cx="27" cy="32" rx="5" ry="7" fill="#111"/>',
-    '<circle cx="27" cy="26" r="12" fill="#fff" stroke="#111" stroke-width="2"/><circle cx="22" cy="23" r="2" fill="#111"/><circle cx="32" cy="23" r="2" fill="#111"/><ellipse cx="27" cy="32" rx="6" ry="5" fill="#111"/>',
-    '<circle cx="27" cy="26" r="12" fill="#fff" stroke="#111" stroke-width="2"/><path d="M19 18q8-8 16 0" stroke="#111" stroke-width="3" fill="none"/><circle cx="22" cy="24" r="2" fill="#111"/><circle cx="32" cy="24" r="2" fill="#111"/><ellipse cx="27" cy="32" rx="4" ry="7" fill="#111"/>',
-    '<circle cx="27" cy="26" r="12" fill="#fff" stroke="#111" stroke-width="2"/><circle cx="22" cy="22" r="4" fill="none" stroke="#111" stroke-width="2"/><circle cx="32" cy="22" r="4" fill="none" stroke="#111" stroke-width="2"/><path d="M26 22h2" stroke="#111" stroke-width="2"/><ellipse cx="27" cy="32" rx="5" ry="6" fill="#111"/>',
-    '<circle cx="27" cy="26" r="12" fill="#fff" stroke="#111" stroke-width="2"/><path d="M17 19q6-8 20 0" stroke="#111" stroke-width="3" fill="none"/><path d="M21 25q2-3 4 0M29 25q2-3 4 0" stroke="#111" stroke-width="2" fill="none"/><ellipse cx="27" cy="33" rx="5" ry="6" fill="#111"/>'
-  ];
-
-  const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="54" height="70" viewBox="0 0 54 70">
-    <path d="M27 2C14 2 3 13 3 26c0 18 24 42 24 42s24-24 24-42C51 13 40 2 27 2z" fill="#ffed00" stroke="#000" stroke-width="2"/>
-    ${faces[pinIndex % faces.length]}
-  </svg>`;
-  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-}
-
 function popupHtml(props) {
   const bildQuelle = props.logo || props.bild || '';
   const bildHtml = bildQuelle
@@ -186,9 +169,7 @@ function zeichneMarker(features) {
   features.forEach((feature, index) => {
     const coords = feature.geometry.coordinates;
     const props = feature.properties;
-
-    const pinIndex = pinIndexFuerChor(props, index);
-    const pinPfad = pinImages[pinIndex];
+    const pinPfad = pinImages[pinIndexFuerChor(props, index)];
 
     const el = document.createElement('div');
     el.className = 'marker';
@@ -199,12 +180,6 @@ function zeichneMarker(features) {
     el.style.backgroundRepeat = 'no-repeat';
     el.style.backgroundPosition = 'center';
     el.style.backgroundImage = `url(${pinPfad})`;
-
-    const testImg = new Image();
-    testImg.onerror = () => {
-      el.style.backgroundImage = `url(${markerFallbackSvg(pinIndex)})`;
-    };
-    testImg.src = pinPfad;
 
     const popup = new mapboxgl.Popup({ maxWidth: '360px' }).setHTML(popupHtml(props));
 
