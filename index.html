@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="de">
-<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kneipenchöre vernetzt</title>
-<link rel="stylesheet" href="Kneipenchor.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Konzert eintragen – Kneipenchöre vernetzt</title>
+  <link rel="stylesheet" href="Kneipenchor.css" />
+  <style>
+    .form-page { max-width: 980px; margin: 0 auto; padding: 2rem; }
+    .form-intro { margin-bottom: 1.5rem; }
+    .form-box { background: #fff; border: 1px solid #d6d2ca; border-radius: 20px; padding: 1.5rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-box label { display: block; font-weight: 700; margin-bottom: .85rem; }
+    .form-box input, .form-box select, .form-box textarea { width: 100%; box-sizing: border-box; margin-top: .35rem; padding: .85rem; border: 1.5px solid #111; border-radius: 12px; font: inherit; background: #fffaf3; }
+    .form-box textarea { min-height: 150px; }
+    .form-note { background: #fff7b8; border-radius: 16px; padding: 1rem; margin: 1rem 0; }
+    .submit-button { border: 0; border-radius: 999px; padding: 1rem 1.6rem; background: #ffeb00; color: #000; text-transform: uppercase; letter-spacing: .15em; font-weight: 800; cursor: pointer; }
+    .submit-button:hover, .submit-button:focus { background: #000; color: #fff; }
+    .hidden-field { display: none; }
+    @media (max-width: 760px) { .form-page { padding: 1.1rem; } .form-grid { grid-template-columns: 1fr; } .submit-button { width: 100%; } }
+  </style>
 </head>
 <body>
-
-
-
 <header class="main-header">
-   <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
-  <span class="bar"></span>
-  <span class="bar"></span>
-  <span class="bar"></span>
-</button>
-
-  
+  <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+  </button>
   <h1 class="site-title">Kneipenchöre vernetzt</h1>
- 
   <nav class="main-nav">
     <ul class="nav-list">
       <li><a href="index.html" class="nav-link">Startseite</a></li>
@@ -32,162 +37,99 @@
   </nav>
 </header>
 
-<main>
-  <section class="hero-section">
-    <img src="Kneipenchoere_LOGO.png" onerror="this.onerror=null;this.src='bilder/Kneipenchoere_LOGO.png';" alt="Kneipenchöre Schriftzug" class="hero-img" />
-    <div class="hero-content">
-      <div class="hero-text-container">
-        <p class="hero-subtitle">Wo Chöre singen, wirds gemütlich:</p>
-        <h2 class="hero-title">Finde deinen<br />Kneipenchor!</h2>
-      </div>
-      <p class="hero-description">
-        Wenn Stimmen sich begegnen, entsteht mehr als Musik - hier wird<br />
-        Gemeinschaft hörbar und der Spaß am Singen spürbar.
-      </p>
-      <a href="Karte.html" class="cta-button">Chor finden</a>
-    </div>
+<main class="form-page">
+  <section class="form-intro">
+    <h2>Konzert eintragen</h2>
+    <p>Hier können eingetragene Kneipenchöre Konzerttermine vorschlagen. Die Angaben werden zuerst geprüft und danach im Kalender veröffentlicht.</p>
   </section>
 
- <section class="map-section" id="veranstaltungen">
-  <div class="map-content">
-    <h2 class="map-title">
-      Die Karte für alle, die lieber mehrstimmig feiern:
-    </h2>
-    <div class="map-image-container">
-      <a href="Karte.html">
-        <img src="kneipenchor_banner.svg" onerror="this.onerror=null;this.src='bilder/kneipenchor_banner.svg';" alt="Vorschaubild zur Karte mit Pins der Kneipenchöre" class="header-img" />
-      </a>
-  
-    </div>
-  </div>
-</section>
-
-
-  <section class="contact-section">
-  <div class="contact-content">
-    <div class="contact-info">
-      <h2 class="contact-title">
-        Chor auf die Karte?<span class="break">Einfach melden!</span>
-      </h2>
-      <p class="contact-description">
-        Gemeinsam klingen wir weiter - tragt euren Chor ein und werdet Teil der Kneipenchor-Community, die Musik und Miteinander liebt.<br><br>
-        <a href="eintragen.html" class="nav-link">Hier</a> könnt Ihr Euch direkt eintragen. Ihr habt Feedback oder braucht Hilfe beim Eintragen?<br>
-        Meldet euch gerne: <strong><a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a></strong>
-      </p>
-    </div>
-    <form class="contact-form" action="https://formsubmit.co/kontakt@kneipenchor.net" method="POST">
-  <!-- Formsubmit Hidden Fields -->
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="/danke.html">
-  <input type="hidden" name="_subject" value="Neue Nachricht vom Kneipenchor-Formular">
-  <input type="text" name="_honey" style="display:none">
-
-  <!-- Vor- & Nachname -->
-  <div class="form-group">
-    <label>Name <span class="required">(erforderlich)</span></label>
-    <div class="name-inputs">
-      <div class="input-group">
-        <label for="firstname">Vorname</label>
-        <input type="text" id="firstname" name="Vorname" class="form-input" required />
-      </div>
-      <div class="input-group">
-        <label for="lastname">Nachname</label>
-        <input type="text" id="lastname" name="Nachname" class="form-input" required />
-      </div>
-    </div>
-  </div>
-
-  <!-- E-Mail -->
-  <div class="form-group">
-    <label for="email">E-Mail-Adresse <span class="required">(erforderlich)</span></label>
-    <input type="email" id="email" name="Email" class="form-input" required />
-  </div>
-
-  <!-- Nachricht -->
-  <div class="form-group">
-    <label for="message">Nachricht <span class="required">(erforderlich)</span></label>
-    <textarea id="message" name="Nachricht" class="form-input" required style="min-height: 88px;"></textarea>
-  </div>
-
-  <!-- Absenden -->
-  <button type="submit" class="submit-button">Senden</button>
-</form>
-
-  </div>
-</section>
-
-  <section class="forum-section" id="forum">
-    <div class="forum-image">
-      <img src="kneipenchor_karlsruhe_forum.png" onerror="this.onerror=null;this.src='bilder/kneipenchor_karlsruhe_forum.png';" alt="Forum illustration" class="forum-img" />
-    </div>
-    <div class="forum-content">
-      <div class="forum-text-container">
-        <p class="forum-subtitle">Mehrstimmig im Forum schnacken:</p>
-        <h2 class="forum-title">Zwischen Alt, Tenor und Austausch</h2>
-      </div>
-      <p class="forum-description">
-        Unser Forum ist wie ein digitaler Stammtisch - nur mit weniger Bier und mehr Noten.<br />
-        Komm vorbei, plaudere mit und bleib im Takt mit den Kneipenchören in Deutschland, der Schweiz und Österreich.
-      </p>
-      <a href="forum.html" class="forum-button">Zum Forum</a>
-    </div>
+  <section class="form-note">
+    <strong>Wichtig:</strong> Der Termin erscheint nicht sofort öffentlich. Das Team prüft den Eintrag vor der Veröffentlichung.
   </section>
+
+  <form class="form-box" name="konzert-eintragen" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/konzert-danke.html">
+    <input type="hidden" name="form-name" value="konzert-eintragen" />
+    <p class="hidden-field"><label>Nicht ausfüllen: <input name="bot-field" /></label></p>
+
+    <div class="form-grid">
+      <label>Chorname
+        <input name="chor" type="text" required placeholder="z. B. Karlsruher Kneipenchor" />
+      </label>
+      <label>Kontaktperson
+        <input name="kontaktperson" type="text" required />
+      </label>
+    </div>
+
+    <div class="form-grid">
+      <label>E-Mail-Adresse für Rückfragen
+        <input name="email" type="email" required />
+      </label>
+      <label>Telefon optional
+        <input name="telefon" type="text" />
+      </label>
+    </div>
+
+    <div class="form-grid">
+      <label>Titel des Konzerts
+        <input name="titel" type="text" required placeholder="z. B. Kneipenchor-Abend" />
+      </label>
+      <label>Datum
+        <input name="datum" type="date" required />
+      </label>
+    </div>
+
+    <div class="form-grid">
+      <label>Uhrzeit
+        <input name="uhrzeit" type="time" required />
+      </label>
+      <label>Ort / Spielstätte
+        <input name="ort" type="text" required placeholder="z. B. Marktplatz Bretten" />
+      </label>
+    </div>
+
+    <div class="form-grid">
+      <label>Stadt
+        <input name="stadt" type="text" required />
+      </label>
+      <label>Link zur Veranstaltung optional
+        <input name="link" type="url" placeholder="https://..." />
+      </label>
+    </div>
+
+    <label>Beschreibung optional
+      <textarea name="beschreibung" placeholder="Kurzer Hinweis zum Konzert, Eintritt, Besonderheiten …"></textarea>
+    </label>
+
+    <label>
+      <input type="checkbox" name="einverstaendnis" value="ja" required />
+      Ich bin damit einverstanden, dass der Termin redaktionell geprüft und auf kneipenchor.net veröffentlicht werden darf.
+    </label>
+
+    <button class="submit-button" type="submit">Konzert absenden</button>
+  </form>
 </main>
 
 <footer class="main-footer">
-  <div class="footer-brand">
-    <h2 class="footer-title">Kneipenchöre<br>vernetzt</h2>
-  </div>
+  <div class="footer-brand"><h2 class="footer-title">Kneipenchöre<br>vernetzt</h2></div>
   <nav class="footer-nav">
     <div class="footer-sections">
-      <section class="footer-section">
-        <h3 class="section-title">Kontakt</h3>
-        <p class="section-content">
-          Jimmy Röck<br>
-          c/o Kulturzentrum Tollhaus<br>
-          Alter Schlachthof 35<br>
-          76131 Karlsruhe<br>
-           <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
-        </p>
-      </section>
-      <section class="footer-section">
-        <h3 class="section-title">Info</h3>
-<p class="section-content">
-  <a href="ueber-uns.html">Über uns</a><br>
-  <a href="impressum.html">Impressum</a><br>
-  <a href="datenschutz.html">Datenschutz</a>
-</p>
-      </section>
+      <section class="footer-section"><h3 class="section-title">Kontakt</h3><p class="section-content">Jimmy Röck<br>c/o Kulturzentrum Tollhaus<br>Alter Schlachthof 35<br>76131 Karlsruhe<br><a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a></p></section>
+      <section class="footer-section"><h3 class="section-title">Info</h3><p class="section-content"><a href="ueber-uns.html">Über uns</a><br><a href="impressum.html">Impressum</a><br><a href="datenschutz.html">Datenschutz</a></p></section>
     </div>
   </nav>
 </footer>
-
-  <script>
+<script>
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const mainNav = document.querySelector('.main-nav');
-
-    // Öffnen / Schließen bei Klick auf Hamburger
-    hamburger.addEventListener('click', (event) => {
-      event.stopPropagation(); // Verhindert Schließen bei eigenem Klick
-      const isOpen = mainNav.classList.toggle('open');
-      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      hamburger.classList.toggle('active', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
-
-    // Schließen bei Klick außerhalb des Menüs
-    document.addEventListener('click', (event) => {
-      const isOpen = mainNav.classList.contains('open');
-      if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
-        mainNav.classList.remove('open');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      }
-    });
+    if (hamburger && mainNav) {
+      hamburger.addEventListener('click', () => {
+        const isOpen = mainNav.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        hamburger.classList.toggle('active', isOpen);
+      });
+    }
   });
 </script>
-  
 </body>
 </html>

@@ -1,4 +1,4 @@
-# Kneipenchöre: kurze URLs auf HTML-Dateien weiterleiten
+# Weiterleitungen für Netlify
 /kalender              /kalender.html              200
 /konzert-eintragen     /konzert-eintragen.html     200
 /konzert-danke         /konzert-danke.html         200
