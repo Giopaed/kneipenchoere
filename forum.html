@@ -148,8 +148,7 @@
     <h2>Beitrittsanfrage stellen</h2>
 
     <p>
-      Bitte fülle das Formular aus. Danach bekommst du eine E-Mail mit dem Link zu Google Groups.
-      Dort klickst du anschließend auf <strong>Beitrittsanfrage stellen</strong>.
+      Bitte fülle das Formular aus. Danach wirst du direkt zu Google Groups weitergeleitet. Dort klickst du auf <strong>Beitrittsanfrage stellen</strong>.
     </p>
 
     <form class="forum-form" id="forum-request-form">
@@ -180,21 +179,15 @@
 
       <div class="forum-actions">
         <button class="forum-button" id="submit-button" type="submit">
-          Anfrage absenden
+          Anfrage absenden und Beitrittsanfrage stellen
         </button>
-
-        <a class="forum-button forum-secondary" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">
-          Direkt zu Google Groups
-        </a>
       </div>
     </form>
 
     <div class="forum-message" id="success-message">
-      <h3>Danke, deine Anfrage wurde gesendet.</h3>
+      <h3>Danke, du wirst zu Google Groups weitergeleitet.</h3>
       <p>
-        Bitte öffne nun Google Groups und klicke dort auf
-        <strong>Beitrittsanfrage stellen</strong>. Erst dann erscheinst du bei uns
-        unter <strong>Ausstehende Mitglieder</strong>.
+        Google Groups öffnet sich gleich. Bitte klicke dort auf <strong>Beitrittsanfrage stellen</strong>.
       </p>
       <div class="forum-actions">
         <a class="forum-button" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">
@@ -209,9 +202,7 @@
     </div>
 
     <div class="forum-note">
-      <strong>Wichtig:</strong> Die Person erscheint erst bei
-      <strong>Ausstehende Mitglieder</strong>, wenn sie in Google Groups auf
-      <strong>Beitrittsanfrage stellen</strong> klickt.
+      <strong>Wichtig:</strong> Nach dem Absenden öffnet sich Google Groups automatisch. Dort bitte auf <strong>Beitrittsanfrage stellen</strong> klicken.
     </div>
   </section>
 </main>
@@ -316,11 +307,13 @@
         form.reset();
         form.style.display = 'none';
         successMessage.style.display = 'block';
+
+        window.location.href = 'https://groups.google.com/g/kneipenchre-vernetzt';
       } catch (error) {
         errorMessage.style.display = 'block';
       } finally {
         submitButton.disabled = false;
-        submitButton.textContent = 'Anfrage absenden';
+        submitButton.textContent = 'Anfrage absenden und Beitrittsanfrage stellen';
       }
     });
   });
