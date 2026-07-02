@@ -20,11 +20,33 @@
       margin-top: 24px;
     }
 
+    .forum-form {
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .forum-form label {
+      display: grid;
+      gap: 7px;
+      font-weight: 700;
+    }
+
+    .forum-form input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1.5px solid #111;
+      border-radius: 14px;
+      padding: 13px 14px;
+      background: #fff;
+      font-size: 1rem;
+    }
+
     .forum-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin: 28px 0;
+      margin: 24px 0 0;
     }
 
     .forum-button {
@@ -40,6 +62,9 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       border: 2px solid #ffed00;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.95rem;
     }
 
     .forum-button:hover,
@@ -68,6 +93,31 @@
 
     .forum-steps li {
       margin-bottom: 10px;
+    }
+
+    .request-output {
+      display: none;
+      margin-top: 24px;
+      background: #fff;
+      border: 1px solid #d7d0c2;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .request-output textarea {
+      width: 100%;
+      min-height: 170px;
+      box-sizing: border-box;
+      border: 1.5px solid #111;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 1rem;
+      background: #fffaf2;
+    }
+
+    .status-message {
+      margin-top: 12px;
+      font-weight: 700;
     }
 
     @media (max-width: 700px) {
@@ -110,35 +160,72 @@
   <h1>Forum der Kneipenchöre</h1>
 
   <section class="forum-card">
-    <h2>Beitritt zum Forum beantragen</h2>
+    <h2>Beitrittsanfrage stellen</h2>
 
     <p>
-      Das Forum läuft über Google Groups. Damit eine Anfrage automatisch bei
-      <strong>Ausstehende Mitglieder</strong> erscheint, muss die Beitrittsanfrage direkt in Google Groups gestellt werden.
+      Bitte fülle zuerst dieses kurze Formular aus. Danach wird ein Text vorbereitet,
+      den du in Google Groups in die Beitrittsanfrage einfügst.
     </p>
 
-    <div class="forum-actions">
-      <a class="forum-button" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">
-        Beitritt bei Google Groups beantragen
-      </a>
+    <form class="forum-form" id="join-request-form">
+      <label for="admin-name">
+        Name
+        <input id="admin-name" name="name" type="text" autocomplete="name" required />
+      </label>
 
-      <a class="forum-button forum-secondary" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">
-        Zum Forum
-      </a>
+      <label for="admin-chor">
+        Chor
+        <input id="admin-chor" name="chor" type="text" required />
+      </label>
+
+      <label for="admin-stadt">
+        Stadt
+        <input id="admin-stadt" name="stadt" type="text" required />
+      </label>
+
+      <label for="admin-funktion">
+        Funktion im Chor
+        <input id="admin-funktion" name="funktion" type="text" placeholder="z. B. Leitung, Organisation, Vorstand" required />
+      </label>
+
+      <div class="forum-actions">
+        <button class="forum-button" type="submit">
+          Text kopieren und Beitrittsanfrage stellen
+        </button>
+      </div>
+    </form>
+
+    <div class="request-output" id="request-output">
+      <h3>Dein Text für Google Groups</h3>
+      <p>
+        Falls der Text nicht automatisch kopiert wurde, kopiere ihn bitte hier und füge ihn bei Google Groups in die Beitrittsanfrage ein.
+      </p>
+      <textarea id="request-text" readonly></textarea>
+
+      <div class="forum-actions">
+        <button class="forum-button forum-secondary" type="button" id="copy-again">
+          Text erneut kopieren
+        </button>
+        <a class="forum-button" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">
+          Google Groups öffnen
+        </a>
+      </div>
+
+      <p class="status-message" id="status-message"></p>
     </div>
 
     <div class="forum-note">
-      <strong>Wichtig:</strong> Bitte im Google-Groups-Fenster auf
-      <strong>Beitritt zur Gruppe beantragen</strong> klicken.
+      <strong>Wichtig:</strong> In Google Groups bitte auf
+      <strong>Beitrittsanfrage stellen</strong> klicken und den vorbereiteten Text einfügen.
       Erst dann erscheint die Person bei den ausstehenden Mitgliedern.
     </div>
 
     <ol class="forum-steps">
-      <li>Auf <strong>Beitritt bei Google Groups beantragen</strong> klicken.</li>
-      <li>Mit der eigenen E-Mail-Adresse bei Google anmelden.</li>
-      <li>In Google Groups auf <strong>Beitritt zur Gruppe beantragen</strong> klicken.</li>
-      <li>Bitte Name, Chor, Stadt und Funktion im Chor in die Anfrage schreiben.</li>
-      <li>Nach der Prüfung wird die Anfrage genehmigt.</li>
+      <li>Formular auf dieser Seite ausfüllen.</li>
+      <li>Auf <strong>Text kopieren und Beitrittsanfrage stellen</strong> klicken.</li>
+      <li>Google Groups öffnet sich in einem neuen Fenster.</li>
+      <li>Dort auf <strong>Beitrittsanfrage stellen</strong> klicken.</li>
+      <li>Den kopierten Text in das Nachrichtenfeld einfügen und absenden.</li>
     </ol>
 
     <p>
@@ -183,26 +270,83 @@
     const hamburger = document.querySelector('.hamburger');
     const mainNav = document.querySelector('.main-nav');
 
-    if (!hamburger || !mainNav) return;
+    if (hamburger && mainNav) {
+      hamburger.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = mainNav.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        hamburger.classList.toggle('active', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
 
-    hamburger.addEventListener('click', (event) => {
-      event.stopPropagation();
-      const isOpen = mainNav.classList.toggle('open');
-      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      hamburger.classList.toggle('active', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
+      document.addEventListener('click', (event) => {
+        const isOpen = mainNav.classList.contains('open');
 
-    document.addEventListener('click', (event) => {
-      const isOpen = mainNav.classList.contains('open');
+        if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
+          mainNav.classList.remove('open');
+          hamburger.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
+    }
 
-      if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
-        mainNav.classList.remove('open');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+    const form = document.getElementById('join-request-form');
+    const requestOutput = document.getElementById('request-output');
+    const requestText = document.getElementById('request-text');
+    const copyAgain = document.getElementById('copy-again');
+    const statusMessage = document.getElementById('status-message');
+    const groupUrl = 'https://groups.google.com/g/kneipenchre-vernetzt';
+
+    function buildRequestText() {
+      const name = document.getElementById('admin-name').value.trim();
+      const chor = document.getElementById('admin-chor').value.trim();
+      const stadt = document.getElementById('admin-stadt').value.trim();
+      const funktion = document.getElementById('admin-funktion').value.trim();
+
+      return `Name: ${name}
+Chor: ${chor}
+Stadt: ${stadt}
+Funktion im Chor: ${funktion}
+
+Ich beantrage den Zugang zum Forum „Kneipenchöre vernetzt“ als Administrator:in unseres Kneipenchores.
+
+Ich bestätige, dass ich für diesen Chor schreiben und Informationen weitergeben darf.`;
+    }
+
+    async function copyText(text) {
+      requestText.value = text;
+      requestOutput.style.display = 'block';
+
+      try {
+        await navigator.clipboard.writeText(text);
+        statusMessage.textContent = 'Der Text wurde kopiert. Bitte in Google Groups einfügen und absenden.';
+      } catch (error) {
+        requestText.focus();
+        requestText.select();
+        statusMessage.textContent = 'Bitte den Text manuell kopieren und in Google Groups einfügen.';
       }
-    });
+    }
+
+    if (form) {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        if (!form.reportValidity()) {
+          return;
+        }
+
+        const text = buildRequestText();
+        await copyText(text);
+        window.open(groupUrl, '_blank', 'noopener,noreferrer');
+      });
+    }
+
+    if (copyAgain) {
+      copyAgain.addEventListener('click', async () => {
+        await copyText(requestText.value || buildRequestText());
+      });
+    }
   });
 </script>
 </body>
