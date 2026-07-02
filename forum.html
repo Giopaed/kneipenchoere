@@ -6,155 +6,81 @@
   <title>Forum – Kneipenchöre vernetzt</title>
   <link rel="stylesheet" href="Kneipenchor.css" />
   <style>
-    .forum-landing {
-      max-width: 1120px;
+    .forum-page {
+      max-width: 980px;
       margin: 0 auto;
-      padding: 90px 24px 100px;
-    }
-
-    .forum-hero-box {
-      background: #f8f2eb;
-      border-radius: 28px;
-      padding: 64px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 48px;
-      align-items: center;
-    }
-
-    .forum-kicker {
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    .forum-hero-box h2 {
-      font-size: clamp(2.4rem, 6vw, 5rem);
-      line-height: 1;
-      margin: 0 0 28px;
-      color: #252525;
-    }
-
-    .forum-hero-box p {
-      font-size: 1.15rem;
-      line-height: 1.55;
-      margin-bottom: 22px;
-    }
-
-    .forum-button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 32px;
-    }
-
-    .forum-primary-button,
-    .forum-secondary-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 0 30px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .forum-primary-button {
-      background: #ffe600;
-      color: #000;
-    }
-
-    .forum-secondary-button {
-      background: #000;
-      color: #fff;
-    }
-
-    .forum-card-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      margin-top: 44px;
+      padding: 48px 24px 80px;
     }
 
     .forum-card {
-      background: #fff;
+      background: #fffaf2;
+      border: 1px solid #e8ddcb;
       border-radius: 22px;
-      padding: 30px;
-      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.08);
+      padding: 32px;
+      margin-top: 24px;
     }
 
-    .forum-card h3 {
-      font-size: 1.35rem;
-      margin: 0 0 12px;
+    .forum-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 28px 0;
     }
 
-    .forum-card p {
-      line-height: 1.55;
-      margin: 0;
+    .forum-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 14px 24px;
+      background: #ffed00;
+      color: #000;
+      text-decoration: none;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 2px solid #ffed00;
     }
 
-    .forum-info-section {
-      margin-top: 60px;
-      background: #ffe600;
-      padding: 48px;
-      border-radius: 26px;
+    .forum-button:hover,
+    .forum-button:focus {
+      background: #000;
+      color: #fff;
+      border-color: #000;
     }
 
-    .forum-info-section h2 {
-      margin-top: 0;
-      font-size: 2.2rem;
+    .forum-secondary {
+      background: transparent;
+      border-color: #000;
     }
 
-    .forum-info-section ul {
-      margin: 20px 0 0;
+    .forum-note {
+      background: #fff2a8;
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 20px;
+    }
+
+    .forum-steps {
+      margin-top: 20px;
       padding-left: 22px;
-      line-height: 1.7;
-      font-size: 1.05rem;
     }
 
-    .forum-small-note {
-      font-size: 0.95rem;
-      opacity: 0.75;
-      margin-top: 22px;
+    .forum-steps li {
+      margin-bottom: 10px;
     }
 
-    .forum-link-fallback {
-      word-break: break-word;
-      font-weight: 700;
-    }
-
-    .forum-desktop-note {
-      margin-top: 22px;
-      padding: 18px 20px;
-      border-radius: 18px;
-      background: #fff;
-      border: 2px solid #000;
-      font-weight: 700;
-      line-height: 1.5;
-    }
-
-    .forum-desktop-note span {
-      display: block;
-      font-weight: 400;
-      margin-top: 6px;
-    }
-
-    @media (max-width: 900px) {
-      .forum-hero-box {
-        grid-template-columns: 1fr;
-        padding: 38px 26px;
+    @media (max-width: 700px) {
+      .forum-page {
+        padding: 32px 18px 60px;
       }
 
-      .forum-card-grid {
-        grid-template-columns: 1fr;
+      .forum-card {
+        padding: 22px;
       }
 
-      .forum-info-section {
-        padding: 32px 24px;
+      .forum-button {
+        width: 100%;
       }
     }
   </style>
@@ -176,82 +102,48 @@
       <li><a href="kalender.html" class="nav-link">Kalender</a></li>
       <li><a href="forum.html" class="nav-link active">Forum</a></li>
     </ul>
-    <a href="eintragen.html" class="register-btn">chor eintragen</a>
+    <a href="eintragen.html" class="register-btn">Chor eintragen</a>
   </nav>
 </header>
 
-<main class="forum-landing">
-  <section class="forum-hero-box">
-    <div>
-      <p class="forum-kicker">Austausch · Vernetzung · Support</p>
-      <h2>Forum der Kneipenchöre</h2>
-      <p>
-        Im Forum können Kneipenchöre Erfahrungen teilen, Fragen stellen, Kooperationen suchen
-        und sich gegenseitig unterstützen.
-      </p>
-      <p>
-        Das Forum ist öffentlich lesbar. Beiträge schreiben und beantworten können nur freigeschaltete
-        Chor-Administrator:innen.
-      </p>
-      <p>
-        Wichtig für Chöre: Bitte fragt zuerst einen Zugang als Chor-Administrator:in an.
-        Pro Kneipenchor kann nur eine Person als Administrator:in freigeschaltet werden.
-      </p>
-      <div class="forum-button-row">
-        <!-- WICHTIG: Wenn eure Google-Gruppe anders heißt, den Link in der nächsten Zeile ersetzen. -->
-        <a class="forum-primary-button" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">Zum Forum</a>
-        <a class="forum-secondary-button" href="mailto:kneipenchor.net@gmail.com?subject=Zugang%20als%20Chor-Administrator%3Ain%20anfragen&body=Hallo%2C%0A%0Aich%20m%C3%B6chte%20einen%20Zugang%20als%20Chor-Administrator%3Ain%20f%C3%BCr%20das%20Kneipenchor-Forum%20anfragen.%0A%0ABitte%20beachten%3A%20Pro%20Kneipenchor%20darf%20nur%20eine%20Person%20als%20Administrator%3Ain%20freigeschaltet%20werden.%0A%0AName%3A%0AChor%3A%0AStadt%3A%0AE-Mail%3A%0AFunktion%20im%20Chor%3A%0A%0AIch%20best%C3%A4tige%2C%20dass%20ich%20f%C3%BCr%20diesen%20Chor%20die%20verantwortliche%20Forum-Administrator%3Ain%20sein%20soll.%0A%0AViele%20Gr%C3%BC%C3%9Fe">Zugang anfragen</a>
-      </div>
-      <div class="forum-desktop-note">
-        Hinweis für Chor-Administrator:innen:
-        <span>Zum Schreiben neuer Beiträge bitte Google Groups am Computer oder im Browser mit aktivierter Desktop-Ansicht nutzen. Lesen ist auch mobil möglich.</span>
-      </div>
-    </div>
+<main class="forum-page">
+  <h1>Forum der Kneipenchöre</h1>
 
-    <div class="forum-card">
-      <h3>So funktioniert es</h3>
-      <p>
-        Jeder Chor benennt genau eine verantwortliche Person. Diese Person beantragt zuerst den Zugang,
-        wird als Mitglied der Google-Gruppe freigeschaltet und darf Beiträge schreiben. Alle anderen Besucher:innen können mitlesen.
-      </p>
-    </div>
-  </section>
+  <section class="forum-card">
+    <h2>Beitritt zum Forum beantragen</h2>
 
-  <section class="forum-card-grid" aria-label="Forum-Themen">
-    <article class="forum-card">
-      <h3>Fragen & Hilfe</h3>
-      <p>Organisation, Proben, Auftritte, Technik, Räume, Kommunikation und alles, was im Choralltag auftaucht.</p>
-    </article>
-    <article class="forum-card">
-      <h3>Vernetzung</h3>
-      <p>Kooperationen, gemeinsame Aktionen, Gastauftritte, Festival-Ideen und Kontakte zu anderen Städten.</p>
-    </article>
-    <article class="forum-card">
-      <h3>Best Practice</h3>
-      <p>Erfahrungen teilen: Was funktioniert bei euch gut? Was können andere Chöre übernehmen?</p>
-    </article>
-  </section>
-
-  <section class="forum-info-section">
-    <h2>Wer darf schreiben?</h2>
     <p>
-      Das Forum soll übersichtlich und verlässlich bleiben. Deshalb können nur freigeschaltete
-      Chor-Administrator:innen Beiträge veröffentlichen.
+      Das Forum läuft über Google Groups. Damit eine Anfrage automatisch bei
+      <strong>Ausstehende Mitglieder</strong> erscheint, muss die Beitrittsanfrage direkt in Google Groups gestellt werden.
     </p>
-    <ul>
-      <li>Alle Besucher:innen dürfen Beiträge lesen.</li>
-      <li>Nur eingeladene Gruppenmitglieder dürfen schreiben und antworten.</li>
-      <li>Jeder Chor bestimmt genau eine verantwortliche Person als Administrator:in.</li>
-      <li>Bevor geschrieben werden kann, muss diese Person zuerst per E-Mail Zugang anfragen.</li>
-      <li>Weitere Personen aus demselben Chor können mitlesen, aber nicht zusätzlich als Administrator:in freigeschaltet werden.</li>
-      <li>Neue Beiträge lassen sich zuverlässig über die Desktop-Version von Google Groups erstellen.</li>
-    </ul>
-    <div class="forum-desktop-note">
-      Zugang für Administrator:innen:
-      <span>Bitte nutzt zuerst den Button „Zugang anfragen“. In der Anfrage müssen Name, Chor, Stadt und E-Mail-Adresse stehen. Pro Kneipenchor wird nur eine Administrator-Person freigeschaltet.</span>
+
+    <div class="forum-actions">
+      <a class="forum-button" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">
+        Beitritt bei Google Groups beantragen
+      </a>
+
+      <a class="forum-button forum-secondary" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">
+        Zum Forum
+      </a>
     </div>
-    <p class="forum-small-note">
-      Direkter Forum-Link: <span class="forum-link-fallback">https://groups.google.com/g/kneipenchre-vernetzt</span>
+
+    <div class="forum-note">
+      <strong>Wichtig:</strong> Bitte im Google-Groups-Fenster auf
+      <strong>Beitritt zur Gruppe beantragen</strong> klicken.
+      Erst dann erscheint die Person bei den ausstehenden Mitgliedern.
+    </div>
+
+    <ol class="forum-steps">
+      <li>Auf <strong>Beitritt bei Google Groups beantragen</strong> klicken.</li>
+      <li>Mit der eigenen E-Mail-Adresse bei Google anmelden.</li>
+      <li>In Google Groups auf <strong>Beitritt zur Gruppe beantragen</strong> klicken.</li>
+      <li>Bitte Name, Chor, Stadt und Funktion im Chor in die Anfrage schreiben.</li>
+      <li>Nach der Prüfung wird die Anfrage genehmigt.</li>
+    </ol>
+
+    <p>
+      Bitte beachtet: Pro Kneipenchor wird zunächst nur eine Administrator:innen-Person freigeschaltet.
+      Beiträge schreiben funktioniert in Google Groups oft zuverlässiger in der Desktop-Ansicht.
     </p>
   </section>
 </main>
@@ -273,6 +165,7 @@
           <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
         </p>
       </section>
+
       <section class="footer-section">
         <h3 class="section-title">Info</h3>
         <p class="section-content">
@@ -302,6 +195,7 @@
 
     document.addEventListener('click', (event) => {
       const isOpen = mainNav.classList.contains('open');
+
       if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
         mainNav.classList.remove('open');
         hamburger.classList.remove('active');
