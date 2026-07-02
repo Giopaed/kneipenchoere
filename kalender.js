@@ -1,16 +1,37 @@
-const KONZERTE_URL = 'daten/konzerte.json';
+// HIER NACH DEM BEREITSTELLEN DEN APPS-SCRIPT-LINK EINTRAGEN.
+// Beispiel:
+// const KONZERT_DATA_URL = 'https://script.google.com/macros/s/DEIN-LINK/exec';
+const KONZERT_DATA_URL = 'HIER_APPS_SCRIPT_URL_EINTRAGEN';
+
 let alleKonzerte = [];
 
-const monatNamen = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const monatNamen = [
+  'Januar',
+  'Februar',
+  'März',
+  'April',
+  'Mai',
+  'Juni',
+  'Juli',
+  'August',
+  'September',
+  'Oktober',
+  'November',
+  'Dezember'
+];
 
 document.addEventListener('DOMContentLoaded', initKalender);
 
 async function initKalender() {
   try {
-    const res = await fetch(KONZERTE_URL, { cache: 'no-store' });
-    alleKonzerte = res.ok ? await res.json() : [];
-    if (!Array.isArray(alleKonzerte)) alleKonzerte = [];
+    if (!KONZERT_DATA_URL || KONZERT_DATA_URL.includes('HIER_APPS_SCRIPT_URL_EINTRAGEN')) {
+      alleKonzerte = [];
+    } else {
+      const daten = await ladeDatenPerJsonp(KONZERT_DATA_URL);
+      alleKonzerte = Array.isArray(daten) ? daten : [];
+    }
   } catch (error) {
+    console.error('Konzerte konnten nicht geladen werden:', error);
     alleKonzerte = [];
   }
 
@@ -22,20 +43,44 @@ async function initKalender() {
   baueFilter();
   renderKalender();
 
-  ['filter-month','filter-choir','filter-place'].forEach(id => {
+  ['filter-month', 'filter-choir', 'filter-place'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('change', renderKalender);
   });
 }
 
+function ladeDatenPerJsonp(url) {
+  return new Promise((resolve, reject) => {
+    const callbackName = 'konzertKalenderCallback_' + Date.now();
+
+    window[callbackName] = (daten) => {
+      delete window[callbackName];
+      script.remove();
+      resolve(daten);
+    };
+
+    const script = document.createElement('script');
+    script.src = `${url}?callback=${callbackName}&_=${Date.now()}`;
+    script.onerror = () => {
+      delete window[callbackName];
+      script.remove();
+      reject(new Error('JSONP konnte nicht geladen werden.'));
+    };
+
+    document.body.appendChild(script);
+  });
+}
+
 function normalisiereTermin(t) {
   if (!t || !t.datum) return null;
+
   return {
-    chor: t.chor || t.name || '',
+    chor: t.chor || t.name || t.chorname || '',
     datum: t.datum || '',
     uhrzeit: t.uhrzeit || t.zeit || '',
-    ort: t.ort || t.stadt || '',
-    titel: t.titel || t.name_des_konzerts || '',
+    ort: t.ort || t.veranstaltungsort || t.stadt || '',
+    stadt: t.stadt || '',
+    titel: t.titel || t.name_des_konzerts || 'Konzert',
     link: t.link || '',
     beschreibung: t.beschreibung || ''
   };
@@ -45,9 +90,21 @@ function baueFilter() {
   const monthSelect = document.getElementById('filter-month');
   const choirSelect = document.getElementById('filter-choir');
   const placeSelect = document.getElementById('filter-place');
+
   if (!monthSelect || !choirSelect || !placeSelect) return;
 
-  const months = [...new Set(alleKonzerte.map(t => new Date(t.datum).getMonth()).filter(n => !isNaN(n)))].sort((a,b) => a-b);
+  monthSelect.innerHTML = '<option value="">Monat wählen</option>';
+  choirSelect.innerHTML = '<option value="">Chor wählen</option>';
+  placeSelect.innerHTML = '<option value="">Ort wählen</option>';
+
+  const months = [
+    ...new Set(
+      alleKonzerte
+        .map(t => new Date(t.datum).getMonth())
+        .filter(n => !isNaN(n))
+    )
+  ].sort((a, b) => a - b);
+
   months.forEach(m => monthSelect.appendChild(new Option(monatNamen[m], String(m))));
 
   const choirs = [...new Set(alleKonzerte.map(t => t.chor).filter(Boolean))].sort();
@@ -59,19 +116,34 @@ function baueFilter() {
 
 function renderKalender() {
   const list = document.getElementById('calendar-list');
+
   if (!list) return;
+
+  if (!KONZERT_DATA_URL || KONZERT_DATA_URL.includes('HIER_APPS_SCRIPT_URL_EINTRAGEN')) {
+    list.innerHTML = '<p class="calendar-empty">Der Kalender ist noch nicht mit der Tabelle verbunden. Bitte zuerst den Apps-Script-Link in kalender.js eintragen.</p>';
+    return;
+  }
 
   const month = document.getElementById('filter-month')?.value || '';
   const choir = document.getElementById('filter-choir')?.value || '';
   const place = document.getElementById('filter-place')?.value || '';
 
   let termine = alleKonzerte;
-  if (month !== '') termine = termine.filter(t => String(new Date(t.datum).getMonth()) === month);
-  if (choir) termine = termine.filter(t => t.chor === choir);
-  if (place) termine = termine.filter(t => t.ort === place);
+
+  if (month !== '') {
+    termine = termine.filter(t => String(new Date(t.datum).getMonth()) === month);
+  }
+
+  if (choir) {
+    termine = termine.filter(t => t.chor === choir);
+  }
+
+  if (place) {
+    termine = termine.filter(t => t.ort === place);
+  }
 
   if (!termine.length) {
-    list.innerHTML = '<p class="calendar-empty">Noch keine Konzerte eingetragen. Chöre können neue Termine über „Konzert eintragen“ vorschlagen.</p>';
+    list.innerHTML = '<p class="calendar-empty">Noch keine freigegebenen Konzerte eingetragen.</p>';
     return;
   }
 
@@ -82,19 +154,47 @@ function renderKalender() {
     const ort = escapeHtml(t.ort || 'Ort folgt');
     const beschreibung = t.beschreibung ? `<p>${escapeHtml(t.beschreibung)}</p>` : '';
     const link = t.link ? `<p><a href="${escapeAttr(t.link)}" target="_blank" rel="noopener noreferrer">Weitere Informationen</a></p>` : '';
-    return `<article class="calendar-card"><h3>${chor}</h3><p class="calendar-meta">${datum} — ${ort}</p><p><strong>Titel:</strong> ${titel}</p>${beschreibung}${link}</article>`;
+
+    return `
+      <article class="calendar-card">
+        <h3>${chor}</h3>
+        <p class="calendar-meta">${datum} — ${ort}</p>
+        <p><strong>Titel:</strong> ${titel}</p>
+        ${beschreibung}
+        ${link}
+      </article>
+    `;
   }).join('');
 }
 
 function formatiereDatum(datum, uhrzeit) {
   const date = new Date(datum + 'T' + (uhrzeit || '00:00'));
-  if (isNaN(date)) return escapeHtml(datum || 'Datum folgt');
-  const datePart = date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+  if (isNaN(date)) {
+    return escapeHtml(datum || 'Datum folgt');
+  }
+
+  const datePart = date.toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+
   const timePart = uhrzeit ? ` ${uhrzeit}` : '';
+
   return `${datePart}${timePart}`;
 }
 
 function escapeHtml(value) {
-  return String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+  return String(value || '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  }[c]));
 }
-function escapeAttr(value) { return escapeHtml(value); }
+
+function escapeAttr(value) {
+  return escapeHtml(value);
+}
