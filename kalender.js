@@ -1,7 +1,7 @@
 // HIER NACH DEM BEREITSTELLEN DEN APPS-SCRIPT-LINK EINTRAGEN.
 // Beispiel:
 // const KONZERT_DATA_URL = 'https://script.google.com/macros/s/DEIN-LINK/exec';
-const KONZERT_DATA_URL = 'HIER_APPS_SCRIPT_URL_EINTRAGEN';
+const KONZERT_DATA_URL = 'https://script.google.com/macros/s/AKfycbwTlaoyp4Pdp8gneUlBpbRWr4LYyz4zv-harvI9Ki4xM1bw95hdm5uJzWjFkJ5428Nt/exec';
 
 let alleKonzerte = [];
 
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', initKalender);
 
 async function initKalender() {
   try {
-    if (!KONZERT_DATA_URL || KONZERT_DATA_URL.includes('HIER_APPS_SCRIPT_URL_EINTRAGEN')) {
+    if (!KONZERT_DATA_URL || KONZERT_DATA_URL.includes('https://script.google.com/macros/s/AKfycbwTlaoyp4Pdp8gneUlBpbRWr4LYyz4zv-harvI9Ki4xM1bw95hdm5uJzWjFkJ5428Nt/exec')) {
       alleKonzerte = [];
     } else {
       const daten = await ladeDatenPerJsonp(KONZERT_DATA_URL);
@@ -119,7 +119,7 @@ function renderKalender() {
 
   if (!list) return;
 
-  if (!KONZERT_DATA_URL || KONZERT_DATA_URL.includes('HIER_APPS_SCRIPT_URL_EINTRAGEN')) {
+  if (!KONZERT_DATA_URL || KONZERT_DATA_URL.includes('https://script.google.com/macros/s/AKfycbwTlaoyp4Pdp8gneUlBpbRWr4LYyz4zv-harvI9Ki4xM1bw95hdm5uJzWjFkJ5428Nt/exec')) {
     list.innerHTML = '<p class="calendar-empty">Der Kalender ist noch nicht mit der Tabelle verbunden. Bitte zuerst den Apps-Script-Link in kalender.js eintragen.</p>';
     return;
   }
