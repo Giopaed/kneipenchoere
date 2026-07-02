@@ -74,19 +74,6 @@
       border-color: #000;
     }
 
-    .forum-secondary {
-      background: transparent;
-      border-color: #000;
-    }
-
-    .forum-note {
-      background: #fff2a8;
-      border-radius: 16px;
-      padding: 18px;
-      margin-top: 20px;
-      border: 1px solid #e8d55b;
-    }
-
     .forum-message {
       display: none;
       margin-top: 24px;
@@ -103,6 +90,14 @@
       padding: 20px;
       background: #ffe1d6;
       border: 1px solid #e49b88;
+    }
+
+    .forum-note {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 20px;
+      border: 1px solid #e8ddcb;
     }
 
     @media (max-width: 700px) {
@@ -145,10 +140,11 @@
   <h1>Forum der Kneipenchöre</h1>
 
   <section class="forum-card">
-    <h2>Beitrittsanfrage stellen</h2>
+    <h2>Administrator:in für das Forum anmelden</h2>
 
     <p>
-      Bitte fülle das Formular aus. Danach wirst du direkt zu Google Groups weitergeleitet. Dort klickst du auf <strong>Beitrittsanfrage stellen</strong>.
+      Bitte fülle das Formular aus. Die Anfrage wird geprüft.
+      Nach der Freigabe bekommst du automatisch eine Bestätigung per E-Mail.
     </p>
 
     <form class="forum-form" id="forum-request-form">
@@ -179,21 +175,16 @@
 
       <div class="forum-actions">
         <button class="forum-button" id="submit-button" type="submit">
-          Anfrage absenden und Beitrittsanfrage stellen
+          Anfrage absenden
         </button>
       </div>
     </form>
 
     <div class="forum-message" id="success-message">
-      <h3>Danke, du wirst zu Google Groups weitergeleitet.</h3>
+      <h3>Danke, deine Anfrage wurde gesendet.</h3>
       <p>
-        Google Groups öffnet sich gleich. Bitte klicke dort auf <strong>Beitrittsanfrage stellen</strong>.
+        Wir prüfen deine Angaben. Nach der Freigabe bekommst du automatisch eine Bestätigung per E-Mail.
       </p>
-      <div class="forum-actions">
-        <a class="forum-button" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">
-          Google Groups öffnen
-        </a>
-      </div>
     </div>
 
     <div class="forum-error" id="error-message">
@@ -202,7 +193,7 @@
     </div>
 
     <div class="forum-note">
-      <strong>Wichtig:</strong> Nach dem Absenden öffnet sich Google Groups automatisch. Dort bitte auf <strong>Beitrittsanfrage stellen</strong> klicken.
+      <strong>Wichtig:</strong> Pro Kneipenchor wird zunächst nur eine Administrator:innen-Person freigeschaltet.
     </div>
   </section>
 </main>
@@ -238,7 +229,6 @@
 </footer>
 
 <script>
-  // Sobald du mir den Apps-Script-Link schickst, setze ich ihn hier fest ein.
   const FORUM_ANFRAGE_URL = 'https://script.google.com/macros/s/AKfycbwjL72Qjs9JWbW_tC20FwDrEpqUkoHnO-bj9PeNqQbRZ549DRnnW8Nb4Oa3FItN9QAzvA/exec';
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -278,19 +268,6 @@
 
       if (!form.reportValidity()) return;
 
-      if (!FORUM_ANFRAGE_URL || FORUM_ANFRAGE_URL.includes('https://script.google.com/macros/s/AKfycbwjL72Qjs9JWbW_tC20FwDrEpqUkoHnO-bj9PeNqQbRZ549DRnnW8Nb4Oa3FItN9QAzvA/exec')) {
-        window.location.href = 'mailto:kneipenchor.net@gmail.com?subject=Beitrittsanfrage Forum Kneipenchöre vernetzt&body='
-          + encodeURIComponent(
-            'Name: ' + document.getElementById('name').value + '\n' +
-            'Chor: ' + document.getElementById('chor').value + '\n' +
-            'Stadt: ' + document.getElementById('stadt').value + '\n' +
-            'Funktion im Chor: ' + document.getElementById('funktion').value + '\n' +
-            'E-Mail-Adresse: ' + document.getElementById('email').value + '\n\n' +
-            'Ich möchte eine Beitrittsanfrage zum Forum stellen.'
-          );
-        return;
-      }
-
       errorMessage.style.display = 'none';
       submitButton.disabled = true;
       submitButton.textContent = 'Wird gesendet …';
@@ -307,13 +284,11 @@
         form.reset();
         form.style.display = 'none';
         successMessage.style.display = 'block';
-
-        window.location.href = 'https://groups.google.com/g/kneipenchre-vernetzt';
       } catch (error) {
         errorMessage.style.display = 'block';
       } finally {
         submitButton.disabled = false;
-        submitButton.textContent = 'Anfrage absenden und Beitrittsanfrage stellen';
+        submitButton.textContent = 'Anfrage absenden';
       }
     });
   });
