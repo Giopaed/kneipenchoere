@@ -1,135 +1,217 @@
 <!DOCTYPE html>
 <html lang="de">
-<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kneipenchöre vernetzt</title>
-<link rel="stylesheet" href="Kneipenchor.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum – Kneipenchöre vernetzt</title>
+  <link rel="stylesheet" href="Kneipenchor.css" />
+  <style>
+    .forum-page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .forum-card {
+      background: #fffaf2;
+      border: 1px solid #e8ddcb;
+      border-radius: 22px;
+      padding: 32px;
+      margin-top: 24px;
+    }
+
+    .forum-form {
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .forum-form label {
+      display: grid;
+      gap: 7px;
+      font-weight: 700;
+    }
+
+    .forum-form input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1.5px solid #111;
+      border-radius: 14px;
+      padding: 13px 14px;
+      background: #fff;
+      font-size: 1rem;
+    }
+
+    .forum-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 24px 0 0;
+    }
+
+    .forum-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 14px 24px;
+      background: #ffed00;
+      color: #000;
+      text-decoration: none;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 2px solid #ffed00;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    .forum-button:hover,
+    .forum-button:focus {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+    }
+
+    .forum-secondary {
+      background: transparent;
+      border-color: #000;
+    }
+
+    .forum-note {
+      background: #fff2a8;
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 20px;
+      border: 1px solid #e8d55b;
+    }
+
+    .forum-message {
+      display: none;
+      margin-top: 24px;
+      border-radius: 18px;
+      padding: 20px;
+      background: #fff2a8;
+      border: 1px solid #e8d55b;
+    }
+
+    .forum-error {
+      display: none;
+      margin-top: 24px;
+      border-radius: 18px;
+      padding: 20px;
+      background: #ffe1d6;
+      border: 1px solid #e49b88;
+    }
+
+    @media (max-width: 700px) {
+      .forum-page {
+        padding: 32px 18px 60px;
+      }
+
+      .forum-card {
+        padding: 22px;
+      }
+
+      .forum-button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-
-
-
 <header class="main-header">
-   <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
-  <span class="bar"></span>
-  <span class="bar"></span>
-  <span class="bar"></span>
-</button>
+  <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
 
-  
   <h1 class="site-title">Kneipenchöre vernetzt</h1>
- 
+
   <nav class="main-nav">
     <ul class="nav-list">
       <li><a href="index.html" class="nav-link">Startseite</a></li>
       <li><a href="Karte.html" class="nav-link">Kneipenchor-Map</a></li>
       <li><a href="kalender.html" class="nav-link">Kalender</a></li>
-      <li><a href="/forum.html" class="nav-link">Forum</a></li>
+      <li><a href="forum.html" class="nav-link active">Forum</a></li>
     </ul>
     <a href="eintragen.html" class="register-btn">Chor eintragen</a>
   </nav>
 </header>
 
-<main>
-  <section class="hero-section">
-    <img src="Kneipenchoere_LOGO.png" onerror="this.onerror=null;this.src='bilder/Kneipenchoere_LOGO.png';" alt="Kneipenchöre Schriftzug" class="hero-img" />
-    <div class="hero-content">
-      <div class="hero-text-container">
-        <p class="hero-subtitle">Wo Chöre singen, wirds gemütlich:</p>
-        <h2 class="hero-title">Finde deinen<br />Kneipenchor!</h2>
+<main class="forum-page">
+  <h1>Forum der Kneipenchöre</h1>
+
+  <section class="forum-card">
+    <h2>Beitrittsanfrage stellen</h2>
+
+    <p>
+      Bitte fülle das Formular aus. Danach bekommst du eine E-Mail mit dem Link zu Google Groups.
+      Dort klickst du anschließend auf <strong>Beitrittsanfrage stellen</strong>.
+    </p>
+
+    <form class="forum-form" id="forum-request-form">
+      <label for="name">
+        Name
+        <input id="name" name="name" type="text" autocomplete="name" required />
+      </label>
+
+      <label for="chor">
+        Chor
+        <input id="chor" name="chor" type="text" required />
+      </label>
+
+      <label for="stadt">
+        Stadt
+        <input id="stadt" name="stadt" type="text" required />
+      </label>
+
+      <label for="funktion">
+        Funktion im Chor
+        <input id="funktion" name="funktion" type="text" placeholder="z. B. Leitung, Organisation, Vorstand" required />
+      </label>
+
+      <label for="email">
+        E-Mail-Adresse
+        <input id="email" name="email" type="email" autocomplete="email" required />
+      </label>
+
+      <div class="forum-actions">
+        <button class="forum-button" id="submit-button" type="submit">
+          Anfrage absenden
+        </button>
+
+        <a class="forum-button forum-secondary" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">
+          Direkt zu Google Groups
+        </a>
       </div>
-      <p class="hero-description">
-        Wenn Stimmen sich begegnen, entsteht mehr als Musik - hier wird<br />
-        Gemeinschaft hörbar und der Spaß am Singen spürbar.
+    </form>
+
+    <div class="forum-message" id="success-message">
+      <h3>Danke, deine Anfrage wurde gesendet.</h3>
+      <p>
+        Bitte öffne nun Google Groups und klicke dort auf
+        <strong>Beitrittsanfrage stellen</strong>. Erst dann erscheinst du bei uns
+        unter <strong>Ausstehende Mitglieder</strong>.
       </p>
-      <a href="Karte.html" class="cta-button">Chor finden</a>
-    </div>
-  </section>
-
- <section class="map-section" id="veranstaltungen">
-  <div class="map-content">
-    <h2 class="map-title">
-      Die Karte für alle, die lieber mehrstimmig feiern:
-    </h2>
-    <div class="map-image-container">
-      <a href="Karte.html">
-        <img src="kneipenchor_banner.svg" onerror="this.onerror=null;this.src='bilder/kneipenchor_banner.svg';" alt="Vorschaubild zur Karte mit Pins der Kneipenchöre" class="header-img" />
-      </a>
-  
-    </div>
-  </div>
-</section>
-
-
-  <section class="contact-section">
-  <div class="contact-content">
-    <div class="contact-info">
-      <h2 class="contact-title">
-        Chor auf die Karte?<span class="break">Einfach melden!</span>
-      </h2>
-      <p class="contact-description">
-        Gemeinsam klingen wir weiter - tragt euren Chor ein und werdet Teil der Kneipenchor-Community, die Musik und Miteinander liebt.<br><br>
-        <a href="eintragen.html" class="nav-link">Hier</a> könnt Ihr Euch direkt eintragen. Ihr habt Feedback oder braucht Hilfe beim Eintragen?<br>
-        Meldet euch gerne: <strong><a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a></strong>
-      </p>
-    </div>
-    <form class="contact-form" action="https://formsubmit.co/kontakt@kneipenchor.net" method="POST">
-  <!-- Formsubmit Hidden Fields -->
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="/danke.html">
-  <input type="hidden" name="_subject" value="Neue Nachricht vom Kneipenchor-Formular">
-  <input type="text" name="_honey" style="display:none">
-
-  <!-- Vor- & Nachname -->
-  <div class="form-group">
-    <label>Name <span class="required">(erforderlich)</span></label>
-    <div class="name-inputs">
-      <div class="input-group">
-        <label for="firstname">Vorname</label>
-        <input type="text" id="firstname" name="Vorname" class="form-input" required />
-      </div>
-      <div class="input-group">
-        <label for="lastname">Nachname</label>
-        <input type="text" id="lastname" name="Nachname" class="form-input" required />
+      <div class="forum-actions">
+        <a class="forum-button" href="https://groups.google.com/g/kneipenchre-vernetzt" target="_blank" rel="noopener noreferrer">
+          Google Groups öffnen
+        </a>
       </div>
     </div>
-  </div>
 
-  <!-- E-Mail -->
-  <div class="form-group">
-    <label for="email">E-Mail-Adresse <span class="required">(erforderlich)</span></label>
-    <input type="email" id="email" name="Email" class="form-input" required />
-  </div>
-
-  <!-- Nachricht -->
-  <div class="form-group">
-    <label for="message">Nachricht <span class="required">(erforderlich)</span></label>
-    <textarea id="message" name="Nachricht" class="form-input" required style="min-height: 88px;"></textarea>
-  </div>
-
-  <!-- Absenden -->
-  <button type="submit" class="submit-button">Senden</button>
-</form>
-
-  </div>
-</section>
-
-  <section class="forum-section" id="forum">
-    <div class="forum-image">
-      <img src="kneipenchor_karlsruhe_forum.png" onerror="this.onerror=null;this.src='bilder/kneipenchor_karlsruhe_forum.png';" alt="Forum illustration" class="forum-img" />
+    <div class="forum-error" id="error-message">
+      Die Anfrage konnte nicht gesendet werden. Bitte versuche es später noch einmal
+      oder schreibe an <a href="mailto:kneipenchor.net@gmail.com">kneipenchor.net@gmail.com</a>.
     </div>
-    <div class="forum-content">
-      <div class="forum-text-container">
-        <p class="forum-subtitle">Mehrstimmig im Forum schnacken:</p>
-        <h2 class="forum-title">Zwischen Alt, Tenor und Austausch</h2>
-      </div>
-      <p class="forum-description">
-        Unser Forum ist wie ein digitaler Stammtisch - nur mit weniger Bier und mehr Noten.<br />
-        Komm vorbei, plaudere mit und bleib im Takt mit den Kneipenchören in Deutschland, der Schweiz und Österreich.
-      </p>
-      <a href="/forum.html" class="forum-button">Zum Forum</a>
+
+    <div class="forum-note">
+      <strong>Wichtig:</strong> Die Person erscheint erst bei
+      <strong>Ausstehende Mitglieder</strong>, wenn sie in Google Groups auf
+      <strong>Beitrittsanfrage stellen</strong> klickt.
     </div>
   </section>
 </main>
@@ -138,6 +220,7 @@
   <div class="footer-brand">
     <h2 class="footer-title">Kneipenchöre<br>vernetzt</h2>
   </div>
+
   <nav class="footer-nav">
     <div class="footer-sections">
       <section class="footer-section">
@@ -147,47 +230,100 @@
           c/o Kulturzentrum Tollhaus<br>
           Alter Schlachthof 35<br>
           76131 Karlsruhe<br>
-           <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
+          <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
         </p>
       </section>
+
       <section class="footer-section">
         <h3 class="section-title">Info</h3>
-<p class="section-content">
-  <a href="ueber-uns.html">Über uns</a><br>
-  <a href="impressum.html">Impressum</a><br>
-  <a href="datenschutz.html">Datenschutz</a>
-</p>
+        <p class="section-content">
+          <a href="ueber-uns.html">Über uns</a><br>
+          <a href="impressum.html">Impressum</a><br>
+          <a href="datenschutz.html">Datenschutz</a>
+        </p>
       </section>
     </div>
   </nav>
 </footer>
 
-  <script>
+<script>
+  // Sobald du mir den Apps-Script-Link schickst, setze ich ihn hier fest ein.
+  const FORUM_ANFRAGE_URL = 'HIER_FORUM_APPS_SCRIPT_URL_EINTRAGEN';
+
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const mainNav = document.querySelector('.main-nav');
 
-    // Öffnen / Schließen bei Klick auf Hamburger
-    hamburger.addEventListener('click', (event) => {
-      event.stopPropagation(); // Verhindert Schließen bei eigenem Klick
-      const isOpen = mainNav.classList.toggle('open');
-      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      hamburger.classList.toggle('active', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
+    if (hamburger && mainNav) {
+      hamburger.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = mainNav.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        hamburger.classList.toggle('active', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
 
-    // Schließen bei Klick außerhalb des Menüs
-    document.addEventListener('click', (event) => {
-      const isOpen = mainNav.classList.contains('open');
-      if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
-        mainNav.classList.remove('open');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+      document.addEventListener('click', (event) => {
+        const isOpen = mainNav.classList.contains('open');
+
+        if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
+          mainNav.classList.remove('open');
+          hamburger.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    const form = document.getElementById('forum-request-form');
+    const submitButton = document.getElementById('submit-button');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+
+    if (!form) return;
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) return;
+
+      if (!FORUM_ANFRAGE_URL || FORUM_ANFRAGE_URL.includes('HIER_FORUM_APPS_SCRIPT_URL_EINTRAGEN')) {
+        window.location.href = 'mailto:kneipenchor.net@gmail.com?subject=Beitrittsanfrage Forum Kneipenchöre vernetzt&body='
+          + encodeURIComponent(
+            'Name: ' + document.getElementById('name').value + '\n' +
+            'Chor: ' + document.getElementById('chor').value + '\n' +
+            'Stadt: ' + document.getElementById('stadt').value + '\n' +
+            'Funktion im Chor: ' + document.getElementById('funktion').value + '\n' +
+            'E-Mail-Adresse: ' + document.getElementById('email').value + '\n\n' +
+            'Ich möchte eine Beitrittsanfrage zum Forum stellen.'
+          );
+        return;
+      }
+
+      errorMessage.style.display = 'none';
+      submitButton.disabled = true;
+      submitButton.textContent = 'Wird gesendet …';
+
+      const formData = new FormData(form);
+
+      try {
+        await fetch(FORUM_ANFRAGE_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formData
+        });
+
+        form.reset();
+        form.style.display = 'none';
+        successMessage.style.display = 'block';
+      } catch (error) {
+        errorMessage.style.display = 'block';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Anfrage absenden';
       }
     });
   });
 </script>
-  
 </body>
 </html>

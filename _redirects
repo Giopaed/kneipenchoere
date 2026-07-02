@@ -1,7 +1,7 @@
 # Weiterleitungen für Netlify
-/kalender              /kalender.html              200
-/konzert-eintragen     /konzert-eintragen.html     200
-/konzert-danke         /konzert-danke.html         200
-/karte                 /Karte.html                 200
-/forum                 /forum.html                 200
-/eintragen             /eintragen.html             200
+/forum                /forum.html                 200
+/kalender             /kalender.html              200
+/konzert-eintragen    /konzert-eintragen.html     200
+/konzert-danke        /konzert-danke.html         200
+/karte                /Karte.html                 200
+/eintragen            /eintragen.html             200
