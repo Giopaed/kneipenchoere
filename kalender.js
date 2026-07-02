@@ -141,7 +141,7 @@ function renderKalender() {
     const chor = escapeHtml(t.chor || 'Kneipenchor');
     const ort = escapeHtml(t.ort || 'Ort folgt');
     const beschreibung = t.beschreibung ? `<p>${escapeHtml(t.beschreibung)}</p>` : '';
-    const link = t.link ? `<p><a href="${escapeAttr(t.link)}" target="_blank" rel="noopener noreferrer">Weitere Informationen</a></p>` : '';
+    const link = linkZurHomepage(t.link);
 
     return `
       <article class="calendar-card">
@@ -153,6 +153,16 @@ function renderKalender() {
       </article>
     `;
   }).join('');
+}
+
+function linkZurHomepage(link) {
+  const text = String(link || '').trim();
+
+  if (!text) return '';
+
+  const href = /^https?:\/\//i.test(text) ? text : `https://${text}`;
+
+  return `<p><a href="${escapeAttr(href)}" target="_blank" rel="noopener noreferrer">Zur Homepage</a></p>`;
 }
 
 function formatiereDatum(datum, uhrzeit) {
