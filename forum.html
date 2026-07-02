@@ -248,7 +248,7 @@
 
 <script>
   // Sobald du mir den Apps-Script-Link schickst, setze ich ihn hier fest ein.
-  const FORUM_ANFRAGE_URL = 'HIER_FORUM_APPS_SCRIPT_URL_EINTRAGEN';
+  const FORUM_ANFRAGE_URL = 'https://script.google.com/macros/s/AKfycbwjL72Qjs9JWbW_tC20FwDrEpqUkoHnO-bj9PeNqQbRZ549DRnnW8Nb4Oa3FItN9QAzvA/exec';
 
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
@@ -287,7 +287,7 @@
 
       if (!form.reportValidity()) return;
 
-      if (!FORUM_ANFRAGE_URL || FORUM_ANFRAGE_URL.includes('HIER_FORUM_APPS_SCRIPT_URL_EINTRAGEN')) {
+      if (!FORUM_ANFRAGE_URL || FORUM_ANFRAGE_URL.includes('https://script.google.com/macros/s/AKfycbwjL72Qjs9JWbW_tC20FwDrEpqUkoHnO-bj9PeNqQbRZ549DRnnW8Nb4Oa3FItN9QAzvA/exec')) {
         window.location.href = 'mailto:kneipenchor.net@gmail.com?subject=Beitrittsanfrage Forum Kneipenchöre vernetzt&body='
           + encodeURIComponent(
             'Name: ' + document.getElementById('name').value + '\n' +
