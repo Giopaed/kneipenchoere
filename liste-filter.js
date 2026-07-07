@@ -16,10 +16,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function bildUrlBereinigen(url) {
-    const text = String(url || '').trim();
+    let text = String(url || '').trim();
     if (!text) return '';
 
-    const idMatch = text.match(/[?&]id=([^&]+)/) || text.match(/\/file\/d\/([^/]+)/);
+    const imageFormula = text.match(/^=?IMAGE\(["']([^"']+)["']/i);
+    if (imageFormula && imageFormula[1]) {
+      text = imageFormula[1];
+    }
+
+    const idMatch =
+      text.match(/[?&]id=([^&]+)/) ||
+      text.match(/\/file\/d\/([^/]+)/) ||
+      text.match(/thumbnail\?id=([^&]+)/);
+
     if (idMatch && idMatch[1]) {
       return `https://drive.google.com/thumbnail?id=${encodeURIComponent(idMatch[1])}&sz=w1000`;
     }
@@ -41,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function bildHtml(props) {
-    const bildQuelle = bildUrlBereinigen(props.logo || props.bild || '');
+    const bildQuelle = bildUrlBereinigen(props.logo || props.bild || props.bild_url || props.foto || props['Foto hochladen'] || props['Bild-Vorschau'] || '');
 
     if (!bildQuelle) {
       return '<div class="choir-image-wrap choir-image-missing"></div>';

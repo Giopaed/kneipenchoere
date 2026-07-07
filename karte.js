@@ -78,10 +78,14 @@ function normalisiereDaten(rohdaten) {
         const bild = holeWert(eintrag, [
           'bild',
           'Bild',
+          'bild_url',
+          'Bild-URL',
           'logo',
           'Logo',
           'Foto hochladen',
+          'Bild-Vorschau',
           'Foto',
+          'foto',
           'Chorbild',
           'Bild hochladen'
         ]);
