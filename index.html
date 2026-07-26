@@ -1,381 +1,135 @@
 <!DOCTYPE html>
 <html lang="de">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Forum – Kneipenchöre vernetzt</title>
-  <link rel="stylesheet" href="Kneipenchor.css" />
-  <style>
-    .forum-page {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
-    }
-
-    .forum-intro {
-      max-width: 850px;
-      line-height: 1.55;
-    }
-
-    .forum-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 30px 0 24px;
-    }
-
-    .forum-tab {
-      border: 2px solid #111;
-      border-radius: 999px;
-      background: transparent;
-      padding: 12px 22px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      cursor: pointer;
-    }
-
-    .forum-tab.active {
-      background: #ffed00;
-      border-color: #ffed00;
-    }
-
-    .forum-section-box {
-      display: none;
-      background: #fffaf2;
-      border: 1px solid #e8ddcb;
-      border-radius: 22px;
-      padding: 30px;
-    }
-
-    .forum-section-box.active {
-      display: block;
-    }
-
-    .forum-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 360px;
-      gap: 28px;
-      align-items: start;
-    }
-
-    .forum-card {
-      background: #fff;
-      border: 1px solid #ded4c2;
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-
-    .forum-card h3 {
-      margin: 0 0 8px;
-    }
-
-    .forum-meta {
-      font-size: .92rem;
-      color: #555;
-      margin: 0 0 12px;
-    }
-
-    .forum-form {
-      display: grid;
-      gap: 14px;
-      background: #fff;
-      border: 1px solid #ded4c2;
-      border-radius: 18px;
-      padding: 20px;
-    }
-
-    .forum-form label {
-      display: grid;
-      gap: 7px;
-      font-weight: 700;
-    }
-
-    .forum-form input,
-    .forum-form textarea {
-      width: 100%;
-      box-sizing: border-box;
-      border: 1.5px solid #111;
-      border-radius: 14px;
-      padding: 12px 14px;
-      background: #fff;
-      font-size: 1rem;
-      font-family: inherit;
-    }
-
-    .forum-form textarea {
-      min-height: 140px;
-      resize: vertical;
-    }
-
-    .forum-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      padding: 14px 24px;
-      background: #ffed00;
-      color: #000;
-      text-decoration: none;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      border: 2px solid #ffed00;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 0.95rem;
-    }
-
-    .forum-button:hover,
-    .forum-button:focus {
-      background: #000;
-      color: #fff;
-      border-color: #000;
-    }
-
-    .forum-note,
-    .forum-message,
-    .forum-error {
-      border-radius: 16px;
-      padding: 16px 18px;
-      margin-top: 18px;
-      border: 1px solid #e8d55b;
-      background: #fff2a8;
-    }
-
-    .forum-error {
-      display: none;
-      background: #ffe1d6;
-      border-color: #e49b88;
-    }
-
-    .forum-message {
-      display: none;
-    }
-
-    .forum-empty {
-      border: 1px dashed #bbb;
-      border-radius: 18px;
-      padding: 20px;
-      background: #fff;
-    }
-
-    .admin-login {
-      background: #fff;
-      border: 1px solid #ded4c2;
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    @media (max-width: 850px) {
-      .forum-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .forum-page {
-        padding: 32px 18px 60px;
-      }
-
-      .forum-section-box {
-        padding: 22px;
-      }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kneipenchöre vernetzt</title>
+<link rel="stylesheet" href="Kneipenchor.css">
 </head>
 <body>
+
+
+
 <header class="main-header">
-  <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
-    <span class="bar"></span>
-    <span class="bar"></span>
-    <span class="bar"></span>
-  </button>
+   <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" type="button">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
 
+  
   <h1 class="site-title">Kneipenchöre vernetzt</h1>
-
+ 
   <nav class="main-nav">
     <ul class="nav-list">
       <li><a href="index.html" class="nav-link">Startseite</a></li>
       <li><a href="Karte.html" class="nav-link">Kneipenchor-Map</a></li>
       <li><a href="kalender.html" class="nav-link">Kalender</a></li>
-      <li><a href="forum.html" class="nav-link active">Forum</a></li>
+      <li><a href="forum.html" class="nav-link">Forum</a></li>
     </ul>
     <a href="eintragen.html" class="register-btn">Chor eintragen</a>
   </nav>
 </header>
 
-<main class="forum-page">
-  <h1>Forum der Kneipenchöre</h1>
+<main>
+  <section class="hero-section">
+    <img src="Kneipenchoere_LOGO.png" onerror="this.onerror=null;this.src='bilder/Kneipenchoere_LOGO.png';" alt="Kneipenchöre Schriftzug" class="hero-img" />
+    <div class="hero-content">
+      <div class="hero-text-container">
+        <p class="hero-subtitle">Wo Chöre singen, wirds gemütlich:</p>
+        <h2 class="hero-title">Finde deinen<br />Kneipenchor!</h2>
+      </div>
+      <p class="hero-description">
+        Wenn Stimmen sich begegnen, entsteht mehr als Musik - hier wird<br />
+        Gemeinschaft hörbar und der Spaß am Singen spürbar.
+      </p>
+      <a href="Karte.html" class="cta-button">Chor finden</a>
+    </div>
+  </section>
 
-  <p class="forum-intro">
-    Hier gibt es zwei Bereiche: ein öffentlich lesbares Forum für alle und ein internes Forum
-    nur für Administrator:innen. Beiträge können nur mit Admin-Passwort erstellt werden.
-  </p>
+ <section class="map-section" id="veranstaltungen">
+  <div class="map-content">
+    <h2 class="map-title">
+      Die Karte für alle, die lieber mehrstimmig feiern:
+    </h2>
+    <div class="map-image-container">
+      <a href="Karte.html">
+        <img src="kneipenchor_banner.svg" onerror="this.onerror=null;this.src='bilder/kneipenchor_banner.svg';" alt="Vorschaubild zur Karte mit Pins der Kneipenchöre" class="header-img" />
+      </a>
+  
+    </div>
+  </div>
+</section>
 
-  <div class="forum-tabs" role="tablist">
-    <button class="forum-tab active" type="button" data-forum-tab="public">Forum für alle</button>
-    <button class="forum-tab" type="button" data-forum-tab="admin">Internes Admin-Forum</button>
-    <button class="forum-tab" type="button" data-forum-tab="request">Admin-Zugang beantragen</button>
+
+  <section class="contact-section">
+  <div class="contact-content">
+    <div class="contact-info">
+      <h2 class="contact-title">
+        Chor auf die Karte?<span class="break">Einfach melden!</span>
+      </h2>
+      <p class="contact-description">
+        Gemeinsam klingen wir weiter - tragt euren Chor ein und werdet Teil der Kneipenchor-Community, die Musik und Miteinander liebt.<br><br>
+        <a href="eintragen.html" class="nav-link">Hier</a> könnt Ihr Euch direkt eintragen. Ihr habt Feedback oder braucht Hilfe beim Eintragen?<br>
+        Meldet euch gerne: <strong><a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a></strong>
+      </p>
+    </div>
+    <form class="contact-form" action="https://formsubmit.co/kontakt@kneipenchor.net" method="POST">
+  <!-- Formsubmit Hidden Fields -->
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_next" value="/danke.html">
+  <input type="hidden" name="_subject" value="Neue Nachricht vom Kneipenchor-Formular">
+  <input type="text" name="_honey" style="display:none">
+
+  <!-- Vor- & Nachname -->
+  <div class="form-group">
+    <label>Name <span class="required">(erforderlich)</span></label>
+    <div class="name-inputs">
+      <div class="input-group">
+        <label for="firstname">Vorname</label>
+        <input type="text" id="firstname" name="Vorname" class="form-input" required />
+      </div>
+      <div class="input-group">
+        <label for="lastname">Nachname</label>
+        <input type="text" id="lastname" name="Nachname" class="form-input" required />
+      </div>
+    </div>
   </div>
 
-  <section class="forum-section-box active" id="forum-public">
-    <h2>Forum für alle</h2>
-    <p>
-      Alle können die Beiträge lesen. Nur Administrator:innen können neue Beiträge veröffentlichen.
-    </p>
+  <!-- E-Mail -->
+  <div class="form-group">
+    <label for="email">E-Mail-Adresse <span class="required">(erforderlich)</span></label>
+    <input type="email" id="email" name="Email" class="form-input" required />
+  </div>
 
-    <div class="forum-grid">
-      <div>
-        <h3>Beiträge</h3>
-        <div id="public-posts">
-          <p class="forum-empty">Beiträge werden geladen …</p>
-        </div>
+  <!-- Nachricht -->
+  <div class="form-group">
+    <label for="message">Nachricht <span class="required">(erforderlich)</span></label>
+    <textarea id="message" name="Nachricht" class="form-input" required style="min-height: 88px;"></textarea>
+  </div>
+
+  <!-- Absenden -->
+  <button type="submit" class="submit-button">Senden</button>
+</form>
+
+  </div>
+</section>
+
+  <section class="forum-section" id="forum">
+    <div class="forum-image">
+      <img src="kneipenchor_karlsruhe_forum.png" onerror="this.onerror=null;this.src='bilder/kneipenchor_karlsruhe_forum.png';" alt="Forum illustration" class="forum-img" />
+    </div>
+    <div class="forum-content">
+      <div class="forum-text-container">
+        <p class="forum-subtitle">Mehrstimmig im Forum schnacken:</p>
+        <h2 class="forum-title">Zwischen Alt, Tenor und Austausch</h2>
       </div>
-
-      <aside>
-        <h3>Beitrag veröffentlichen</h3>
-        <form class="forum-form" id="public-post-form">
-          <input type="hidden" name="type" value="public" />
-
-          <label>
-            Admin-Passwort
-            <input name="password" type="password" required />
-          </label>
-
-          <label>
-            Autor:in
-            <input name="author" type="text" required />
-          </label>
-
-          <label>
-            Titel
-            <input name="title" type="text" required />
-          </label>
-
-          <label>
-            Beitrag
-            <textarea name="text" required></textarea>
-          </label>
-
-          <button class="forum-button" type="submit">Beitrag veröffentlichen</button>
-        </form>
-        <div class="forum-message" id="public-success">Der Beitrag wurde gespeichert.</div>
-        <div class="forum-error" id="public-error">Der Beitrag konnte nicht gespeichert werden.</div>
-      </aside>
-    </div>
-  </section>
-
-  <section class="forum-section-box" id="forum-admin">
-    <h2>Internes Admin-Forum</h2>
-    <p>
-      Dieser Bereich ist nur für Administrator:innen. Zum Lesen und Schreiben ist das Admin-Passwort nötig.
-    </p>
-
-    <div class="admin-login" id="admin-login-box">
-      <form class="forum-form" id="admin-login-form">
-        <label>
-          Admin-Passwort
-          <input id="admin-read-password" type="password" required />
-        </label>
-        <button class="forum-button" type="submit">Internes Forum öffnen</button>
-      </form>
-      <div class="forum-error" id="admin-login-error">Das Passwort stimmt nicht.</div>
-    </div>
-
-    <div class="forum-grid" id="admin-forum-content" style="display:none;">
-      <div>
-        <h3>Interne Beiträge</h3>
-        <div id="admin-posts">
-          <p class="forum-empty">Beiträge werden geladen …</p>
-        </div>
-      </div>
-
-      <aside>
-        <h3>Internen Beitrag veröffentlichen</h3>
-        <form class="forum-form" id="admin-post-form">
-          <input type="hidden" name="type" value="admin" />
-
-          <label>
-            Admin-Passwort
-            <input name="password" id="admin-write-password" type="password" required />
-          </label>
-
-          <label>
-            Autor:in
-            <input name="author" type="text" required />
-          </label>
-
-          <label>
-            Titel
-            <input name="title" type="text" required />
-          </label>
-
-          <label>
-            Beitrag
-            <textarea name="text" required></textarea>
-          </label>
-
-          <button class="forum-button" type="submit">Internen Beitrag veröffentlichen</button>
-        </form>
-        <div class="forum-message" id="admin-success">Der interne Beitrag wurde gespeichert.</div>
-        <div class="forum-error" id="admin-error">Der interne Beitrag konnte nicht gespeichert werden.</div>
-      </aside>
-    </div>
-
-    <div class="forum-note">
-      Das Passwort wird nur dafür genutzt, interne Beiträge zu laden und Beiträge zu speichern.
-    </div>
-  </section>
-
-  <section class="forum-section-box" id="forum-request">
-    <h2>Admin-Zugang beantragen</h2>
-    <p>
-      Chöre können hier eine Administrator:innen-Freigabe beantragen.
-      Nach Prüfung bekommt die Person das Admin-Passwort per E-Mail.
-    </p>
-
-    <form class="forum-form" id="admin-request-form">
-      <input type="hidden" name="action" value="requestAdmin" />
-
-      <label>
-        Name
-        <input name="name" type="text" required />
-      </label>
-
-      <label>
-        Chor
-        <input name="chor" type="text" required />
-      </label>
-
-      <label>
-        Stadt
-        <input name="stadt" type="text" required />
-      </label>
-
-      <label>
-        Funktion im Chor
-        <input name="funktion" type="text" placeholder="z. B. Leitung, Organisation, Vorstand" required />
-      </label>
-
-      <label>
-        E-Mail-Adresse
-        <input name="email" type="email" required />
-      </label>
-
-      <button class="forum-button" type="submit">Admin-Zugang beantragen</button>
-    </form>
-
-    <div class="forum-message" id="request-success">
-      Die Anfrage wurde gesendet. Nach der Prüfung bekommt die Person eine E-Mail.
-    </div>
-    <div class="forum-error" id="request-error">
-      Die Anfrage konnte nicht gesendet werden.
-    </div>
-
-    <div class="forum-note">
-      Die Anfrage landet in der Google-Tabelle im Blatt „Admin-Anfragen“.
-      Dort wird sie mit einem Häkchen bei „Freigeben“ bestätigt.
+      <p class="forum-description">
+        Unser Forum ist wie ein digitaler Stammtisch - nur mit weniger Bier und mehr Noten.<br />
+        Komm vorbei, plaudere mit und bleib im Takt mit den Kneipenchören in Deutschland, der Schweiz und Österreich.
+      </p>
+      <a href="forum.html" class="forum-button">Zum Forum</a>
     </div>
   </section>
 </main>
@@ -384,7 +138,6 @@
   <div class="footer-brand">
     <h2 class="footer-title">Kneipenchöre<br>vernetzt</h2>
   </div>
-
   <nav class="footer-nav">
     <div class="footer-sections">
       <section class="footer-section">
@@ -394,239 +147,47 @@
           c/o Kulturzentrum Tollhaus<br>
           Alter Schlachthof 35<br>
           76131 Karlsruhe<br>
-          <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
+           <a href="mailto:kontakt@kneipenchor.net">kontakt@kneipenchor.net</a>
         </p>
       </section>
-
       <section class="footer-section">
         <h3 class="section-title">Info</h3>
-        <p class="section-content">
-          <a href="ueber-uns.html">Über uns</a><br>
-          <a href="impressum.html">Impressum</a><br>
-          <a href="datenschutz.html">Datenschutz</a>
-        </p>
+<p class="section-content">
+  <a href="ueber-uns.html">Über uns</a><br>
+  <a href="impressum.html">Impressum</a><br>
+  <a href="datenschutz.html">Datenschutz</a>
+</p>
       </section>
     </div>
   </nav>
 </footer>
 
-<script>
-  const FORUM_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLdsL_ku_-mO5JOnKd44OSN7qqpZAtZ3ubw_N_5BROrwGmOnfCsJSFEuDEUa-CuVCY/exec';
-
+  <script>
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const mainNav = document.querySelector('.main-nav');
 
-    if (hamburger && mainNav) {
-      hamburger.addEventListener('click', (event) => {
-        event.stopPropagation();
-        const isOpen = mainNav.classList.toggle('open');
-        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        hamburger.classList.toggle('active', isOpen);
-        document.body.style.overflow = isOpen ? 'hidden' : '';
-      });
-
-      document.addEventListener('click', (event) => {
-        const isOpen = mainNav.classList.contains('open');
-
-        if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
-          mainNav.classList.remove('open');
-          hamburger.classList.remove('active');
-          hamburger.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
-        }
-      });
-    }
-
-    document.querySelectorAll('[data-forum-tab]').forEach(button => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('[data-forum-tab]').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.forum-section-box').forEach(box => box.classList.remove('active'));
-
-        button.classList.add('active');
-        document.getElementById('forum-' + button.dataset.forumTab).classList.add('active');
-      });
+    // Öffnen / Schließen bei Klick auf Hamburger
+    hamburger.addEventListener('click', (event) => {
+      event.stopPropagation(); // Verhindert Schließen bei eigenem Klick
+      const isOpen = mainNav.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      hamburger.classList.toggle('active', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
-    ladeOeffentlicheBeitraege();
-
-    const adminLoginForm = document.getElementById('admin-login-form');
-    const adminPasswordInput = document.getElementById('admin-read-password');
-
-    adminLoginForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const password = adminPasswordInput.value.trim();
-      const ok = await ladeInterneBeitraege(password);
-
-      if (ok) {
-        document.getElementById('admin-login-error').style.display = 'none';
-        document.getElementById('admin-login-box').style.display = 'none';
-        document.getElementById('admin-forum-content').style.display = 'grid';
-        document.getElementById('admin-write-password').value = password;
-      } else {
-        document.getElementById('admin-login-error').style.display = 'block';
+    // Schließen bei Klick außerhalb des Menüs
+    document.addEventListener('click', (event) => {
+      const isOpen = mainNav.classList.contains('open');
+      if (isOpen && !mainNav.contains(event.target) && !hamburger.contains(event.target)) {
+        mainNav.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       }
-    });
-
-    document.getElementById('public-post-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-      await sendeBeitrag(event.target, 'public');
-    });
-
-    document.getElementById('admin-post-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-      await sendeBeitrag(event.target, 'admin');
-    });
-
-    document.getElementById('admin-request-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-      await sendeAdminAnfrage(event.target);
     });
   });
-
-  function ladeDatenPerJsonp(url) {
-    return new Promise((resolve, reject) => {
-      const callbackName = 'forumCallback_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-
-      window[callbackName] = (daten) => {
-        delete window[callbackName];
-        script.remove();
-        resolve(daten);
-      };
-
-      const script = document.createElement('script');
-      script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + callbackName + '&_=' + Date.now();
-      script.onerror = () => {
-        delete window[callbackName];
-        script.remove();
-        reject(new Error('Daten konnten nicht geladen werden.'));
-      };
-
-      document.body.appendChild(script);
-    });
-  }
-
-  async function ladeOeffentlicheBeitraege() {
-    const container = document.getElementById('public-posts');
-
-    try {
-      const daten = await ladeDatenPerJsonp(FORUM_SCRIPT_URL + '?action=list&type=public');
-      renderBeitraege(container, daten.beitraege || [], 'Noch keine öffentlichen Beiträge vorhanden.');
-    } catch (error) {
-      container.innerHTML = '<p class="forum-empty">Beiträge konnten nicht geladen werden.</p>';
-    }
-  }
-
-  async function ladeInterneBeitraege(password) {
-    const container = document.getElementById('admin-posts');
-
-    try {
-      const daten = await ladeDatenPerJsonp(
-        FORUM_SCRIPT_URL + '?action=list&type=admin&password=' + encodeURIComponent(password)
-      );
-
-      if (!daten.ok) {
-        return false;
-      }
-
-      renderBeitraege(container, daten.beitraege || [], 'Noch keine internen Beiträge vorhanden.');
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  async function sendeBeitrag(form, type) {
-    const success = document.getElementById(type === 'admin' ? 'admin-success' : 'public-success');
-    const error = document.getElementById(type === 'admin' ? 'admin-error' : 'public-error');
-    const button = form.querySelector('button[type="submit"]');
-
-    success.style.display = 'none';
-    error.style.display = 'none';
-    button.disabled = true;
-    button.textContent = 'Wird gespeichert …';
-
-    const formData = new FormData(form);
-
-    try {
-      await fetch(FORUM_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-      });
-
-      form.reset();
-      success.style.display = 'block';
-
-      if (type === 'admin') {
-        const password = document.getElementById('admin-read-password').value.trim();
-        document.getElementById('admin-write-password').value = password;
-        await ladeInterneBeitraege(password);
-      } else {
-        await ladeOeffentlicheBeitraege();
-      }
-    } catch (fehler) {
-      error.style.display = 'block';
-    } finally {
-      button.disabled = false;
-      button.textContent = type === 'admin' ? 'Internen Beitrag veröffentlichen' : 'Beitrag veröffentlichen';
-    }
-  }
-
-  async function sendeAdminAnfrage(form) {
-    const success = document.getElementById('request-success');
-    const error = document.getElementById('request-error');
-    const button = form.querySelector('button[type="submit"]');
-
-    success.style.display = 'none';
-    error.style.display = 'none';
-    button.disabled = true;
-    button.textContent = 'Wird gesendet …';
-
-    const formData = new FormData(form);
-
-    try {
-      await fetch(FORUM_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-      });
-
-      form.reset();
-      success.style.display = 'block';
-    } catch (fehler) {
-      error.style.display = 'block';
-    } finally {
-      button.disabled = false;
-      button.textContent = 'Admin-Zugang beantragen';
-    }
-  }
-
-  function renderBeitraege(container, beitraege, leerText) {
-    if (!beitraege.length) {
-      container.innerHTML = '<p class="forum-empty">' + escapeHtml(leerText) + '</p>';
-      return;
-    }
-
-    container.innerHTML = beitraege.map(beitrag => `
-      <article class="forum-card">
-        <h3>${escapeHtml(beitrag.titel || 'Ohne Titel')}</h3>
-        <p class="forum-meta">${escapeHtml(beitrag.datum || '')} · ${escapeHtml(beitrag.autor || '')}</p>
-        <p>${escapeHtml(beitrag.text || '').replace(/\n/g, '<br>')}</p>
-      </article>
-    `).join('');
-  }
-
-  function escapeHtml(value) {
-    return String(value || '').replace(/[&<>"']/g, c => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;'
-    }[c]));
-  }
 </script>
+  
 </body>
 </html>
