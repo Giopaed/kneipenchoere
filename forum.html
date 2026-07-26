@@ -216,7 +216,7 @@
   async function ladeOeffentlicheBeitraege() {
     const container = document.getElementById('public-posts');
     if (FORUM_SCRIPT_URL.includes('https://script.google.com/macros/s/AKfycbzLdsL_ku_-mO5JOnKd44OSN7qqpZAtZ3ubw_N_5BROrwGmOnfCsJSFEuDEUa-CuVCY/exec')) {
-      container.innerHTML = '<p class="forum-empty">Das Forum ist noch nicht verbunden. Bitte zuerst den Apps-Script-Link in forum.html eintragen.</p>';
+      container.innerHTML = '<p class="forum-empty">Beiträge werden geladen …</p>';
       return;
     }
     try {
@@ -230,7 +230,7 @@
   async function ladeInterneBeitraege(password) {
     const container = document.getElementById('admin-posts');
     if (FORUM_SCRIPT_URL.includes('https://script.google.com/macros/s/AKfycbzLdsL_ku_-mO5JOnKd44OSN7qqpZAtZ3ubw_N_5BROrwGmOnfCsJSFEuDEUa-CuVCY/exec')) {
-      container.innerHTML = '<p class="forum-empty">Das Forum ist noch nicht verbunden. Bitte zuerst den Apps-Script-Link in forum.html eintragen.</p>';
+      container.innerHTML = '<p class="forum-empty">Beiträge werden geladen …</p>';
       return false;
     }
     try {
